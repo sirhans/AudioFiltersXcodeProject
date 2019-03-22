@@ -51,6 +51,7 @@
 		4C1507292244D3C70075824B /* BMRMSPower.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C1506F92244D3C70075824B /* BMRMSPower.c */; };
 		4C15072A2244D3C70075824B /* TPCircularBuffer+AudioBufferList.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C1506FC2244D3C70075824B /* TPCircularBuffer+AudioBufferList.c */; };
 		4C15072B2244D3C70075824B /* TPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C1506FE2244D3C70075824B /* TPCircularBuffer.c */; };
+		4C15072E2244D7400075824B /* BMStereoLagTime.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C15072C2244D7400075824B /* BMStereoLagTime.c */; };
 		4C688A382244CF6700E3B1E6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C688A372244CF6700E3B1E6 /* main.c */; };
 /* End PBXBuildFile section */
 
@@ -176,6 +177,8 @@
 		4C1506FD2244D3C70075824B /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.markdown; sourceTree = "<group>"; };
 		4C1506FE2244D3C70075824B /* TPCircularBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TPCircularBuffer.c; sourceTree = "<group>"; };
 		4C1506FF2244D3C70075824B /* TPCircularBuffer+AudioBufferList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TPCircularBuffer+AudioBufferList.h"; sourceTree = "<group>"; };
+		4C15072C2244D7400075824B /* BMStereoLagTime.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMStereoLagTime.c; sourceTree = "<group>"; };
+		4C15072D2244D7400075824B /* BMStereoLagTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMStereoLagTime.h; sourceTree = "<group>"; };
 		4C688A342244CF6700E3B1E6 /* AudioFiltersXcodeProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AudioFiltersXcodeProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C688A372244CF6700E3B1E6 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -266,22 +269,24 @@
 		4C1506AA2244D3C70075824B /* DelayAndReverb */ = {
 			isa = PBXGroup;
 			children = (
+				4C15072C2244D7400075824B /* BMStereoLagTime.c */,
+				4C15072D2244D7400075824B /* BMStereoLagTime.h */,
 				4C1506AB2244D3C70075824B /* BMEarlyReflections.c */,
-				4C1506AC2244D3C70075824B /* BMStaticDelay.h */,
-				4C1506AD2244D3C70075824B /* BMReverb.h */,
-				4C1506AE2244D3C70075824B /* BMMultiTapDelay.h */,
-				4C1506AF2244D3C70075824B /* BMInterpolatedDelay.h */,
-				4C1506B02244D3C70075824B /* TestReverb.c */,
-				4C1506B12244D3C70075824B /* BMSimpleDelay.c */,
-				4C1506B22244D3C70075824B /* BMVelvetNoise.h */,
 				4C1506B32244D3C70075824B /* BMEarlyReflections.h */,
-				4C1506B42244D3C70075824B /* BMStaticDelay.c */,
-				4C1506B52244D3C70075824B /* BMMultiTapDelay.c */,
-				4C1506B62244D3C70075824B /* BMReverb.c */,
-				4C1506B72244D3C70075824B /* TestReverb.h */,
 				4C1506B82244D3C70075824B /* BMInterpolatedDelay.c */,
-				4C1506B92244D3C70075824B /* BMVelvetNoise.c */,
+				4C1506AF2244D3C70075824B /* BMInterpolatedDelay.h */,
+				4C1506B52244D3C70075824B /* BMMultiTapDelay.c */,
+				4C1506AE2244D3C70075824B /* BMMultiTapDelay.h */,
+				4C1506B62244D3C70075824B /* BMReverb.c */,
+				4C1506AD2244D3C70075824B /* BMReverb.h */,
+				4C1506B12244D3C70075824B /* BMSimpleDelay.c */,
 				4C1506BA2244D3C70075824B /* BMSimpleDelay.h */,
+				4C1506B42244D3C70075824B /* BMStaticDelay.c */,
+				4C1506AC2244D3C70075824B /* BMStaticDelay.h */,
+				4C1506B92244D3C70075824B /* BMVelvetNoise.c */,
+				4C1506B22244D3C70075824B /* BMVelvetNoise.h */,
+				4C1506B02244D3C70075824B /* TestReverb.c */,
+				4C1506B72244D3C70075824B /* TestReverb.h */,
 			);
 			path = DelayAndReverb;
 			sourceTree = "<group>";
@@ -488,6 +493,7 @@
 				4C1507042244D3C70075824B /* BMFIRFilter.c in Sources */,
 				4C688A382244CF6700E3B1E6 /* main.c in Sources */,
 				4C1507262244D3C70075824B /* BMCompressor.c in Sources */,
+				4C15072E2244D7400075824B /* BMStereoLagTime.c in Sources */,
 				4C1507092244D3C70075824B /* BMBiquadArray.c in Sources */,
 				4C1507032244D3C70075824B /* BMCrossover.c in Sources */,
 				4C1507132244D3C70075824B /* BMStaticDelay.c in Sources */,
