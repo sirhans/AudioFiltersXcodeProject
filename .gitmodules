@@ -1,0 +1,3 @@
+[submodule "AudioFiltersSubmodule"]
+	path = AudioFiltersSubmodule
+	url = https://github.com/sirhans/AudioFiltersSubmodule.git
