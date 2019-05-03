@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3AD57D3E227BE7F5001E7FAF /* BMSmoothGain.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AD57D3C227BE7F5001E7FAF /* BMSmoothGain.c */; };
+		3AD57D44227C28B2001E7FAF /* BMWetDryMixer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AD57D43227C28B2001E7FAF /* BMWetDryMixer.c */; };
 		4C688A382244CF6700E3B1E6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C688A372244CF6700E3B1E6 /* main.c */; };
 		4CC13A672244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F22244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c */; };
 		4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F52244D80B003FA1B9 /* BMDiffusion.c */; };
@@ -71,6 +72,8 @@
 /* Begin PBXFileReference section */
 		3AD57D3C227BE7F5001E7FAF /* BMSmoothGain.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMSmoothGain.c; sourceTree = "<group>"; };
 		3AD57D3D227BE7F5001E7FAF /* BMSmoothGain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSmoothGain.h; sourceTree = "<group>"; };
+		3AD57D42227C28B2001E7FAF /* BMWetDryMixer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMWetDryMixer.h; sourceTree = "<group>"; };
+		3AD57D43227C28B2001E7FAF /* BMWetDryMixer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMWetDryMixer.c; sourceTree = "<group>"; };
 		4C688A342244CF6700E3B1E6 /* AudioFiltersXcodeProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AudioFiltersXcodeProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C688A372244CF6700E3B1E6 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		4CC139F02244D80B003FA1B9 /* BMVelocityFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMVelocityFilter.h; sourceTree = "<group>"; };
@@ -367,6 +370,8 @@
 		4CC13A3D2244D80B003FA1B9 /* OtherEffects */ = {
 			isa = PBXGroup;
 			children = (
+				3AD57D42227C28B2001E7FAF /* BMWetDryMixer.h */,
+				3AD57D43227C28B2001E7FAF /* BMWetDryMixer.c */,
 				3AD57D3C227BE7F5001E7FAF /* BMSmoothGain.c */,
 				3AD57D3D227BE7F5001E7FAF /* BMSmoothGain.h */,
 				4CC13A432244D80B003FA1B9 /* BMMidSide.h */,
@@ -513,6 +518,7 @@
 				4CC13A6D2244D80B003FA1B9 /* BMStereoModulator.c in Sources */,
 				4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */,
 				4CC13A8E2244D80B003FA1B9 /* BMSaturation.c in Sources */,
+				3AD57D44227C28B2001E7FAF /* BMWetDryMixer.c in Sources */,
 				4CC13A862244D80B003FA1B9 /* BMOffset.c in Sources */,
 				4CC13A742244D80B003FA1B9 /* BMLFO.c in Sources */,
 				4CC13A792244D80B003FA1B9 /* BMSimpleDelay.c in Sources */,
