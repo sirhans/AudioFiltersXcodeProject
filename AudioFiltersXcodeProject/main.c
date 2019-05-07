@@ -34,7 +34,7 @@
 #include "BMCompressor.h"
 #include <string.h>
 #include "BMStereoLagTime.h"
-
+#include "BMBinauralSynthesis.h"
 
 #define TESTBUFFERLENGTH 128
 
@@ -1509,6 +1509,44 @@ void testBMLagTime(){
     arrayXYToFile(audioX,outLAudioY, length);
 }
 
+#define BS_Range 10
+#define BS_Freq_Range 1000.0f
+#define BS_Freq_Start 1.0f
+#define BS_Freq_End 20000.0f
+void testBinauralSynthesis(){
+    float* input = malloc(sizeof(float) * BS_Range);
+    float* output = malloc(sizeof(float) * BS_Range);
+    float* frequency = malloc(sizeof(float)*BS_Freq_Range);
+    float* magnitude = malloc(sizeof(float)*BS_Freq_Range);
+    
+    float alpha = powf(BS_Freq_End/BS_Freq_Start, 1.0f/BS_Freq_Range);
+    
+    float* xArray = malloc(sizeof(float)*BS_Freq_Range);
+    
+    for(int i = 0;i< BS_Freq_Range;i++){
+        frequency[i] = BS_Freq_Start * powf(alpha, i);
+        xArray[i] = i * 10;
+    }
+    
+    
+    
+    BMBinauralSynthesis bs;
+    BMBinauralSynthesis_init(&bs, false, LT_SampleRate);
+    
+    BMBinauralSynthesis_setAngleLeft(&bs, 0);
+    
+    BMBinauralSynthesis_processMono(&bs, input, output, BS_Range);
+    
+    BMBinauralSynthesis_getTFMagVectorData(&bs,frequency, magnitude, BS_Freq_Range, 0);
+    //Convert from gain to db
+    for(int i=0;i<BS_Freq_Range;i++){
+        magnitude[i] = BM_GAIN_TO_DB(magnitude[i]) * 1000;
+    }
+    
+    arrayXYToFile(xArray,magnitude, BS_Freq_Range);
+    
+}
+
 int main(int argc, const char * argv[]) {
     // testGainStage();
     // testAsymptoticLimitOutputRange();
@@ -1520,8 +1558,8 @@ int main(int argc, const char * argv[]) {
     // testEnvReleaseTime();
     // logSpeedTest();
 //    quadraticThresholdTest();
-    testBMLagTime();
-    
+//    testBMLagTime();
+    testBinauralSynthesis();
     return 0;
 }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C0FD74D2280186500995864 /* BMBinauralSynthesis.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */; };
 		4C688A382244CF6700E3B1E6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C688A372244CF6700E3B1E6 /* main.c */; };
 		4CC13A672244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F22244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c */; };
 		4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F52244D80B003FA1B9 /* BMDiffusion.c */; };
@@ -68,6 +69,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4C0FD74B2280186500995864 /* BMBinauralSynthesis.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMBinauralSynthesis.h; sourceTree = "<group>"; };
+		4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMBinauralSynthesis.c; sourceTree = "<group>"; };
 		4C688A342244CF6700E3B1E6 /* AudioFiltersXcodeProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AudioFiltersXcodeProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C688A372244CF6700E3B1E6 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		4CC139F02244D80B003FA1B9 /* BMVelocityFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMVelocityFilter.h; sourceTree = "<group>"; };
@@ -312,6 +315,8 @@
 				4CC13A192244D80B003FA1B9 /* BMVelvetNoise.h */,
 				4CC13A172244D80B003FA1B9 /* TestReverb.c */,
 				4CC13A1E2244D80B003FA1B9 /* TestReverb.h */,
+				4C0FD74B2280186500995864 /* BMBinauralSynthesis.h */,
+				4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */,
 			);
 			path = DelayAndReverb;
 			sourceTree = "<group>";
@@ -319,16 +324,16 @@
 		4CC13A222244D80B003FA1B9 /* MathUtilities */ = {
 			isa = PBXGroup;
 			children = (
-				4CC13A232244D80B003FA1B9 /* BMLagrangeInterpolationTable.c */,
-				4CC13A242244D80B003FA1B9 /* BMVectorOps.h */,
-				4CC13A252244D80B003FA1B9 /* BMLagrangeInterpolation.c */,
 				4CC13A262244D80B003FA1B9 /* BM2x2Matrix.h */,
-				4CC13A272244D80B003FA1B9 /* BMLagrangeInterpolationTable.h */,
-				4CC13A282244D80B003FA1B9 /* BMIntegerMath.h */,
-				4CC13A292244D80B003FA1B9 /* fastApproximation */,
 				4CC13A362244D80B003FA1B9 /* BMComplexMath.h */,
 				4CC13A372244D80B003FA1B9 /* BMFastHadamard.h */,
+				4CC13A282244D80B003FA1B9 /* BMIntegerMath.h */,
+				4CC13A252244D80B003FA1B9 /* BMLagrangeInterpolation.c */,
 				4CC13A382244D80B003FA1B9 /* BMLagrangeInterpolation.h */,
+				4CC13A232244D80B003FA1B9 /* BMLagrangeInterpolationTable.c */,
+				4CC13A272244D80B003FA1B9 /* BMLagrangeInterpolationTable.h */,
+				4CC13A242244D80B003FA1B9 /* BMVectorOps.h */,
+				4CC13A292244D80B003FA1B9 /* fastApproximation */,
 			);
 			path = MathUtilities;
 			sourceTree = "<group>";
@@ -515,6 +520,7 @@
 				4CC13A852244D80B003FA1B9 /* BMStereoWidener.c in Sources */,
 				4CC13A8A2244D80B003FA1B9 /* BMEnvelopeFollower.c in Sources */,
 				4CC13A8B2244D80B003FA1B9 /* BMGainStage.c in Sources */,
+				4C0FD74D2280186500995864 /* BMBinauralSynthesis.c in Sources */,
 				4CC13A882244D80B003FA1B9 /* BMDownsampler.c in Sources */,
 				4CC13A842244D80B003FA1B9 /* BMTremolo.c in Sources */,
 				4CC13A7F2244D80B003FA1B9 /* BMLagrangeInterpolationTable.c in Sources */,
