@@ -35,6 +35,7 @@
 #include <string.h>
 #include "BMStereoLagTime.h"
 #include "BMBinauralSynthesis.h"
+#include "BMWetDryMixer.h"
 
 #define TESTBUFFERLENGTH 128
 
@@ -1547,6 +1548,69 @@ void testBinauralSynthesis(){
     
 }
 
+
+
+void testWetDryMixer() {
+    size_t bufferSize = 600;
+    size_t testLength = bufferSize * round(48000.0 / bufferSize);
+    float* inputDryR = malloc(sizeof(float)*testLength);
+    float* inputDryL = malloc(sizeof(float)*testLength);
+    float* inputWetR = malloc(sizeof(float)*testLength);
+    float* inputWetL = malloc(sizeof(float)*testLength);
+    float* outputR = malloc(sizeof(float)*testLength);
+    float* outputL = malloc(sizeof(float)*testLength);
+    
+    float zero = 0.0f;
+    float fourth = 0.25f;
+    float threeFourths = 0.75f;
+    float one = 1.0f;
+    
+    vDSP_vfill(&zero,inputDryL, 1, testLength);
+    vDSP_vfill(&fourth,inputDryR, 1, testLength);
+    vDSP_vfill(&threeFourths, inputWetL, 1, testLength);
+    vDSP_vfill(&one, inputWetR, 1, testLength);
+    
+    BMWetDryMixer m;
+    BMWetDryMixer_init(&m, 48000);
+    BMWetDryMixer_setMix(&m, 0.0f);
+    
+    size_t i;
+    for(i=0; i<testLength/4; i+= bufferSize){
+        BMWetDryMixer_processBufferInPhase(&m,
+                                    inputWetL+i, inputWetR+i,
+                                    inputDryL+i, inputDryR+i,
+                                    outputL+i, outputR+i,
+                                    bufferSize);
+    }
+    
+    BMWetDryMixer_setMix(&m, 0.5f);
+    
+    for(; i<testLength; i+= bufferSize){
+        BMWetDryMixer_processBufferInPhase(&m,
+                                           inputWetL+i, inputWetR+i,
+                                           inputDryL+i, inputDryR+i,
+                                           outputL+i, outputR+i,
+                                           bufferSize);
+    }
+    
+    // fill an array of x coordinates for plotting the output
+    float* xArray = malloc(sizeof(float)*testLength);
+    vDSP_vramp(&zero,&one,xArray,1,testLength);
+    
+    // plot one channel of output
+    arrayXYToFile(xArray, outputL, testLength);
+    
+    free(inputDryR);
+    free(inputDryL);
+    free(inputWetR);
+    free(inputWetL);
+    free(outputR);
+    free(outputL);
+}
+
+
+
+
 int main(int argc, const char * argv[]) {
     // testGainStage();
     // testAsymptoticLimitOutputRange();
@@ -1559,7 +1623,8 @@ int main(int argc, const char * argv[]) {
     // logSpeedTest();
 //    quadraticThresholdTest();
 //    testBMLagTime();
-    testBinauralSynthesis();
+    // testBinauralSynthesis();
+    testWetDryMixer();
     return 0;
 }
 
