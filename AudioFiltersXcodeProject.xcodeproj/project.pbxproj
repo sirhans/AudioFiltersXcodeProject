@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A95396422CB50CD0058A586 /* BMZavalishinLPFOrder1.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */; };
 		3AAEA15422B3420B0066D852 /* BMHoldPeak.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AAEA15322B3420B0066D852 /* BMHoldPeak.c */; };
 		3AB41758229F843500AECC6E /* BMVariableFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41757229F843500AECC6E /* BMVariableFilter.c */; };
 		3AB4175B22A61DBF00AECC6E /* BMLevelMeter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4175922A61DBF00AECC6E /* BMLevelMeter.c */; };
@@ -74,6 +75,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3A95396222CB50CD0058A586 /* BMZavalishinLPFOrder1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMZavalishinLPFOrder1.h; sourceTree = "<group>"; };
+		3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMZavalishinLPFOrder1.c; sourceTree = "<group>"; };
 		3AAEA15222B3420B0066D852 /* BMHoldPeak.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMHoldPeak.h; sourceTree = "<group>"; };
 		3AAEA15322B3420B0066D852 /* BMHoldPeak.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMHoldPeak.c; sourceTree = "<group>"; };
 		3AB41756229F843500AECC6E /* BMVariableFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMVariableFilter.h; sourceTree = "<group>"; };
@@ -310,6 +313,8 @@
 				4CC139FE2244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.h */,
 				3AB41756229F843500AECC6E /* BMVariableFilter.h */,
 				3AB41757229F843500AECC6E /* BMVariableFilter.c */,
+				3A95396222CB50CD0058A586 /* BMZavalishinLPFOrder1.h */,
+				3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -539,6 +544,7 @@
 				4CC13A772244D80B003FA1B9 /* BMEarlyReflections.c in Sources */,
 				3AB41758229F843500AECC6E /* BMVariableFilter.c in Sources */,
 				4CC13A7D2244D80B003FA1B9 /* BMInterpolatedDelay.c in Sources */,
+				3A95396422CB50CD0058A586 /* BMZavalishinLPFOrder1.c in Sources */,
 				4CC13A872244D80B003FA1B9 /* BMUpsampler.c in Sources */,
 				4CC13A712244D80B003FA1B9 /* BMRoundRobinFilter.c in Sources */,
 				4CC13A7B2244D80B003FA1B9 /* BMMultiTapDelay.c in Sources */,
