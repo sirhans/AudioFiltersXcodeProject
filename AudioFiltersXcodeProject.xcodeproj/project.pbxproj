@@ -11,6 +11,10 @@
 		3A95396722CB55D00058A586 /* BMQuadraticRectifier.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A95396622CB55D00058A586 /* BMQuadraticRectifier.c */; };
 		3A95396A22CB57450058A586 /* BMQuadraticThreshold.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A95396922CB57450058A586 /* BMQuadraticThreshold.c */; };
 		3AAEA15422B3420B0066D852 /* BMHoldPeak.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AAEA15322B3420B0066D852 /* BMHoldPeak.c */; };
+		3AB0E8FB22CDB81900B0394F /* BMTransientShaper.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB0E8F622CDB81900B0394F /* BMTransientShaper.c */; };
+		3AB0E8FC22CDB81900B0394F /* BMQuadraticRectifier.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB0E8F822CDB81900B0394F /* BMQuadraticRectifier.c */; };
+		3AB0E8FD22CDB81900B0394F /* BMQuadraticThreshold.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB0E8FA22CDB81900B0394F /* BMQuadraticThreshold.c */; };
+		3AB0E90022CDBC8A00B0394F /* BMWaveshaping.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB0E8FF22CDBC8A00B0394F /* BMWaveshaping.c */; };
 		3AB41758229F843500AECC6E /* BMVariableFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41757229F843500AECC6E /* BMVariableFilter.c */; };
 		3AB4175B22A61DBF00AECC6E /* BMLevelMeter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4175922A61DBF00AECC6E /* BMLevelMeter.c */; };
 		3AEB17BC228AAA54004C7E4E /* BMWetDryMixer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB17B9228AAA54004C7E4E /* BMWetDryMixer.c */; };
@@ -85,6 +89,14 @@
 		3A95396922CB57450058A586 /* BMQuadraticThreshold.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMQuadraticThreshold.c; sourceTree = "<group>"; };
 		3AAEA15222B3420B0066D852 /* BMHoldPeak.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMHoldPeak.h; sourceTree = "<group>"; };
 		3AAEA15322B3420B0066D852 /* BMHoldPeak.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMHoldPeak.c; sourceTree = "<group>"; };
+		3AB0E8F522CDB81900B0394F /* BMQuadraticThreshold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMQuadraticThreshold.h; sourceTree = "<group>"; };
+		3AB0E8F622CDB81900B0394F /* BMTransientShaper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMTransientShaper.c; sourceTree = "<group>"; };
+		3AB0E8F722CDB81900B0394F /* BMQuadraticRectifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMQuadraticRectifier.h; sourceTree = "<group>"; };
+		3AB0E8F822CDB81900B0394F /* BMQuadraticRectifier.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMQuadraticRectifier.c; sourceTree = "<group>"; };
+		3AB0E8F922CDB81900B0394F /* BMTransientShaper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMTransientShaper.h; sourceTree = "<group>"; };
+		3AB0E8FA22CDB81900B0394F /* BMQuadraticThreshold.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMQuadraticThreshold.c; sourceTree = "<group>"; };
+		3AB0E8FE22CDBC8A00B0394F /* BMWaveshaping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMWaveshaping.h; sourceTree = "<group>"; };
+		3AB0E8FF22CDBC8A00B0394F /* BMWaveshaping.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMWaveshaping.c; sourceTree = "<group>"; };
 		3AB41756229F843500AECC6E /* BMVariableFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMVariableFilter.h; sourceTree = "<group>"; };
 		3AB41757229F843500AECC6E /* BMVariableFilter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMVariableFilter.c; sourceTree = "<group>"; };
 		3AB4175922A61DBF00AECC6E /* BMLevelMeter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMLevelMeter.c; sourceTree = "<group>"; };
@@ -464,12 +476,16 @@
 				4CC13A5E2244D80B003FA1B9 /* BMGainStage.h */,
 				4CC13A552244D80B003FA1B9 /* BMNoiseGate.c */,
 				4CC13A5D2244D80B003FA1B9 /* BMNoiseGate.h */,
+				3AB0E8F822CDB81900B0394F /* BMQuadraticRectifier.c */,
+				3AB0E8F722CDB81900B0394F /* BMQuadraticRectifier.h */,
+				3AB0E8FA22CDB81900B0394F /* BMQuadraticThreshold.c */,
+				3AB0E8F522CDB81900B0394F /* BMQuadraticThreshold.h */,
 				4CC13A572244D80B003FA1B9 /* BMSaturation.c */,
 				4CC13A5B2244D80B003FA1B9 /* BMSaturation.h */,
-				3A95396522CB55D00058A586 /* BMQuadraticRectifier.h */,
-				3A95396622CB55D00058A586 /* BMQuadraticRectifier.c */,
-				3A95396822CB57450058A586 /* BMQuadraticThreshold.h */,
-				3A95396922CB57450058A586 /* BMQuadraticThreshold.c */,
+				3AB0E8F622CDB81900B0394F /* BMTransientShaper.c */,
+				3AB0E8F922CDB81900B0394F /* BMTransientShaper.h */,
+				3AB0E8FE22CDBC8A00B0394F /* BMWaveshaping.h */,
+				3AB0E8FF22CDBC8A00B0394F /* BMWaveshaping.c */,
 			);
 			path = NonlinearGain;
 			sourceTree = "<group>";
@@ -543,6 +559,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CC13A732244D80B003FA1B9 /* BMRoundRobin.c in Sources */,
+				3AB0E90022CDBC8A00B0394F /* BMWaveshaping.c in Sources */,
 				4CC13A6B2244D80B003FA1B9 /* BMFIRFilter.c in Sources */,
 				4C688A382244CF6700E3B1E6 /* main.c in Sources */,
 				4CC13A8D2244D80B003FA1B9 /* BMCompressor.c in Sources */,
@@ -559,6 +576,7 @@
 				4CC13A712244D80B003FA1B9 /* BMRoundRobinFilter.c in Sources */,
 				4CC13A7B2244D80B003FA1B9 /* BMMultiTapDelay.c in Sources */,
 				4CC13A672244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c in Sources */,
+				3AB0E8FD22CDB81900B0394F /* BMQuadraticThreshold.c in Sources */,
 				4CC13A762244D80B003FA1B9 /* BMQuadratureOscillator.c in Sources */,
 				4CC13A6D2244D80B003FA1B9 /* BMStereoModulator.c in Sources */,
 				4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */,
@@ -578,11 +596,13 @@
 				4CC13A842244D80B003FA1B9 /* BMTremolo.c in Sources */,
 				4CC13A7F2244D80B003FA1B9 /* BMLagrangeInterpolationTable.c in Sources */,
 				4CC13A902244D80B003FA1B9 /* BMRMSPower.c in Sources */,
+				3AB0E8FC22CDB81900B0394F /* BMQuadraticRectifier.c in Sources */,
 				4CC13A8F2244D80B003FA1B9 /* BMDCBlocker.c in Sources */,
 				4CC13A8C2244D80B003FA1B9 /* BMNoiseGate.c in Sources */,
 				4CC13A6E2244D80B003FA1B9 /* BMVelocityFilter.c in Sources */,
 				4CC13A7C2244D80B003FA1B9 /* BMReverb.c in Sources */,
 				4CC13A922244D80B003FA1B9 /* TPCircularBuffer.c in Sources */,
+				3AB0E8FB22CDB81900B0394F /* BMTransientShaper.c in Sources */,
 				4CC13A782244D80B003FA1B9 /* TestReverb.c in Sources */,
 				4CC13A722244D80B003FA1B9 /* BMMultiLevelBiquad.c in Sources */,
 				4CC13A822244D80B003FA1B9 /* BMVibrato.c in Sources */,
