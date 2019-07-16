@@ -141,17 +141,17 @@ void testUpsampler2x(){
             0.000543975}};
     
     BMUpsampler2x upsampler;
-    BMUpsampler2x_init(&upsampler, coefficients[0], coefficients[1], 6, 6);
-    
-    float* IR = malloc(sizeof(float)*upsampler.IRLength);
-    BMUpsampler2x_impulseResponse(&upsampler, IR);
-    
-    printf("\nUpsampleR2X impulse response:\n{");
-    for(size_t i=0; i<upsampler.IRLength-1; i++)
-        printf("%f,",IR[i]);
-    printf("%f}\n",IR[upsampler.IRLength-1]);
-    
-    free(IR);
+//    BMUpsampler2x_init(&upsampler, coefficients[0], coefficients[1], 6, 6);
+//
+//    float* IR = malloc(sizeof(float)*upsampler.IRLength);
+//    BMUpsampler2x_impulseResponse(&upsampler, IR);
+//    
+//    printf("\nUpsampleR2X impulse response:\n{");
+//    for(size_t i=0; i<upsampler.IRLength-1; i++)
+//        printf("%f,",IR[i]);
+//    printf("%f}\n",IR[upsampler.IRLength-1]);
+//    
+//    free(IR);
 }
 
 
