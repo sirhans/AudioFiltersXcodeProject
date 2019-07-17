@@ -15,7 +15,6 @@
 #include "BMVelocityFilter.h"
 #include "BMGetOSVersion.h"
 #include "BMHIIRUpsampler2x.h"
-#include "BMHIIRDownsampler2x.h"
 #include "BMUpsampler.h"
 #include "BMDownsampler.h"
 #include "BMFIRFilter.h"
@@ -1690,8 +1689,8 @@ void testDownsampler2xFPU(){
 void testUpDownsampler2xFPU(){
     BMHIIRDownsampler2xFPU ds;
     BMHIIRUpsampler2xFPU us;
-    BMHIIRUpsampler2xFPU_init(&us, 12, 0.02);
-    float attenuation = BMHIIRDownsampler2xFPU_init(&ds, 12, 0.02);
+    BMHIIRUpsampler2xFPU_init(&us, 100.0, 0.02);
+    float attenuation = BMHIIRDownsampler2xFPU_init(&ds, 100.0, 0.02);
 
     printf("\nstopband attenuation: %f\n",attenuation);
     float sampleRate = 48000.0f;
