@@ -37,6 +37,9 @@
 #include "BMStereoLagTime.h"
 #include "BMBinauralSynthesis.h"
 #include "BMWetDryMixer.h"
+#include "BMHIIRUpsampler2xFPU.h"
+#include "BMHIIRDownsampler2xFPU.h"
+#include "BMWaveshaping.h"
 
 #define TESTBUFFERLENGTH 128
 
@@ -1562,15 +1565,38 @@ double frequencyToPhaseIncrement(double frequency, double sampleRate){
 }
 
 
+
+
 void generateSineSweep(float* output, double startFrequency, double endFrequency, double sampleRate, size_t numSamples){
+    /*
+     * logarithmic sweep, direct method
+     */
     double phase = 0.0f;
+    //double frequency = startFrequency;
+    double startPhaseIncrement = frequencyToPhaseIncrement(startFrequency, sampleRate);
+    double endPhaseIncrement = frequencyToPhaseIncrement(endFrequency, sampleRate);
+    double phaseIncrement = startPhaseIncrement;
+    double phaseIncrementCommonRatio = pow(endPhaseIncrement/startPhaseIncrement,1.0/(double)numSamples);
     for(size_t i=0; i<numSamples; i++){
         output[i] = (float)sin(phase);
-        double progress = (double)i / (double)(numSamples-1);
-        double frequency = startFrequency * pow(2.0,progress*log2(endFrequency/startFrequency));
-        double phaseIncrement = frequencyToPhaseIncrement(frequency,sampleRate);
         phase += phaseIncrement;
+        phaseIncrement *= phaseIncrementCommonRatio;
+        if(phase > 2.0 * M_PI) phase -= 2.0 * M_PI;
     }
+
+/*
+ * Linear sweep, matrix method
+ */
+//    BMVector2D state = {0.0, 1.0};
+//    BM2x2MatrixD frequencyMatrix = BM2x2MatrixD_rotationMatrix(frequencyToPhaseIncrement(startFrequency, sampleRate));
+//    BM2x2MatrixD frequencyIncreaseMatrix = BM2x2MatrixD_rotationMatrix(M_PI/(double)(numSamples-1));
+//
+//    for(size_t i=0; i<numSamples; i++){
+//        output[i] = state.x;
+//        state = BM2x2MatrixD_mvmul(frequencyMatrix, state);
+//        frequencyMatrix = BM2x2MatrixD_mmul(frequencyMatrix, frequencyIncreaseMatrix);
+//    }
+
 }
 
 
@@ -1582,13 +1608,20 @@ void testUpsampler2x(){
     size_t testLength = sampleRate * 5;
     
     float* sineSweep = malloc(sizeof(float)*testLength);
+//    float* sineSweep4 = malloc(sizeof(float)*testLength*4);
     float* output = malloc(sizeof(float)*testLength*2);
     
     generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
     
+    // duplicate each sample 4 times to get sineSweep4
+//    for(size_t i=0; i<testLength; i++){
+//        for(size_t j=0; j<4; j++)
+//            sineSweep4[4*i + j] = sineSweep[i];
+//    }
+    
     BMHIIRUpsampler2x_processBufferMono(&us, sineSweep, output, testLength);
     
-    arrayToFile(output,testLength*2);
+    arrayToFile(sineSweep,testLength);
     
     free(sineSweep);
     free(output);
@@ -1606,6 +1639,90 @@ void testSimdMulAdd(){
     printf("\nresult: %f\n",result[0]);
 }
 
+void testUpsampler2xFPU(){
+    BMHIIRUpsampler2xFPU us;
+    float attenuation = BMHIIRUpsampler2xFPU_init(&us, 7, 0.075);
+    printf("\nstopband attenuation: %f\n",attenuation);
+    float sampleRate = 48000.0f;
+    size_t testLength = sampleRate * 5;
+    
+    float* sineSweep = malloc(sizeof(float)*testLength);
+    //    float* sineSweep4 = malloc(sizeof(float)*testLength*4);
+    float* output = malloc(sizeof(float)*testLength*2);
+    
+    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
+    
+    BMHIIRUpsampler2xFPU_processBufferMono(&us, sineSweep, output, testLength);
+    
+    arrayToFile(output,2*testLength);
+    
+    free(sineSweep);
+    free(output);
+}
+
+
+
+void testDownsampler2xFPU(){
+    BMHIIRDownsampler2xFPU ds;
+    float attenuation = BMHIIRDownsampler2xFPU_init(&ds, 7, 0.075);
+    printf("\nstopband attenuation: %f\n",attenuation);
+    float sampleRate = 48000.0f;
+    size_t testLength = sampleRate * 10;
+    
+    float* sineSweep = malloc(sizeof(float)*testLength);
+    //    float* sineSweep4 = malloc(sizeof(float)*testLength*4);
+    float* output = malloc(sizeof(float)*testLength/2);
+    
+    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
+    
+    BMHIIRDownsampler2xFPU_processBufferMono(&ds, sineSweep, output, testLength);
+    
+    arrayToFile(output,testLength/2);
+    
+    free(sineSweep);
+    free(output);
+}
+
+
+
+
+
+void testUpDownsampler2xFPU(){
+    BMHIIRDownsampler2xFPU ds;
+    BMHIIRUpsampler2xFPU us;
+    BMHIIRUpsampler2xFPU_init(&us, 12, 0.02);
+    float attenuation = BMHIIRDownsampler2xFPU_init(&ds, 12, 0.02);
+
+    printf("\nstopband attenuation: %f\n",attenuation);
+    float sampleRate = 48000.0f;
+    size_t testLength = sampleRate * 10;
+    
+    float* sineSweep = malloc(sizeof(float)*testLength);
+    float* upsampled = malloc(sizeof(float)*testLength*2);
+    float* output = malloc(sizeof(float)*testLength);
+    
+    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
+    
+    // upsample
+    BMHIIRUpsampler2xFPU_processBufferMono(&us, sineSweep, upsampled, testLength);
+    
+//    // amplify
+//    float gainBoost = 2.0f;
+//    vDSP_vsmul(upsampled, 1, &gainBoost, upsampled, 1, testLength*2);
+    
+    // waveshape
+    BMWaveshaper_processBufferBidirectional(upsampled, upsampled, testLength*2);
+                                            
+    // downsample
+    BMHIIRDownsampler2xFPU_processBufferMono(&ds, upsampled, output, testLength*2);
+    
+    arrayToFile(output,testLength);
+    
+    free(sineSweep);
+    free(output);
+}
+
+
 
 int main(int argc, const char * argv[]) {
     // testGainStage();
@@ -1622,7 +1739,8 @@ int main(int argc, const char * argv[]) {
     // testBinauralSynthesis();
 //    testWetDryMixer();
 //    testSimdMulAdd();
-    testUpsampler2x();
+//    testUpsampler2xFPU();
+    testUpDownsampler2xFPU();
     return 0;
 }
 
