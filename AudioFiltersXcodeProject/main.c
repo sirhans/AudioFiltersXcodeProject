@@ -14,7 +14,8 @@
 #include <sys/sysctl.h>
 #include "BMVelocityFilter.h"
 #include "BMGetOSVersion.h"
-#include "BMUpsampler2x.h"
+#include "BMHIIRUpsampler2x.h"
+#include "BMHIIRDownsampler2x.h"
 #include "BMUpsampler.h"
 #include "BMDownsampler.h"
 #include "BMFIRFilter.h"
@@ -130,59 +131,6 @@ void testReverb(){
     
     
     fclose(audioFile);
-}
-
-
-
-void testUpsampler2x(){
-    float coefficients [2][6] =
-    {{0.000543975, 0.0242378, 0.0947517, 0.121264, 0.0565216,
-        0.00641545}, {0.00641545, 0.0565216, 0.121264, 0.0947517, 0.0242378,
-            0.000543975}};
-    
-    BMUpsampler2x upsampler;
-//    BMUpsampler2x_init(&upsampler, coefficients[0], coefficients[1], 6, 6);
-//
-//    float* IR = malloc(sizeof(float)*upsampler.IRLength);
-//    BMUpsampler2x_impulseResponse(&upsampler, IR);
-//    
-//    printf("\nUpsampleR2X impulse response:\n{");
-//    for(size_t i=0; i<upsampler.IRLength-1; i++)
-//        printf("%f,",IR[i]);
-//    printf("%f}\n",IR[upsampler.IRLength-1]);
-//    
-//    free(IR);
-}
-
-
-void testUpsampler(){
-    
-    BMUpsampler upsampler;
-    BMUpsampler_init(&upsampler, 2);
-    
-    float* IR = malloc(sizeof(float)*upsampler.IRLength);
-    BMUpsampler_impulseResponse(&upsampler, IR);
-    
-    printf("\nUpsampleR2X impulse response:\n{");
-    for(size_t i=0; i<upsampler.IRLength-1; i++)
-        printf("%f,",IR[i]);
-    printf("%f}\n",IR[upsampler.IRLength-1]);
-    
-    free(IR);
-}
-
-
-void testDownsampler(){
-    BMDownsampler downsampler;
-    BMDownsampler_init(&downsampler, 2);
-    
-    float* IR = malloc(sizeof(float)*downsampler.IRLength);
-    BMDownsampler_impulseResponse(&downsampler, IR);
-    
-    printf("\nDownsampler impulse response:\n{");
-    for(size_t i=0; i<downsampler.IRLength-1; i++)
-        printf("%f,",IR[i]);
-    printf("%f}\n",IR[downsampler.IRLength-1]);
 }
 
 
@@ -1609,6 +1557,54 @@ void testWetDryMixer() {
 }
 
 
+double frequencyToPhaseIncrement(double frequency, double sampleRate){
+    return (frequency * 2.0 * M_PI) / sampleRate;
+}
+
+
+void generateSineSweep(float* output, double startFrequency, double endFrequency, double sampleRate, size_t numSamples){
+    double phase = 0.0f;
+    for(size_t i=0; i<numSamples; i++){
+        output[i] = (float)sin(phase);
+        double progress = (double)i / (double)(numSamples-1);
+        double frequency = startFrequency * pow(2.0,progress*log2(endFrequency/startFrequency));
+        double phaseIncrement = frequencyToPhaseIncrement(frequency,sampleRate);
+        phase += phaseIncrement;
+    }
+}
+
+
+void testUpsampler2x(){
+    BMHIIRUpsampler2x us;
+    float attenuation = BMHIIRUpsampler2x_init(&us, 7, 0.075);
+    printf("\nstopband attenuation: %f\n",attenuation);
+    float sampleRate = 48000.0f;
+    size_t testLength = sampleRate * 5;
+    
+    float* sineSweep = malloc(sizeof(float)*testLength);
+    float* output = malloc(sizeof(float)*testLength*2);
+    
+    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
+    
+    BMHIIRUpsampler2x_processBufferMono(&us, sineSweep, output, testLength);
+    
+    arrayToFile(output,testLength*2);
+    
+    free(sineSweep);
+    free(output);
+}
+
+void testSimdMulAdd(){
+    simd_float4 x, y, z, result;
+    x = 100.0f;
+    y = 1.0f;
+    z = 3.0f;
+    
+    // result = x + y*z;
+    result = simd_muladd(x, y, z);
+    
+    printf("\nresult: %f\n",result[0]);
+}
 
 
 int main(int argc, const char * argv[]) {
@@ -1624,7 +1620,9 @@ int main(int argc, const char * argv[]) {
 //    quadraticThresholdTest();
 //    testBMLagTime();
     // testBinauralSynthesis();
-    testWetDryMixer();
+//    testWetDryMixer();
+//    testSimdMulAdd();
+    testUpsampler2x();
     return 0;
 }
 
