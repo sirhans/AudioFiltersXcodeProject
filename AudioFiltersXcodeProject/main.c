@@ -1807,7 +1807,7 @@ void testDownsampler(){
 
 
 void testUpDownsampler(){
-    size_t upsampleFactor = 4;
+    size_t upsampleFactor = 16;
     
     BMDownsampler ds;
     BMUpsampler us;
@@ -1818,25 +1818,29 @@ void testUpDownsampler(){
     size_t testLength = sampleRate * 5;
     
     float* sineSweep = malloc(sizeof(float)*testLength);
-    float* upsampled = malloc(sizeof(float)*testLength*upsampleFactor);
+    float* upsampledPos = malloc(sizeof(float)*testLength*upsampleFactor);
+    float* upsampledNeg = malloc(sizeof(float)*testLength*upsampleFactor);
     float* output = malloc(sizeof(float)*testLength);
     
     generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
     
-    BMUpsampler_processBufferMono(&us, sineSweep, upsampled, testLength);
+    BMUpsampler_processBufferMono(&us, sineSweep, upsampledPos, testLength);
     
     // waveshape
-    BMWaveshaper_processBufferBidirectional(upsampled, upsampled, testLength*upsampleFactor);
-    BMWaveshaper_processBufferBidirectional(upsampled, upsampled, testLength*upsampleFactor);
+    BMWaveshaper_processBufferNegative(upsampledPos, upsampledNeg, testLength*upsampleFactor);
+    BMWaveshaper_processBufferPositive(upsampledPos, upsampledPos, testLength*upsampleFactor);
+    vDSP_vadd(upsampledPos, 1, upsampledNeg, 1, upsampledPos, 1, testLength*upsampleFactor);
 
-    BMDownsampler_processBufferMono(&ds, upsampled, output, testLength*upsampleFactor);
+    BMDownsampler_processBufferMono(&ds, upsampledPos, output, testLength*upsampleFactor);
     
-    arrayToFile(output,testLength);
-    
+    arrayToFile(output, testLength);
+    //arrayToFile(upsampledPos,testLength*upsampleFactor);
+
     BMDownsampler_free(&ds);
     BMUpsampler_free(&us);
     free(sineSweep);
-    free(upsampled);
+    free(upsampledPos);
+    free(upsampledNeg);
     free(output);
 }
 
