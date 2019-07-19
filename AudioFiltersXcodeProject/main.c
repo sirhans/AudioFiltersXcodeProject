@@ -1673,13 +1673,12 @@ void testUpDownsampler2xFPU(){
 
 void testUpsampler2x(){
     BMIIRUpsampler2x us;
-    size_t numCoefficients = BMIIRUpsampler2x_init(&us, 100.0, 0.05, false, false);
+    size_t numCoefficients = BMIIRUpsampler2x_init(&us, 110.0, 0.025, false);
     printf("\nnumber of allpass coefficients: %zu\n",numCoefficients);
     float sampleRate = 48000.0f;
     size_t testLength = sampleRate * 5;
     
     float* sineSweep = malloc(sizeof(float)*testLength);
-    //    float* sineSweep4 = malloc(sizeof(float)*testLength*4);
     float* output = malloc(sizeof(float)*testLength*2);
     
     generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
@@ -1688,14 +1687,163 @@ void testUpsampler2x(){
     
     arrayToFile(output,2*testLength);
     
+    BMIIRUpsampler2x_free(&us);
     free(sineSweep);
     free(output);
 }
 
 
 
+
+void testDownsampler2x(){
+    BMIIRDownsampler2x ds;
+    size_t numCoefficients = BMIIRDownsampler2x_init(&ds, 110.0, 0.025, false);
+    printf("\nnumber of allpass coefficients: %zu\n",numCoefficients);
+    float sampleRate = 48000.0f;
+    size_t testLength = sampleRate * 10;
+    
+    float* sineSweep = malloc(sizeof(float)*testLength);
+    float* output = malloc(sizeof(float)*testLength/2);
+    
+    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
+    
+    BMIIRDownsampler2x_processBufferMono(&ds, sineSweep, output, testLength);
+    
+    arrayToFile(output,testLength/2);
+    
+    BMIIRDownsampler2x_free(&ds);
+    free(sineSweep);
+    free(output);
+}
+
+
+
+
+
+
+void testUpDownsampler2x(){
+    BMIIRUpsampler2x us;
+    BMIIRDownsampler2x ds;
+    BMIIRUpsampler2x_init(&us, 110.0, 0.025, false);
+    size_t numCoefficients = BMIIRDownsampler2x_init(&ds, 110.0, 0.025, false);
+    printf("\nnumber of allpass coefficients: %zu\n",numCoefficients);
+    float sampleRate = 48000.0f;
+    size_t testLength = sampleRate * 5;
+    
+    float* sineSweep = malloc(sizeof(float)*testLength);
+    float* upsampled = malloc(sizeof(float)*testLength*2);
+    float* output = malloc(sizeof(float)*testLength);
+    
+    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
+    
+    // upsample
+    BMIIRUpsampler2x_processBufferMono(&us, sineSweep, upsampled, testLength);
+    
+    // waveshape
+    BMWaveshaper_processBufferBidirectional(upsampled, upsampled, testLength*2);
+    
+    // downsample
+    BMIIRDownsampler2x_processBufferMono(&ds, upsampled, output, testLength*2);
+    
+    arrayToFile(output,testLength);
+    
+    BMIIRUpsampler2x_free(&us);
+    BMIIRDownsampler2x_free(&ds);
+    free(sineSweep);
+    free(upsampled);
+    free(output);
+}
+
+
+
+void testUpsampler(){
+    size_t upsampleFactor = 8;
+    
+    BMUpsampler us;
+    BMUpsampler_init(&us, false, upsampleFactor);
+
+    float sampleRate = 48000.0f;
+    size_t testLength = sampleRate * 5 / upsampleFactor;
+    
+    float* sineSweep = malloc(sizeof(float)*testLength);
+    float* output = malloc(sizeof(float)*testLength*upsampleFactor);
+    
+    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
+    
+    BMUpsampler_processBufferMono(&us, sineSweep, output, testLength);
+    
+    arrayToFile(output,upsampleFactor*testLength);
+    
+    BMUpsampler_free(&us);
+    free(sineSweep);
+    free(output);
+}
+
+
+
+
+void testDownsampler(){
+    size_t downsampleFactor = 8;
+    
+    BMDownsampler ds;
+    BMDownsampler_init(&ds, false, downsampleFactor);
+    
+    float sampleRate = 48000.0f;
+    size_t testLength = sampleRate * 5 * downsampleFactor;
+    
+    float* sineSweep = malloc(sizeof(float)*testLength);
+    float* output = malloc(sizeof(float)*testLength/downsampleFactor);
+    
+    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
+    
+    BMDownsampler_processBufferMono(&ds, sineSweep, output, testLength);
+    
+    arrayToFile(output,testLength/downsampleFactor);
+    
+    BMDownsampler_free(&ds);
+    free(sineSweep);
+    free(output);
+}
+
+
+void testUpDownsampler(){
+    size_t upsampleFactor = 4;
+    
+    BMDownsampler ds;
+    BMUpsampler us;
+    BMUpsampler_init(&us, false, upsampleFactor);
+    BMDownsampler_init(&ds, false, upsampleFactor);
+    
+    float sampleRate = 48000.0f;
+    size_t testLength = sampleRate * 5;
+    
+    float* sineSweep = malloc(sizeof(float)*testLength);
+    float* upsampled = malloc(sizeof(float)*testLength*upsampleFactor);
+    float* output = malloc(sizeof(float)*testLength);
+    
+    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
+    
+    BMUpsampler_processBufferMono(&us, sineSweep, upsampled, testLength);
+    
+    // waveshape
+    BMWaveshaper_processBufferBidirectional(upsampled, upsampled, testLength*upsampleFactor);
+    BMWaveshaper_processBufferBidirectional(upsampled, upsampled, testLength*upsampleFactor);
+
+    BMDownsampler_processBufferMono(&ds, upsampled, output, testLength*upsampleFactor);
+    
+    arrayToFile(output,testLength);
+    
+    BMDownsampler_free(&ds);
+    BMUpsampler_free(&us);
+    free(sineSweep);
+    free(upsampled);
+    free(output);
+}
+
+
+
 int main(int argc, const char * argv[]) {
-    testUpsampler2x();
+    testUpDownsampler();
     
     return 0;
 }
