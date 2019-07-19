@@ -14,7 +14,6 @@
 #include <sys/sysctl.h>
 #include "BMVelocityFilter.h"
 #include "BMGetOSVersion.h"
-#include "BMHIIRUpsampler2x.h"
 #include "BMUpsampler.h"
 #include "BMDownsampler.h"
 #include "BMFIRFilter.h"
@@ -39,6 +38,8 @@
 #include "BMHIIRUpsampler2xFPU.h"
 #include "BMHIIRDownsampler2xFPU.h"
 #include "BMWaveshaping.h"
+#include "BMIIRUpsampler2x.h"
+#include "BMIIRDownsampler2x.h"
 
 #define TESTBUFFERLENGTH 128
 
@@ -1582,61 +1583,9 @@ void generateSineSweep(float* output, double startFrequency, double endFrequency
         phaseIncrement *= phaseIncrementCommonRatio;
         if(phase > 2.0 * M_PI) phase -= 2.0 * M_PI;
     }
-
-/*
- * Linear sweep, matrix method
- */
-//    BMVector2D state = {0.0, 1.0};
-//    BM2x2MatrixD frequencyMatrix = BM2x2MatrixD_rotationMatrix(frequencyToPhaseIncrement(startFrequency, sampleRate));
-//    BM2x2MatrixD frequencyIncreaseMatrix = BM2x2MatrixD_rotationMatrix(M_PI/(double)(numSamples-1));
-//
-//    for(size_t i=0; i<numSamples; i++){
-//        output[i] = state.x;
-//        state = BM2x2MatrixD_mvmul(frequencyMatrix, state);
-//        frequencyMatrix = BM2x2MatrixD_mmul(frequencyMatrix, frequencyIncreaseMatrix);
-//    }
-
 }
 
 
-void testUpsampler2x(){
-    BMHIIRUpsampler2x us;
-    float attenuation = BMHIIRUpsampler2x_init(&us, 7, 0.075);
-    printf("\nstopband attenuation: %f\n",attenuation);
-    float sampleRate = 48000.0f;
-    size_t testLength = sampleRate * 5;
-    
-    float* sineSweep = malloc(sizeof(float)*testLength);
-//    float* sineSweep4 = malloc(sizeof(float)*testLength*4);
-    float* output = malloc(sizeof(float)*testLength*2);
-    
-    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
-    
-    // duplicate each sample 4 times to get sineSweep4
-//    for(size_t i=0; i<testLength; i++){
-//        for(size_t j=0; j<4; j++)
-//            sineSweep4[4*i + j] = sineSweep[i];
-//    }
-    
-    BMHIIRUpsampler2x_processBufferMono(&us, sineSweep, output, testLength);
-    
-    arrayToFile(sineSweep,testLength);
-    
-    free(sineSweep);
-    free(output);
-}
-
-void testSimdMulAdd(){
-    simd_float4 x, y, z, result;
-    x = 100.0f;
-    y = 1.0f;
-    z = 3.0f;
-    
-    // result = x + y*z;
-    result = simd_muladd(x, y, z);
-    
-    printf("\nresult: %f\n",result[0]);
-}
 
 void testUpsampler2xFPU(){
     BMHIIRUpsampler2xFPU us;
@@ -1722,24 +1671,32 @@ void testUpDownsampler2xFPU(){
 }
 
 
+void testUpsampler2x(){
+    BMIIRUpsampler2x us;
+    size_t numCoefficients = BMIIRUpsampler2x_init(&us, 100.0, 0.05, false, false);
+    printf("\nnumber of allpass coefficients: %zu\n",numCoefficients);
+    float sampleRate = 48000.0f;
+    size_t testLength = sampleRate * 5;
+    
+    float* sineSweep = malloc(sizeof(float)*testLength);
+    //    float* sineSweep4 = malloc(sizeof(float)*testLength*4);
+    float* output = malloc(sizeof(float)*testLength*2);
+    
+    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
+    
+    BMIIRUpsampler2x_processBufferMono(&us, sineSweep, output, testLength);
+    
+    arrayToFile(output,2*testLength);
+    
+    free(sineSweep);
+    free(output);
+}
+
+
 
 int main(int argc, const char * argv[]) {
-    // testGainStage();
-    // testAsymptoticLimitOutputRange();
-    // testCompressor();
-    // testAsymptoticThreshold();
-    // testCriticallyDampedFilterStepResponse();
-    // testCriticallyDampedFilterFrequencyResponse();
-    // testEnvelopeFollower();
-    // testEnvReleaseTime();
-    // logSpeedTest();
-//    quadraticThresholdTest();
-//    testBMLagTime();
-    // testBinauralSynthesis();
-//    testWetDryMixer();
-//    testSimdMulAdd();
-//    testUpsampler2xFPU();
-    testUpDownsampler2xFPU();
+    testUpsampler2x();
+    
     return 0;
 }
 
