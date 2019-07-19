@@ -11,6 +11,7 @@
 		3A00188822DF141B007C78F9 /* BMHIIRDownsampler2xFPU.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A00188722DF141B007C78F9 /* BMHIIRDownsampler2xFPU.c */; };
 		3A6A32A922CF357300DEEDFA /* BMQuadraticThreshold.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */; };
 		3A95396422CB50CD0058A586 /* BMZavalishinLPFOrder1.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */; };
+		3A9E06C122E1651100ECB53B /* BMDownsampler2x.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A9E06BF22E1651100ECB53B /* BMDownsampler2x.c */; };
 		3AAEA15422B3420B0066D852 /* BMHoldPeak.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AAEA15322B3420B0066D852 /* BMHoldPeak.c */; };
 		3AB0E8FB22CDB81900B0394F /* BMTransientShaper.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB0E8F622CDB81900B0394F /* BMTransientShaper.c */; };
 		3AB0E8FC22CDB81900B0394F /* BMQuadraticRectifier.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB0E8F822CDB81900B0394F /* BMQuadraticRectifier.c */; };
@@ -90,6 +91,8 @@
 		3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMQuadraticThreshold.c; sourceTree = "<group>"; };
 		3A95396222CB50CD0058A586 /* BMZavalishinLPFOrder1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMZavalishinLPFOrder1.h; sourceTree = "<group>"; };
 		3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMZavalishinLPFOrder1.c; sourceTree = "<group>"; };
+		3A9E06BF22E1651100ECB53B /* BMDownsampler2x.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMDownsampler2x.c; sourceTree = "<group>"; };
+		3A9E06C022E1651100ECB53B /* BMDownsampler2x.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMDownsampler2x.h; sourceTree = "<group>"; };
 		3AAEA15222B3420B0066D852 /* BMHoldPeak.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMHoldPeak.h; sourceTree = "<group>"; };
 		3AAEA15322B3420B0066D852 /* BMHoldPeak.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMHoldPeak.c; sourceTree = "<group>"; };
 		3AB0E8F522CDB81900B0394F /* BMQuadraticThreshold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMQuadraticThreshold.h; sourceTree = "<group>"; };
@@ -471,19 +474,21 @@
 			children = (
 				4CC13A502244D80B003FA1B9 /* BMDownsampler.c */,
 				4CC13A4D2244D80B003FA1B9 /* BMDownsampler.h */,
+				3A9E06BF22E1651100ECB53B /* BMDownsampler2x.c */,
+				3A9E06C022E1651100ECB53B /* BMDownsampler2x.h */,
+				3A00188722DF141B007C78F9 /* BMHIIRDownsampler2xFPU.c */,
+				3A00188622DF141B007C78F9 /* BMHIIRDownsampler2xFPU.h */,
 				3AEEF23C22D88B1800A3C5B5 /* BMHIIRMath.h */,
 				3AEEF23822D8450500A3C5B5 /* BMHIIRStage.h */,
 				3A00188222DEE3B9007C78F9 /* BMHIIRStageFPU.h */,
 				4CC13A512244D80B003FA1B9 /* BMHIIRUpsampler2x.c */,
 				4CC13A4E2244D80B003FA1B9 /* BMHIIRUpsampler2x.h */,
+				3A00188422DEE6FD007C78F9 /* BMHIIRUpsampler2xFPU.c */,
+				3A00188322DEE6FD007C78F9 /* BMHIIRUpsampler2xFPU.h */,
 				3AEEF23A22D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.c */,
 				3AEEF23922D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.h */,
 				4CC13A4F2244D80B003FA1B9 /* BMUpsampler.c */,
 				4CC13A4C2244D80B003FA1B9 /* BMUpsampler.h */,
-				3A00188422DEE6FD007C78F9 /* BMHIIRUpsampler2xFPU.c */,
-				3A00188322DEE6FD007C78F9 /* BMHIIRUpsampler2xFPU.h */,
-				3A00188622DF141B007C78F9 /* BMHIIRDownsampler2xFPU.h */,
-				3A00188722DF141B007C78F9 /* BMHIIRDownsampler2xFPU.c */,
 			);
 			path = SampleRate;
 			sourceTree = "<group>";
@@ -621,6 +626,7 @@
 				4CC13A902244D80B003FA1B9 /* BMRMSPower.c in Sources */,
 				3AB0E8FC22CDB81900B0394F /* BMQuadraticRectifier.c in Sources */,
 				4CC13A8F2244D80B003FA1B9 /* BMDCBlocker.c in Sources */,
+				3A9E06C122E1651100ECB53B /* BMDownsampler2x.c in Sources */,
 				3A00188522DEE6FD007C78F9 /* BMHIIRUpsampler2xFPU.c in Sources */,
 				4CC13A8C2244D80B003FA1B9 /* BMNoiseGate.c in Sources */,
 				4CC13A6E2244D80B003FA1B9 /* BMVelocityFilter.c in Sources */,
