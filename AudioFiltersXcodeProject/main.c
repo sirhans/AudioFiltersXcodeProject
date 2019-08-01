@@ -40,7 +40,7 @@
 #include "BMWaveshaping.h"
 #include "BMIIRUpsampler2x.h"
 #include "BMIIRDownsampler2x.h"
-
+#include "BMVAStateVariableFilter.h"
 #define TESTBUFFERLENGTH 128
 
 
@@ -1844,11 +1844,12 @@ void testUpDownsampler(){
     free(output);
 }
 
-
+void testVASVF(){
+    
+}
 
 int main(int argc, const char * argv[]) {
-    testUpDownsampler();
-    
+//    testUpDownsampler();
     return 0;
 }
 
