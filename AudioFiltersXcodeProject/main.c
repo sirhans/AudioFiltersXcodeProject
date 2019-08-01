@@ -1845,11 +1845,33 @@ void testUpDownsampler(){
 }
 
 void testVASVF(){
+    float sampleRate = 48000;
+    float testLength = 5000;
     
+    float* input = malloc(sizeof(float)*testLength);
+    float* output = malloc(sizeof(float)*testLength);
+    input[0] = 1;
+    for(int i =1;i<testLength;i++){
+        input[1] = 0;
+    }
+    
+    BMVAStateVariableFilter filter;
+    BMVAStateVariableFilter_init(&filter, true, sampleRate, SVFLowpass);
+    
+    BMVAStateVariableFilter_setFilter(&filter, SVFBandpass, 1000, 1.0f/sqrtf(2.0f), 0);
+    
+    BMVAStateVariableFilter_processBufferStereo(&filter, input, input, output, output, testLength);
+    
+    for(int i =0;i<testLength;i++){
+        output[i] = output[i]*100;
+    }
+    
+    arrayToFile(output, testLength);
 }
 
 int main(int argc, const char * argv[]) {
 //    testUpDownsampler();
+    testVASVF();
     return 0;
 }
 
