@@ -1807,7 +1807,7 @@ void testDownsampler(){
 
 
 void testUpDownsampler(){
-    size_t upsampleFactor = 16;
+    size_t upsampleFactor = 32;
     
     BMDownsampler ds;
     BMUpsampler us;
@@ -1818,20 +1818,29 @@ void testUpDownsampler(){
     size_t testLength = sampleRate * 5;
     
     float* sineSweep = malloc(sizeof(float)*testLength);
-    float* upsampledPos = malloc(sizeof(float)*testLength*upsampleFactor);
-    float* upsampledNeg = malloc(sizeof(float)*testLength*upsampleFactor);
+    float* upsampled = malloc(sizeof(float)*testLength*upsampleFactor);
     float* output = malloc(sizeof(float)*testLength);
     
     generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
     
-    BMUpsampler_processBufferMono(&us, sineSweep, upsampledPos, testLength);
+    // gain boost
+    float boost = BM_DB_TO_GAIN(100.0f);
+    vDSP_vsmul(sineSweep,1,&boost,sineSweep,1,testLength);
+    
+    if(upsampleFactor > 1)
+        BMUpsampler_processBufferMono(&us, sineSweep, upsampled, testLength);
+    else
+        memcpy(upsampled,sineSweep,sizeof(float)*testLength);
     
     // waveshape
-    BMWaveshaper_processBufferNegative(upsampledPos, upsampledNeg, testLength*upsampleFactor);
-    BMWaveshaper_processBufferPositive(upsampledPos, upsampledPos, testLength*upsampleFactor);
-    vDSP_vadd(upsampledPos, 1, upsampledNeg, 1, upsampledPos, 1, testLength*upsampleFactor);
-
-    BMDownsampler_processBufferMono(&ds, upsampledPos, output, testLength*upsampleFactor);
+    int length = (int)testLength*(int)upsampleFactor;
+    vvtanhf(upsampled, upsampled, &length);
+    
+    if(upsampleFactor > 1)
+        BMDownsampler_processBufferMono(&ds, upsampled, output, testLength*upsampleFactor);
+    else
+        memcpy(output,upsampled,sizeof(float)*testLength);
+    
     
     arrayToFile(output, testLength);
     //arrayToFile(upsampledPos,testLength*upsampleFactor);
@@ -1839,10 +1848,10 @@ void testUpDownsampler(){
     BMDownsampler_free(&ds);
     BMUpsampler_free(&us);
     free(sineSweep);
-    free(upsampledPos);
-    free(upsampledNeg);
+    free(upsampled);
     free(output);
 }
+
 
 
 
