@@ -25,6 +25,7 @@
 		3AEEF23B22D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AEEF23A22D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.c */; };
 		4C0FD74D2280186500995864 /* BMBinauralSynthesis.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */; };
 		4C688A382244CF6700E3B1E6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C688A372244CF6700E3B1E6 /* main.c */; };
+		4C8E3C9C22F0288E00B17824 /* BMVAStateVariableFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C8E3C9B22F0288E00B17824 /* BMVAStateVariableFilter.c */; };
 		4CC13A672244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F22244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c */; };
 		4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F52244D80B003FA1B9 /* BMDiffusion.c */; };
 		4CC13A692244D80B003FA1B9 /* BMMultiLevelSVF.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F62244D80B003FA1B9 /* BMMultiLevelSVF.c */; };
@@ -123,6 +124,10 @@
 		4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMBinauralSynthesis.c; sourceTree = "<group>"; };
 		4C688A342244CF6700E3B1E6 /* AudioFiltersXcodeProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AudioFiltersXcodeProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C688A372244CF6700E3B1E6 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		4C8E3C9A22F0288E00B17824 /* BMVAStateVariableFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMVAStateVariableFilter.h; sourceTree = "<group>"; };
+		4C8E3C9B22F0288E00B17824 /* BMVAStateVariableFilter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMVAStateVariableFilter.c; sourceTree = "<group>"; };
+		4C8E3C9D22F0331D00B17824 /* DspUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DspUtilities.h; sourceTree = "<group>"; };
+		4C8E3C9E22F0331D00B17824 /* LinearSmoothedValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinearSmoothedValue.h; sourceTree = "<group>"; };
 		4CC139F02244D80B003FA1B9 /* BMVelocityFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMVelocityFilter.h; sourceTree = "<group>"; };
 		4CC139F12244D80B003FA1B9 /* BMStereoModulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMStereoModulator.h; sourceTree = "<group>"; };
 		4CC139F22244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMVelvetNoiseDecorrelator.c; sourceTree = "<group>"; };
@@ -353,6 +358,8 @@
 				3AB41757229F843500AECC6E /* BMVariableFilter.c */,
 				3A95396222CB50CD0058A586 /* BMZavalishinLPFOrder1.h */,
 				3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */,
+				4C8E3C9A22F0288E00B17824 /* BMVAStateVariableFilter.h */,
+				4C8E3C9B22F0288E00B17824 /* BMVAStateVariableFilter.c */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -400,6 +407,8 @@
 		4CC13A222244D80B003FA1B9 /* MathUtilities */ = {
 			isa = PBXGroup;
 			children = (
+				4C8E3C9D22F0331D00B17824 /* DspUtilities.h */,
+				4C8E3C9E22F0331D00B17824 /* LinearSmoothedValue.h */,
 				4CC13A262244D80B003FA1B9 /* BM2x2Matrix.h */,
 				4CC13A362244D80B003FA1B9 /* BMComplexMath.h */,
 				4CC13A372244D80B003FA1B9 /* BMFastHadamard.h */,
@@ -639,6 +648,7 @@
 				4CC13A7C2244D80B003FA1B9 /* BMReverb.c in Sources */,
 				4CC13A922244D80B003FA1B9 /* TPCircularBuffer.c in Sources */,
 				3AB0E8FB22CDB81900B0394F /* BMTransientShaper.c in Sources */,
+				4C8E3C9C22F0288E00B17824 /* BMVAStateVariableFilter.c in Sources */,
 				4CC13A782244D80B003FA1B9 /* TestReverb.c in Sources */,
 				4CC13A722244D80B003FA1B9 /* BMMultiLevelBiquad.c in Sources */,
 				4CC13A822244D80B003FA1B9 /* BMVibrato.c in Sources */,
