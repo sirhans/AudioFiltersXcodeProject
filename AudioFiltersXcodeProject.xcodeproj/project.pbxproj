@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A00188522DEE6FD007C78F9 /* BMHIIRUpsampler2xFPU.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A00188422DEE6FD007C78F9 /* BMHIIRUpsampler2xFPU.c */; };
-		3A00188822DF141B007C78F9 /* BMHIIRDownsampler2xFPU.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A00188722DF141B007C78F9 /* BMHIIRDownsampler2xFPU.c */; };
 		3A309BB3230A491300A94F0B /* BMWaveshaping.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A309BAD230A491200A94F0B /* BMWaveshaping.c */; };
 		3A309BB4230A491300A94F0B /* BMQuadraticRectifier.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A309BAE230A491200A94F0B /* BMQuadraticRectifier.c */; };
 		3A309BB5230A491300A94F0B /* BMQuadraticThreshold.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A309BB2230A491300A94F0B /* BMQuadraticThreshold.c */; };
@@ -88,11 +86,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3A00188222DEE3B9007C78F9 /* BMHIIRStageFPU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMHIIRStageFPU.h; sourceTree = "<group>"; };
-		3A00188322DEE6FD007C78F9 /* BMHIIRUpsampler2xFPU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMHIIRUpsampler2xFPU.h; sourceTree = "<group>"; };
-		3A00188422DEE6FD007C78F9 /* BMHIIRUpsampler2xFPU.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMHIIRUpsampler2xFPU.c; sourceTree = "<group>"; };
-		3A00188622DF141B007C78F9 /* BMHIIRDownsampler2xFPU.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMHIIRDownsampler2xFPU.h; sourceTree = "<group>"; };
-		3A00188722DF141B007C78F9 /* BMHIIRDownsampler2xFPU.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMHIIRDownsampler2xFPU.c; sourceTree = "<group>"; };
 		3A309BAD230A491200A94F0B /* BMWaveshaping.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = BMWaveshaping.c; path = ../Filters/BMWaveshaping.c; sourceTree = "<group>"; };
 		3A309BAE230A491200A94F0B /* BMQuadraticRectifier.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = BMQuadraticRectifier.c; path = ../Filters/BMQuadraticRectifier.c; sourceTree = "<group>"; };
 		3A309BAF230A491300A94F0B /* BMQuadraticThreshold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMQuadraticThreshold.h; path = ../Filters/BMQuadraticThreshold.h; sourceTree = "<group>"; };
@@ -495,12 +488,7 @@
 			children = (
 				4CC13A502244D80B003FA1B9 /* BMDownsampler.c */,
 				4CC13A4D2244D80B003FA1B9 /* BMDownsampler.h */,
-				3A00188722DF141B007C78F9 /* BMHIIRDownsampler2xFPU.c */,
-				3A00188622DF141B007C78F9 /* BMHIIRDownsampler2xFPU.h */,
 				3AEEF23C22D88B1800A3C5B5 /* BMHIIRMath.h */,
-				3A00188222DEE3B9007C78F9 /* BMHIIRStageFPU.h */,
-				3A00188422DEE6FD007C78F9 /* BMHIIRUpsampler2xFPU.c */,
-				3A00188322DEE6FD007C78F9 /* BMHIIRUpsampler2xFPU.h */,
 				3A9E06BF22E1651100ECB53B /* BMIIRDownsampler2x.c */,
 				3A9E06C022E1651100ECB53B /* BMIIRDownsampler2x.h */,
 				3A9E06C622E1693D00ECB53B /* BMIIRUpsampler2x.c */,
@@ -659,7 +647,6 @@
 				4CC13A8F2244D80B003FA1B9 /* BMDCBlocker.c in Sources */,
 				3A874E9522F157B800B97FC2 /* BMTanhLimiter.c in Sources */,
 				3A9E06C122E1651100ECB53B /* BMIIRDownsampler2x.c in Sources */,
-				3A00188522DEE6FD007C78F9 /* BMHIIRUpsampler2xFPU.c in Sources */,
 				4CC13A8C2244D80B003FA1B9 /* BMNoiseGate.c in Sources */,
 				3A309BB3230A491300A94F0B /* BMWaveshaping.c in Sources */,
 				4CC13A6E2244D80B003FA1B9 /* BMVelocityFilter.c in Sources */,
@@ -677,7 +664,6 @@
 				4CC13A752244D80B003FA1B9 /* BMOscillatorArray.c in Sources */,
 				4CC13A832244D80B003FA1B9 /* BMSpectrum.c in Sources */,
 				4CC13A802244D80B003FA1B9 /* BMLagrangeInterpolation.c in Sources */,
-				3A00188822DF141B007C78F9 /* BMHIIRDownsampler2xFPU.c in Sources */,
 				4CC13A692244D80B003FA1B9 /* BMMultiLevelSVF.c in Sources */,
 				3AB4175B22A61DBF00AECC6E /* BMLevelMeter.c in Sources */,
 				3AEB17BD228AAA54004C7E4E /* BMSmoothGain.c in Sources */,
