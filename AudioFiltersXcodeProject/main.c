@@ -35,12 +35,12 @@
 #include "BMStereoLagTime.h"
 #include "BMBinauralSynthesis.h"
 #include "BMWetDryMixer.h"
-#include "BMHIIRUpsampler2xFPU.h"
-#include "BMHIIRDownsampler2xFPU.h"
 #include "BMWaveshaping.h"
 #include "BMIIRUpsampler2x.h"
 #include "BMIIRDownsampler2x.h"
 #include "BMVAStateVariableFilter.h"
+#include "BMNoiseGate.h"
+
 #define TESTBUFFERLENGTH 128
 
 
@@ -1587,90 +1587,6 @@ void generateSineSweep(float* output, double startFrequency, double endFrequency
 
 
 
-void testUpsampler2xFPU(){
-    BMHIIRUpsampler2xFPU us;
-    float attenuation = BMHIIRUpsampler2xFPU_init(&us, 7, 0.075);
-    printf("\nstopband attenuation: %f\n",attenuation);
-    float sampleRate = 48000.0f;
-    size_t testLength = sampleRate * 5;
-    
-    float* sineSweep = malloc(sizeof(float)*testLength);
-    //    float* sineSweep4 = malloc(sizeof(float)*testLength*4);
-    float* output = malloc(sizeof(float)*testLength*2);
-    
-    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
-    
-    BMHIIRUpsampler2xFPU_processBufferMono(&us, sineSweep, output, testLength);
-    
-    arrayToFile(output,2*testLength);
-    
-    free(sineSweep);
-    free(output);
-}
-
-
-
-void testDownsampler2xFPU(){
-    BMHIIRDownsampler2xFPU ds;
-    float attenuation = BMHIIRDownsampler2xFPU_init(&ds, 7, 0.075);
-    printf("\nstopband attenuation: %f\n",attenuation);
-    float sampleRate = 48000.0f;
-    size_t testLength = sampleRate * 10;
-    
-    float* sineSweep = malloc(sizeof(float)*testLength);
-    //    float* sineSweep4 = malloc(sizeof(float)*testLength*4);
-    float* output = malloc(sizeof(float)*testLength/2);
-    
-    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
-    
-    BMHIIRDownsampler2xFPU_processBufferMono(&ds, sineSweep, output, testLength);
-    
-    arrayToFile(output,testLength/2);
-    
-    free(sineSweep);
-    free(output);
-}
-
-
-
-
-
-void testUpDownsampler2xFPU(){
-    BMHIIRDownsampler2xFPU ds;
-    BMHIIRUpsampler2xFPU us;
-    BMHIIRUpsampler2xFPU_init(&us, 100.0, 0.02);
-    float attenuation = BMHIIRDownsampler2xFPU_init(&ds, 100.0, 0.02);
-
-    printf("\nstopband attenuation: %f\n",attenuation);
-    float sampleRate = 48000.0f;
-    size_t testLength = sampleRate * 10;
-    
-    float* sineSweep = malloc(sizeof(float)*testLength);
-    float* upsampled = malloc(sizeof(float)*testLength*2);
-    float* output = malloc(sizeof(float)*testLength);
-    
-    generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
-    
-    // upsample
-    BMHIIRUpsampler2xFPU_processBufferMono(&us, sineSweep, upsampled, testLength);
-    
-//    // amplify
-//    float gainBoost = 2.0f;
-//    vDSP_vsmul(upsampled, 1, &gainBoost, upsampled, 1, testLength*2);
-    
-    // waveshape
-    BMWaveshaper_processBufferBidirectional(upsampled, upsampled, testLength*2);
-                                            
-    // downsample
-    BMHIIRDownsampler2xFPU_processBufferMono(&ds, upsampled, output, testLength*2);
-    
-    arrayToFile(output,testLength);
-    
-    free(sineSweep);
-    free(output);
-}
-
-
 void testUpsampler2x(){
     BMIIRUpsampler2x us;
     size_t numCoefficients = BMIIRUpsampler2x_init(&us, 110.0, 0.025, false);
@@ -1878,9 +1794,183 @@ void testVASVF(){
 }
 
 
+
+void fadeOut(const float* input, float* output, float rt60DecaySeconds, float sampleRate, size_t numSamples){
+    double decayTimeSamples = rt60DecaySeconds * sampleRate;
+    double commonRatio = pow(BM_DB_TO_GAIN(-60.0),1.0/decayTimeSamples);
+    double gain = 1.0;
+    for(size_t i=0; i<numSamples; i++){
+        output[i] = input[i] * gain;
+        gain *= commonRatio;
+    }
+}
+
+
+
+
+void fadeIn(const float* input, float* output, float fadeTimeSeconds, float sampleRate, size_t numSamples){
+    double fadeTimeSamples = fadeTimeSeconds * sampleRate;
+    double commonRatio = pow(BM_DB_TO_GAIN(100.0),1.0/fadeTimeSamples);
+    double gain = BM_DB_TO_GAIN(-100.0);
+    for(size_t i=0; i<numSamples; i++){
+        output[i] = input[i] * gain;
+        if(gain <= 1.0)
+            gain *= commonRatio;
+    }
+}
+
+
+
+void testNoiseGate() {
+    float sampleRate = 48000;
+    size_t testLength = sampleRate * 5;
+    float decayTime = 1.0 / 10.0;
+    float threshold = -10.0;
+    float toneFrequency = 800.0;
+    BMNoiseGate ng1;
+    
+    BMNoiseGate_init(&ng1, threshold, sampleRate);
+    
+    // generate a 20 Hz tone for a test signal
+    float* testSignal = malloc(sizeof(float)*testLength);
+    generateSineSweep(testSignal, toneFrequency, toneFrequency, sampleRate, testLength);
+    
+    //fade the volume of the test signal so that it goes below the threshold
+    float rt60DecayTime = 10.0f;
+    fadeOut(testSignal, testSignal, rt60DecayTime, sampleRate, testLength/2);
+    
+    // fade back in
+    float fadeInTime = 1.0f;
+    fadeIn(testSignal + testLength/2, testSignal + testLength/2, fadeInTime, sampleRate, testLength/2);
+    
+    BMNoiseGate_processMono(&ng1, testSignal, testSignal, testLength);
+    
+    arrayToFile(testSignal, testLength);
+}
+
+
+
+
+
+void testOversamplerTransientResponse(){
+    float sampleRate = 48000;
+    size_t testLength = sampleRate * 5;
+    float toneFrequency = 80.0;
+    
+    
+    // generate a toneFrequency Hz tone for a test signal
+    float* testSignal = malloc(sizeof(float)*testLength);
+    generateSineSweep(testSignal, toneFrequency, toneFrequency, sampleRate, testLength);
+    
+    // zero out some sections of the signal
+    for(size_t i=0; i<testLength; i++){
+        if((int)ceil((float)i/sampleRate) % 2 == 0)
+            testSignal[i]=0;
+    }
+    
+    size_t upsampleFactor = 32;
+    
+    BMDownsampler ds;
+    BMUpsampler us;
+    BMUpsampler_init(&us, false, upsampleFactor);
+    BMDownsampler_init(&ds, false, upsampleFactor);
+    
+    float* upsampled = malloc(sizeof(float)*testLength*upsampleFactor);
+    float* output = malloc(sizeof(float)*testLength);
+    
+//    // gain boost
+//    float boost = BM_DB_TO_GAIN(100.0f);
+//    vDSP_vsmul(sineSweep,1,&boost,sineSweep,1,testLength);
+    
+    if(upsampleFactor > 1)
+        BMUpsampler_processBufferMono(&us, testSignal, upsampled, testLength);
+    else
+        memcpy(upsampled,testSignal,sizeof(float)*testLength);
+    
+//    // waveshape
+//    int length = (int)testLength*(int)upsampleFactor;
+//    vvtanhf(upsampled, upsampled, &length);
+    
+    if(upsampleFactor > 1)
+        BMDownsampler_processBufferMono(&ds, upsampled, output, testLength*upsampleFactor);
+    else
+        memcpy(output,upsampled,sizeof(float)*testLength);
+    
+    
+    arrayToFile(output, testLength);
+    
+    BMDownsampler_free(&ds);
+    BMUpsampler_free(&us);
+    free(testSignal);
+    free(upsampled);
+    free(output);
+}
+
+
+
+
+
+void testOversamplerImpulseResponse(){
+    
+    float sampleRate = 48000;
+    size_t testLength = sampleRate * 5;
+    
+    
+    // generate the impulse input
+    float* testSignal = malloc(sizeof(float)*testLength);
+    float* emptySignal = malloc(sizeof(float)*testLength);
+    memset(emptySignal,0,sizeof(float)*testLength);
+    memset(testSignal,0,sizeof(float)*testLength);
+    testSignal[0] = 1.0f;
+    
+    size_t upsampleFactor = 16;
+    
+    BMDownsampler ds;
+    BMUpsampler us;
+    BMUpsampler_init(&us, false, upsampleFactor);
+    BMDownsampler_init(&ds, false, upsampleFactor);
+    
+    float* upsampled = malloc(sizeof(float)*testLength*upsampleFactor);
+    float* output = malloc(sizeof(float)*testLength);
+    
+    //    // gain boost
+    //    float boost = BM_DB_TO_GAIN(100.0f);
+    //    vDSP_vsmul(sineSweep,1,&boost,sineSweep,1,testLength);
+    
+    if(upsampleFactor > 1)
+        BMUpsampler_processBufferMono(&us, testSignal, upsampled, testLength);
+    else
+        memcpy(upsampled,testSignal,sizeof(float)*testLength);
+    
+    //    // waveshape
+    //    int length = (int)testLength*(int)upsampleFactor;
+    //    vvtanhf(upsampled, upsampled, &length);
+    
+    if(upsampleFactor > 1)
+        BMDownsampler_processBufferMono(&ds, upsampled, output, testLength*upsampleFactor);
+    else
+        memcpy(output,upsampled,sizeof(float)*testLength);
+    
+    
+    arrayToFile(upsampled, testLength);
+    
+    BMDownsampler_free(&ds);
+    BMUpsampler_free(&us);
+    free(testSignal);
+    free(upsampled);
+    free(output);
+}
+
+
+
+
+
 int main(int argc, const char * argv[]) {
 //    testUpDownsampler();
-    testVASVF();
+//    testVASVF();
+//    testNoiseGate();
+    //testOversamplerTransientResponse();
+    testOversamplerImpulseResponse();
     return 0;
 }
 
