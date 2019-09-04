@@ -1049,10 +1049,13 @@ void testAsymptoticLimitOutputRange(){
 }
 
 
-void arrayToFile(float* array, size_t length){
+
+
+
+void arrayToFileWithName(float* array, char* name, size_t length){
     // open a file for writing
     FILE* audioFile;
-    audioFile = fopen("./arrayOut.csv", "w+");
+    audioFile = fopen(name, "w+");
     
     // print out the entire frame in .csv format
     //fprintf(audioFile,"{");
@@ -1064,8 +1067,21 @@ void arrayToFile(float* array, size_t length){
     fclose(audioFile);
     
     system("pwd");
-    printf("/arrayOut.csv\n");
+    printf(name);
+    printf("\n");
 }
+
+
+
+
+
+void arrayToFile(float* array, size_t length){
+    char* name = "./arrayOut.csv";
+    arrayToFileWithName(array, name, length);
+}
+
+
+
 
 void arrayXYToFile(float* arrayX,float* arrayY, size_t length){
     // open a file for writing
@@ -1723,7 +1739,7 @@ void testDownsampler(){
 
 
 void testUpDownsampler(){
-    size_t upsampleFactor = 32;
+    size_t upsampleFactor = 16;
     
     BMDownsampler ds;
     BMUpsampler us;
@@ -1740,8 +1756,8 @@ void testUpDownsampler(){
     generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
     
     // gain boost
-    float boost = BM_DB_TO_GAIN(100.0f);
-    vDSP_vsmul(sineSweep,1,&boost,sineSweep,1,testLength);
+    //float boost = BM_DB_TO_GAIN(100.0f);
+    //vDSP_vsmul(sineSweep,1,&boost,sineSweep,1,testLength);
     
     if(upsampleFactor > 1)
         BMUpsampler_processBufferMono(&us, sineSweep, upsampled, testLength);
@@ -1749,8 +1765,8 @@ void testUpDownsampler(){
         memcpy(upsampled,sineSweep,sizeof(float)*testLength);
     
     // waveshape
-    int length = (int)testLength*(int)upsampleFactor;
-    vvtanhf(upsampled, upsampled, &length);
+    //int length = (int)testLength*(int)upsampleFactor;
+    //vvtanhf(upsampled, upsampled, &length);
     
     if(upsampleFactor > 1)
         BMDownsampler_processBufferMono(&ds, upsampled, output, testLength*upsampleFactor);
@@ -1758,8 +1774,8 @@ void testUpDownsampler(){
         memcpy(output,upsampled,sizeof(float)*testLength);
     
     
-    arrayToFile(output, testLength);
-    //arrayToFile(upsampledPos,testLength*upsampleFactor);
+    char* filename = "./sineSweepResponse.csv";
+    arrayToFileWithName(output, filename, testLength);
 
     BMDownsampler_free(&ds);
     BMUpsampler_free(&us);
@@ -1829,7 +1845,7 @@ void testNoiseGate() {
     float toneFrequency = 800.0;
     BMNoiseGate ng1;
     
-    BMNoiseGate_init(&ng1, threshold, sampleRate);
+    BMNoiseGate_init(&ng1, threshold, decayTime, sampleRate);
     
     // generate a 20 Hz tone for a test signal
     float* testSignal = malloc(sizeof(float)*testLength);
@@ -1913,7 +1929,7 @@ void testOversamplerTransientResponse(){
 void testOversamplerImpulseResponse(){
     
     float sampleRate = 48000;
-    size_t testLength = sampleRate * 5;
+    size_t testLength = 512;
     
     
     // generate the impulse input
@@ -1933,18 +1949,11 @@ void testOversamplerImpulseResponse(){
     float* upsampled = malloc(sizeof(float)*testLength*upsampleFactor);
     float* output = malloc(sizeof(float)*testLength);
     
-    //    // gain boost
-    //    float boost = BM_DB_TO_GAIN(100.0f);
-    //    vDSP_vsmul(sineSweep,1,&boost,sineSweep,1,testLength);
-    
     if(upsampleFactor > 1)
         BMUpsampler_processBufferMono(&us, testSignal, upsampled, testLength);
     else
         memcpy(upsampled,testSignal,sizeof(float)*testLength);
     
-    //    // waveshape
-    //    int length = (int)testLength*(int)upsampleFactor;
-    //    vvtanhf(upsampled, upsampled, &length);
     
     if(upsampleFactor > 1)
         BMDownsampler_processBufferMono(&ds, upsampled, output, testLength*upsampleFactor);
@@ -1952,7 +1961,8 @@ void testOversamplerImpulseResponse(){
         memcpy(output,upsampled,sizeof(float)*testLength);
     
     
-    arrayToFile(upsampled, testLength);
+    char* filename = "./impulseResponse.csv";
+    arrayToFileWithName(output, filename, testLength);
     
     BMDownsampler_free(&ds);
     BMUpsampler_free(&us);
@@ -1966,7 +1976,7 @@ void testOversamplerImpulseResponse(){
 
 
 int main(int argc, const char * argv[]) {
-//    testUpDownsampler();
+    testUpDownsampler();
 //    testVASVF();
 //    testNoiseGate();
     //testOversamplerTransientResponse();

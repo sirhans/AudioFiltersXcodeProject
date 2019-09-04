@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3A6A32A922CF357300DEEDFA /* BMQuadraticThreshold.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */; };
+		3A7FDAF7231684170090EC36 /* BMChamberlinSVF.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A7FDAF6231684170090EC36 /* BMChamberlinSVF.c */; };
 		3A874E9522F157B800B97FC2 /* BMTanhLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A874E9422F157B800B97FC2 /* BMTanhLimiter.c */; };
 		3A95396422CB50CD0058A586 /* BMZavalishinLPFOrder1.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */; };
 		3A9E06C122E1651100ECB53B /* BMIIRDownsampler2x.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A9E06BF22E1651100ECB53B /* BMIIRDownsampler2x.c */; };
@@ -62,7 +63,6 @@
 		4CC13A8B2244D80B003FA1B9 /* BMGainStage.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A542244D80B003FA1B9 /* BMGainStage.c */; };
 		4CC13A8C2244D80B003FA1B9 /* BMNoiseGate.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A552244D80B003FA1B9 /* BMNoiseGate.c */; };
 		4CC13A8D2244D80B003FA1B9 /* BMCompressor.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A562244D80B003FA1B9 /* BMCompressor.c */; };
-		4CC13A8E2244D80B003FA1B9 /* BMSaturation.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A572244D80B003FA1B9 /* BMSaturation.c */; };
 		4CC13A8F2244D80B003FA1B9 /* BMDCBlocker.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A582244D80B003FA1B9 /* BMDCBlocker.c */; };
 		4CC13A902244D80B003FA1B9 /* BMRMSPower.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A602244D80B003FA1B9 /* BMRMSPower.c */; };
 		4CC13A912244D80B003FA1B9 /* TPCircularBuffer+AudioBufferList.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A632244D80B003FA1B9 /* TPCircularBuffer+AudioBufferList.c */; };
@@ -84,6 +84,8 @@
 
 /* Begin PBXFileReference section */
 		3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMQuadraticThreshold.c; sourceTree = "<group>"; };
+		3A7FDAF5231684170090EC36 /* BMChamberlinSVF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMChamberlinSVF.h; sourceTree = "<group>"; };
+		3A7FDAF6231684170090EC36 /* BMChamberlinSVF.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMChamberlinSVF.c; sourceTree = "<group>"; };
 		3A874E9322F157B800B97FC2 /* BMTanhLimiter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMTanhLimiter.h; sourceTree = "<group>"; };
 		3A874E9422F157B800B97FC2 /* BMTanhLimiter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMTanhLimiter.c; sourceTree = "<group>"; };
 		3A95396222CB50CD0058A586 /* BMZavalishinLPFOrder1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMZavalishinLPFOrder1.h; sourceTree = "<group>"; };
@@ -213,11 +215,9 @@
 		4CC13A542244D80B003FA1B9 /* BMGainStage.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMGainStage.c; sourceTree = "<group>"; };
 		4CC13A552244D80B003FA1B9 /* BMNoiseGate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMNoiseGate.c; sourceTree = "<group>"; };
 		4CC13A562244D80B003FA1B9 /* BMCompressor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMCompressor.c; sourceTree = "<group>"; };
-		4CC13A572244D80B003FA1B9 /* BMSaturation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMSaturation.c; sourceTree = "<group>"; };
 		4CC13A582244D80B003FA1B9 /* BMDCBlocker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMDCBlocker.c; sourceTree = "<group>"; };
 		4CC13A592244D80B003FA1B9 /* BMRMSPower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMRMSPower.h; sourceTree = "<group>"; };
 		4CC13A5A2244D80B003FA1B9 /* BMEnvelopeFollower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMEnvelopeFollower.h; sourceTree = "<group>"; };
-		4CC13A5B2244D80B003FA1B9 /* BMSaturation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSaturation.h; sourceTree = "<group>"; };
 		4CC13A5C2244D80B003FA1B9 /* BMCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCompressor.h; sourceTree = "<group>"; };
 		4CC13A5D2244D80B003FA1B9 /* BMNoiseGate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMNoiseGate.h; sourceTree = "<group>"; };
 		4CC13A5E2244D80B003FA1B9 /* BMGainStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMGainStage.h; sourceTree = "<group>"; };
@@ -319,12 +319,12 @@
 		4CC139EF2244D80B003FA1B9 /* Filters */ = {
 			isa = PBXGroup;
 			children = (
-				4CC13A582244D80B003FA1B9 /* BMDCBlocker.c */,
-				4CC13A5F2244D80B003FA1B9 /* BMDCBlocker.h */,
 				4CC13A022244D80B003FA1B9 /* BMBiquadArray.c */,
 				4CC139F72244D80B003FA1B9 /* BMBiquadArray.h */,
 				4CC139FA2244D80B003FA1B9 /* BMCrossover.c */,
 				4CC13A062244D80B003FA1B9 /* BMCrossover.h */,
+				4CC13A582244D80B003FA1B9 /* BMDCBlocker.c */,
+				4CC13A5F2244D80B003FA1B9 /* BMDCBlocker.h */,
 				4CC139F52244D80B003FA1B9 /* BMDiffusion.c */,
 				4CC13A012244D80B003FA1B9 /* BMDiffusion.h */,
 				4CC139FC2244D80B003FA1B9 /* BMDynamicSmoothingFilter.c */,
@@ -343,16 +343,18 @@
 				4CC139F12244D80B003FA1B9 /* BMStereoModulator.h */,
 				4CC13A002244D80B003FA1B9 /* BMTNFilter.c */,
 				4CC139F32244D80B003FA1B9 /* BMTNFilter.h */,
+				3AB41757229F843500AECC6E /* BMVariableFilter.c */,
+				3AB41756229F843500AECC6E /* BMVariableFilter.h */,
+				4C8E3C9B22F0288E00B17824 /* BMVAStateVariableFilter.c */,
+				4C8E3C9A22F0288E00B17824 /* BMVAStateVariableFilter.h */,
 				4CC139FF2244D80B003FA1B9 /* BMVelocityFilter.c */,
 				4CC139F02244D80B003FA1B9 /* BMVelocityFilter.h */,
 				4CC139F22244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c */,
 				4CC139FE2244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.h */,
-				3AB41756229F843500AECC6E /* BMVariableFilter.h */,
-				3AB41757229F843500AECC6E /* BMVariableFilter.c */,
-				3A95396222CB50CD0058A586 /* BMZavalishinLPFOrder1.h */,
 				3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */,
-				4C8E3C9A22F0288E00B17824 /* BMVAStateVariableFilter.h */,
-				4C8E3C9B22F0288E00B17824 /* BMVAStateVariableFilter.c */,
+				3A95396222CB50CD0058A586 /* BMZavalishinLPFOrder1.h */,
+				3A7FDAF5231684170090EC36 /* BMChamberlinSVF.h */,
+				3A7FDAF6231684170090EC36 /* BMChamberlinSVF.c */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -508,8 +510,6 @@
 				3AB0E8F722CDB81900B0394F /* BMQuadraticRectifier.h */,
 				3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */,
 				3AB0E8F522CDB81900B0394F /* BMQuadraticThreshold.h */,
-				4CC13A572244D80B003FA1B9 /* BMSaturation.c */,
-				4CC13A5B2244D80B003FA1B9 /* BMSaturation.h */,
 				3A874E9422F157B800B97FC2 /* BMTanhLimiter.c */,
 				3A874E9322F157B800B97FC2 /* BMTanhLimiter.h */,
 				3AB0E8F622CDB81900B0394F /* BMTransientShaper.c */,
@@ -610,7 +610,6 @@
 				4CC13A762244D80B003FA1B9 /* BMQuadratureOscillator.c in Sources */,
 				4CC13A6D2244D80B003FA1B9 /* BMStereoModulator.c in Sources */,
 				4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */,
-				4CC13A8E2244D80B003FA1B9 /* BMSaturation.c in Sources */,
 				3AAEA15422B3420B0066D852 /* BMHoldPeak.c in Sources */,
 				3AEB17BC228AAA54004C7E4E /* BMWetDryMixer.c in Sources */,
 				4CC13A862244D80B003FA1B9 /* BMOffset.c in Sources */,
@@ -633,6 +632,7 @@
 				4CC13A8C2244D80B003FA1B9 /* BMNoiseGate.c in Sources */,
 				4CC13A6E2244D80B003FA1B9 /* BMVelocityFilter.c in Sources */,
 				4CC13A7C2244D80B003FA1B9 /* BMReverb.c in Sources */,
+				3A7FDAF7231684170090EC36 /* BMChamberlinSVF.c in Sources */,
 				4CC13A922244D80B003FA1B9 /* TPCircularBuffer.c in Sources */,
 				3AB0E8FB22CDB81900B0394F /* BMTransientShaper.c in Sources */,
 				4C8E3C9C22F0288E00B17824 /* BMVAStateVariableFilter.c in Sources */,
