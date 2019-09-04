@@ -379,11 +379,21 @@ void testLagrangeInterpol(){
 
 void testMultiLevelSVF(){
     BMMultiLevelSVF svf;
-    BMMultiLevelSVF_init(&svf, 1, 44100, false);
+    BMMultiLevelSVF_init(&svf, 1, 44100, true);
     
     BMMultiLevelSVF_setBell(&svf, 2000, -40, 2, 0);
     
     BMMultiLevelSVF_impulseResponse(&svf, 1000);
+    
+    BMMultiLevelSVF_free(&svf);
+    
+    simd_float4* a = malloc(sizeof(simd_float4));
+    a[0].x = 0;
+    a[0].y = 1;
+    a[0].z = 2;
+    a[0].a = 3;
+    simd_float2* a2 = (simd_float2*)a;
+    printf("%f %f\n",a2[1].x,a2[1].y);
 }
 
 void testFastLog(){
@@ -1980,7 +1990,8 @@ int main(int argc, const char * argv[]) {
 //    testVASVF();
 //    testNoiseGate();
     //testOversamplerTransientResponse();
-    testOversamplerImpulseResponse();
+//    testOversamplerImpulseResponse();
+    testMultiLevelSVF();
     return 0;
 }
 
