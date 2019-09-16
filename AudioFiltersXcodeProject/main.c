@@ -2038,6 +2038,7 @@ void SFMStatsFromIR(float* IR, size_t irLength){
 
 
 
+
 void testFDN(){
     // variables to set up the reverb
     float sampleRate = 48000;
@@ -2053,7 +2054,7 @@ void testFDN(){
     BMSimpleFDN_init(&fdn,
                      sampleRate,
                      numDelays,
-                     DTM_VELVETNOISE,
+                     DTM_RELATIVEPRIME,
                      minDelayTime,
                      maxDelayTime,
                      FLT_MAX);
