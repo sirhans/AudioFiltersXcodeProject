@@ -2054,7 +2054,7 @@ void testFDN(){
     BMSimpleFDN_init(&fdn,
                      sampleRate,
                      numDelays,
-                     DTM_RELATIVEPRIME,
+                     DTM_RANDOM,
                      minDelayTime,
                      maxDelayTime,
                      FLT_MAX);
