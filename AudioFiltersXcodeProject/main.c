@@ -40,6 +40,8 @@
 #include "BMIIRDownsampler2x.h"
 #include "BMVAStateVariableFilter.h"
 #include "BMNoiseGate.h"
+#include "BMSimpleFDN.h"
+#include "BMSFM.h"
 
 #define TESTBUFFERLENGTH 128
 
@@ -1855,7 +1857,7 @@ void testNoiseGate() {
     float toneFrequency = 800.0;
     BMNoiseGate ng1;
     
-    BMNoiseGate_init(&ng1, threshold, decayTime, sampleRate);
+    BMNoiseGate_init(&ng1, threshold, sampleRate);
     
     // generate a 20 Hz tone for a test signal
     float* testSignal = malloc(sizeof(float)*testLength);
@@ -1985,13 +1987,96 @@ void testOversamplerImpulseResponse(){
 
 
 
+
+void SFMStatsFromIR(float* IR, size_t irLength){
+    // set up the SFM
+    BMSFM sfm;
+    size_t fftSize = 2048;
+    BMSFM_init(&sfm, fftSize);
+    
+    // compute the SFM on windows from the impulse response.
+    size_t numWindows = irLength / fftSize;
+    size_t numWindowsToSkip = 0; // skip the beginning of the IR
+    float* SFMResults = malloc(sizeof(float)*(numWindows-numWindowsToSkip));
+    for(size_t i=numWindowsToSkip; i<numWindows; i ++){
+        SFMResults[i-numWindowsToSkip] = BMSFM_process(&sfm, IR + (fftSize * i), fftSize);
+    }
+    
+    // calculate the min, max and mean
+    float meanSFM = 0.0f;
+    float maxSFM = FLT_MIN;
+    float minSFM = FLT_MAX;
+    for(size_t i=0; i<numWindows-numWindowsToSkip; i ++){
+        meanSFM += SFMResults[i]; // mean
+        if(SFMResults[i] > maxSFM) maxSFM = SFMResults[i]; // max
+        if(SFMResults[i] < minSFM) minSFM = SFMResults[i]; // min
+    }
+    meanSFM /= (float)(numWindows - numWindowsToSkip);
+    
+    // calulate the std. dev.
+    float variance = 0.0f;
+    for(size_t i=0; i<numWindows-numWindowsToSkip; i ++){
+        float diff = SFMResults[i] - meanSFM;
+        variance += diff*diff;
+    }
+    variance /= (float)(numWindows - numWindowsToSkip);
+    float stdDev = sqrtf(variance);
+    
+    printf("*** SFM Stats ***\n");
+    printf("mean: %f\n", meanSFM);
+    printf("std. dev.: %f\n", stdDev);
+    printf("min: %f\n", minSFM);
+    printf("max: %f\n", maxSFM);
+    
+    // output the SFM results to a file
+    char* filename = "./SFMResults.csv";
+    arrayToFileWithName(SFMResults, filename, numWindows-numWindowsToSkip);
+}
+
+
+
+
+
+
+void testFDN(){
+    // variables to set up the reverb
+    float sampleRate = 48000;
+    size_t numDelays = 16;
+    float minDelayTime = 0.007f;
+    float maxDelayTime = 2.0f * minDelayTime;
+    size_t IRLength = (size_t)sampleRate * 3;
+    float* IR = malloc(sizeof(float)*IRLength);
+    
+    
+    // initialise the reverberator
+    BMSimpleFDN fdn;
+    BMSimpleFDN_init(&fdn,
+                     sampleRate,
+                     numDelays,
+                     DTM_VELVETNOISE,
+                     minDelayTime,
+                     maxDelayTime,
+                     FLT_MAX);
+    
+    
+    // compute the impulse response
+    BMSimpleFDN_impulseResponse(&fdn, IR, IRLength);
+    
+    
+    // output the impulse response to a file
+    char* filename = "./impulseResponse.csv";
+    arrayToFileWithName(IR, filename, IRLength);
+    
+    // compute statistics on the SFM
+    SFMStatsFromIR(IR, IRLength);
+}
+
+
+
+
+
 int main(int argc, const char * argv[]) {
-    testUpDownsampler();
-//    testVASVF();
-//    testNoiseGate();
-    //testOversamplerTransientResponse();
-//    testOversamplerImpulseResponse();
-    testMultiLevelSVF();
+    testFDN();
     return 0;
 }
 
