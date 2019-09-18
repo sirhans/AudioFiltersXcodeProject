@@ -1993,7 +1993,7 @@ void SFMStatsFromIR(float* IR, size_t irLength, float* stats, int index, bool wr
     
     // compute the SFM on windows from the impulse response.
     size_t numWindows = irLength / fftSize;
-    size_t numWindowsToSkip = 1; // skip the beginning of the IR
+    size_t numWindowsToSkip = 0; // skip the beginning of the IR
     float* SFMResults = malloc(sizeof(float)*(numWindows-numWindowsToSkip));
     for(size_t i=numWindowsToSkip; i<numWindows; i ++){
         SFMResults[i-numWindowsToSkip] = BMSFM_process(&sfm, IR + (fftSize * i), fftSize);
@@ -2003,20 +2003,31 @@ void SFMStatsFromIR(float* IR, size_t irLength, float* stats, int index, bool wr
     float meanSFM = 0.0f;
     float maxSFM = FLT_MIN;
     float minSFM = FLT_MAX;
+    float sumSFM = 0;
+    int nonZeroSFM = 0;
+    
     for(size_t i=0; i<numWindows-numWindowsToSkip; i ++){
-        meanSFM += SFMResults[i]; // mean
-        if(SFMResults[i] > maxSFM) maxSFM = SFMResults[i]; // max
-        if(SFMResults[i] < minSFM) minSFM = SFMResults[i]; // min
+        //skip if 0
+        if (SFMResults[i] > 0.00000001){
+            sumSFM += SFMResults[i];
+            if(SFMResults[i] > maxSFM) maxSFM = SFMResults[i]; // max
+            if(SFMResults[i] < minSFM) minSFM = SFMResults[i]; // min
+            nonZeroSFM++;
+        }
     }
-    meanSFM /= (float)(numWindows - numWindowsToSkip);
+    
+    meanSFM = sumSFM / (float)(nonZeroSFM);
     
     // calulate the std. dev.
     float variance = 0.0f;
     for(size_t i=0; i<numWindows-numWindowsToSkip; i ++){
-        float diff = SFMResults[i] - meanSFM;
-        variance += diff*diff;
+        //skip if 0
+        if (SFMResults[i] > 0.00000001){
+            float diff = SFMResults[i] - meanSFM;
+            variance += diff*diff;
+        }
     }
-    variance /= (float)(numWindows - numWindowsToSkip);
+    variance /= (float)(nonZeroSFM);
     float stdDev = sqrtf(variance);
     
 //    printf("*** SFM Stats ***\n");
@@ -2171,7 +2182,6 @@ void testFDN(int repeat, bool write){
         }
         
     }
-    
     
     char* filename = "OverallStats.csv";
     
