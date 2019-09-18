@@ -2019,11 +2019,11 @@ void SFMStatsFromIR(float* IR, size_t irLength, float* stats, int index, bool wr
     variance /= (float)(numWindows - numWindowsToSkip);
     float stdDev = sqrtf(variance);
     
-    printf("*** SFM Stats ***\n");
-    printf("mean: %f\n", meanSFM);
-    printf("std. dev.: %f\n", stdDev);
-    printf("min: %f\n", minSFM);
-    printf("max: %f\n", maxSFM);
+//    printf("*** SFM Stats ***\n");
+//    printf("mean: %f\n", meanSFM);
+//    printf("std. dev.: %f\n", stdDev);
+//    printf("min: %f\n", minSFM);
+//    printf("max: %f\n", maxSFM);
     
     stats[0] = meanSFM;
     stats[1] = stdDev;
@@ -2140,14 +2140,13 @@ void testFDN(int repeat, bool write){
     float* IR = malloc(sizeof(float)*IRLength);
     float* SFMStats = malloc(sizeof(float)*repeat*4);
     
-    
     for (int i = 0; i<repeat; i++){
         // initialise the reverberator
         BMSimpleFDN fdn;
         BMSimpleFDN_init(&fdn,
                          sampleRate,
                          numDelays,
-                         DTM_VELVETNOISE,
+                         DTM_RANDOM,
                          minDelayTime,
                          maxDelayTime,
                          FLT_MAX);
@@ -2165,11 +2164,14 @@ void testFDN(int repeat, bool write){
 
             arrayToFileWithName(IR, filename, IRLength);
         }
+        
+        if (i%50 == 0)
+        {
+            printf("Completed : %f%% \n", (float)i/(float)repeat * 100);
+        }
+        
     }
     
-    for (int i = 0; i< repeat*4; i++){
-        printf("%f\n", SFMStats[i]);
-    }
     char* filename = "OverallStats.csv";
     arrayToFileWithName(SFMStats, filename, repeat*4);
     
@@ -2184,7 +2186,7 @@ void testFDN(int repeat, bool write){
 
 
 int main(int argc, const char * argv[]) {
-    testFDN(100, false);
+    testFDN(1000, false);
     return 0;
 }
 
