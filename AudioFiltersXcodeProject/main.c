@@ -1985,10 +1985,7 @@ void testOversamplerImpulseResponse(){
 
 
 
-
-
-
-void SFMStatsFromIR(float* IR, size_t irLength){
+void SFMStatsFromIR(float* IR, size_t irLength, float* stats){
     // set up the SFM
     BMSFM sfm;
     size_t fftSize = 2048;
@@ -2028,6 +2025,11 @@ void SFMStatsFromIR(float* IR, size_t irLength){
     printf("min: %f\n", minSFM);
     printf("max: %f\n", maxSFM);
     
+    stats[0] = meanSFM;
+    stats[1] = stdDev;
+    stats[2] = minSFM;
+    stats[3] = maxSFM;
+    
     // output the SFM results to a file
     char* filename = "./SFMResults.csv";
     arrayToFileWithName(SFMResults, filename, numWindows-numWindowsToSkip);
@@ -2035,11 +2037,97 @@ void SFMStatsFromIR(float* IR, size_t irLength){
 
 
 
+typedef struct StatsValue{
+    float mean;
+    float stdev;
+    float min;
+    float max;
+}SFM_stats;
+
+void print_SFMStats(SFM_stats* row1, SFM_stats* row2, SFM_stats* row3, SFM_stats* row4){
+    printf("\t\t mean \t stdev\t min\t max\n");
+    printf("mean \t %f\t %f \t%f \t%f \n", row1->mean, row1->stdev, row1->min, row1->max);
+    printf("stdev \t %f\t %f \t%f \t%f \n", row2->mean, row2->stdev, row2->min, row2->max);
+    printf("min \t %f\t %f \t%f\t %f \n", row3->mean, row3->stdev, row3->min, row3->max);
+    printf("max \t %f\t %f \t%f \t%f \n", row4->mean, row4->stdev, row4->min, row4->max);
+    
+}
+
+void computeStats(float* data, int repeat, SFM_stats* result){
+    float mean_value = 0;
+    
+    float minVal = FLT_MAX_EXP;
+    float maxVal = FLT_MIN_10_EXP -37;
+    
+    float variance = 0;
+    float stdev = 0;
+    
+    for (int i = 0; i<repeat; i++){
+        mean_value += data[i] / (float) repeat;
+        if (data[i] > maxVal){
+            maxVal = data[i];
+        }
+        if (data[i] < minVal){
+            minVal = data[i];
+        }
+    }
+    
+    for (int i = 0; i<repeat; i++){
+        variance += (data[i] - mean_value) * (data[i] - mean_value);
+    }
+    variance /= (float) repeat;
+    stdev = sqrtf(variance);
+    
+    result->mean = mean_value;
+    result->stdev = stdev;
+    result->min = minVal;
+    result->max = maxVal;
+}
+
+void createAllStatsArray(float* SFMdata, int stride, int repeat, float* output){
+    for (int i = 0; i<repeat; i++){
+        output[i] = SFMdata[i*4 + stride];
+    }
+}
 
 
 
+void computeStatsMatrix(float* SFMdata, int values){
+    //create the 4x4 matrix
+    //         mean stdev min max
+    // mean
+    // stdev
+    // min
+    // max
+    
+    int repeat = values/4;
+    float* allMean = malloc(sizeof(float)*repeat);
+    float* allStdev = malloc(sizeof(float)*repeat);
+    float* allMin = malloc(sizeof(float)*repeat);
+    float* allMax = malloc(sizeof(float)*repeat);
+    
+    createAllStatsArray(SFMdata, 0, repeat, allMean);
+    createAllStatsArray(SFMdata, 1, repeat, allStdev);
+    createAllStatsArray(SFMdata, 2, repeat, allMin);
+    createAllStatsArray(SFMdata, 3, repeat, allMax);
+    
+    //each row is the data of which mean/stdev/min/max is computed
+    SFM_stats* row1 = malloc(sizeof(SFM_stats));
+    SFM_stats* row2 = malloc(sizeof(SFM_stats));
+    SFM_stats* row3 = malloc(sizeof(SFM_stats));
+    SFM_stats* row4 = malloc(sizeof(SFM_stats));
+    
+    computeStats(allMean, repeat, row1);
+    computeStats(allStdev, repeat, row2);
+    computeStats(allMin, repeat, row3);
+    computeStats(allMax, repeat, row4);
+    
+    print_SFMStats(row1, row2, row3, row4);
+    
+}
 
-void testFDN(){
+
+void testFDN(int repeat){
     // variables to set up the reverb
     float sampleRate = 48000;
     size_t numDelays = 16;
@@ -2047,37 +2135,52 @@ void testFDN(){
     float maxDelayTime = 2.0f * minDelayTime;
     size_t IRLength = (size_t)sampleRate * 3;
     float* IR = malloc(sizeof(float)*IRLength);
+    float* SFMStats = malloc(sizeof(float)*repeat*4);
     
     
-    // initialise the reverberator
-    BMSimpleFDN fdn;
-    BMSimpleFDN_init(&fdn,
-                     sampleRate,
-                     numDelays,
-                     DTM_VELVETNOISE,
-                     minDelayTime,
-                     maxDelayTime,
-                     FLT_MAX);
+    for (int i = 0; i<repeat; i++){
+        // initialise the reverberator
+        BMSimpleFDN fdn;
+        BMSimpleFDN_init(&fdn,
+                         sampleRate,
+                         numDelays,
+                         DTM_VELVETNOISE,
+                         minDelayTime,
+                         maxDelayTime,
+                         FLT_MAX);
+        
+        
+        // compute the impulse response
+        BMSimpleFDN_impulseResponse(&fdn, IR, IRLength);
+        
+        // output the impulse response to a file
+        char *filename = malloc(sizeof(char)*128);
+        sprintf(filename, "./impulseResponse%d.csv", i);
+
+        arrayToFileWithName(IR, filename, IRLength);
+        
+        // compute statistics on the SFM
+        SFMStatsFromIR(IR, IRLength, &SFMStats[i*4]);
+    }
     
+    for (int i = 0; i< repeat*4; i++){
+        printf("%f\n", SFMStats[i]);
+    }
+    char* filename = "OverallStats.csv";
+    arrayToFileWithName(SFMStats, filename, repeat*4);
     
-    // compute the impulse response
-    BMSimpleFDN_impulseResponse(&fdn, IR, IRLength);
+    computeStatsMatrix(SFMStats, repeat*4);
     
-    
-    // output the impulse response to a file
-    char* filename = "./impulseResponse.csv";
-    arrayToFileWithName(IR, filename, IRLength);
-    
-    // compute statistics on the SFM
-    SFMStatsFromIR(IR, IRLength);
 }
 
 
 
 
 
+
+
 int main(int argc, const char * argv[]) {
-    testFDN();
+    testFDN(100);
     return 0;
 }
 
