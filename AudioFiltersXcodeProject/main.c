@@ -1985,7 +1985,7 @@ void testOversamplerImpulseResponse(){
 
 
 
-void SFMStatsFromIR(float* IR, size_t irLength, float* stats){
+void SFMStatsFromIR(float* IR, size_t irLength, float* stats, int index, bool write){
     // set up the SFM
     BMSFM sfm;
     size_t fftSize = 2048;
@@ -2030,9 +2030,12 @@ void SFMStatsFromIR(float* IR, size_t irLength, float* stats){
     stats[2] = minSFM;
     stats[3] = maxSFM;
     
-    // output the SFM results to a file
-    char* filename = "./SFMResults.csv";
-    arrayToFileWithName(SFMResults, filename, numWindows-numWindowsToSkip);
+    if (write){
+        char *filename = malloc(sizeof(char)*128);
+        sprintf(filename, "./SFMResults%d.csv", index);
+        arrayToFileWithName(SFMResults, filename, numWindows-numWindowsToSkip);
+    }
+   
 }
 
 
@@ -2127,7 +2130,7 @@ void computeStatsMatrix(float* SFMdata, int values){
 }
 
 
-void testFDN(int repeat){
+void testFDN(int repeat, bool write){
     // variables to set up the reverb
     float sampleRate = 48000;
     size_t numDelays = 16;
@@ -2152,15 +2155,16 @@ void testFDN(int repeat){
         
         // compute the impulse response
         BMSimpleFDN_impulseResponse(&fdn, IR, IRLength);
-        
-        // output the impulse response to a file
-        char *filename = malloc(sizeof(char)*128);
-        sprintf(filename, "./impulseResponse%d.csv", i);
-
-        arrayToFileWithName(IR, filename, IRLength);
-        
         // compute statistics on the SFM
-        SFMStatsFromIR(IR, IRLength, &SFMStats[i*4]);
+        SFMStatsFromIR(IR, IRLength, &SFMStats[i*4], i, false);
+        
+        if (write){
+            // output the impulse response to a file
+            char *filename = malloc(sizeof(char)*128);
+            sprintf(filename, "./impulseResponse%d.csv", i);
+
+            arrayToFileWithName(IR, filename, IRLength);
+        }
     }
     
     for (int i = 0; i< repeat*4; i++){
@@ -2180,7 +2184,7 @@ void testFDN(int repeat){
 
 
 int main(int argc, const char * argv[]) {
-    testFDN(100);
+    testFDN(100, false);
     return 0;
 }
 
