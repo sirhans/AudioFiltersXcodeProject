@@ -1993,7 +1993,7 @@ void SFMStatsFromIR(float* IR, size_t irLength, float* stats, int index, bool wr
     
     // compute the SFM on windows from the impulse response.
     size_t numWindows = irLength / fftSize;
-    size_t numWindowsToSkip = 0; // skip the beginning of the IR
+    size_t numWindowsToSkip = 1; // skip the beginning of the IR
     float* SFMResults = malloc(sizeof(float)*(numWindows-numWindowsToSkip));
     for(size_t i=numWindowsToSkip; i<numWindows; i ++){
         SFMResults[i-numWindowsToSkip] = BMSFM_process(&sfm, IR + (fftSize * i), fftSize);
@@ -2135,7 +2135,7 @@ void testFDN(int repeat, bool write){
     float sampleRate = 48000;
     size_t numDelays = 16;
     float minDelayTime = 0.007f;
-    float maxDelayTime = 2.0f * minDelayTime;
+    float maxDelayTime = 10.0f * minDelayTime;
     size_t IRLength = (size_t)sampleRate * 3;
     float* IR = malloc(sizeof(float)*IRLength);
     float* SFMStats = malloc(sizeof(float)*repeat*4);
@@ -2146,7 +2146,7 @@ void testFDN(int repeat, bool write){
         BMSimpleFDN_init(&fdn,
                          sampleRate,
                          numDelays,
-                         DTM_RANDOM,
+                         DTM_RELATIVEPRIME,
                          minDelayTime,
                          maxDelayTime,
                          FLT_MAX);
@@ -2172,9 +2172,23 @@ void testFDN(int repeat, bool write){
         
     }
     
-    char* filename = "OverallStats.csv";
-    arrayToFileWithName(SFMStats, filename, repeat*4);
     
+    char* filename = "OverallStats.csv";
+    
+    FILE* audioFile;
+    audioFile = fopen(filename, "w+");
+    
+    // print out all the stats in .csv format
+    fprintf(audioFile,"mean, stdev, min, max\n");
+    for (size_t i=0; i<repeat*4; i = i+4) {
+        fprintf(audioFile, "%f,%f,%f,%f\n",SFMStats[i], SFMStats[i+1], SFMStats[i+2], SFMStats[i+3]);
+    }
+    
+    fclose(audioFile);
+    system("pwd");
+    printf("%s",filename);
+    printf("\n");
+
     computeStatsMatrix(SFMStats, repeat*4);
     
 }
