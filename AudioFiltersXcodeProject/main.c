@@ -2146,7 +2146,7 @@ void testFDN(int repeat, bool write){
     float sampleRate = 48000;
     size_t numDelays = 16;
     float minDelayTime = 0.007f;
-    float maxDelayTime = 10.0f * minDelayTime;
+    float maxDelayTime = 2.0f * minDelayTime;
     size_t IRLength = (size_t)sampleRate * 3;
     float* IR = malloc(sizeof(float)*IRLength);
     float* SFMStats = malloc(sizeof(float)*repeat*4);
@@ -2157,7 +2157,7 @@ void testFDN(int repeat, bool write){
         BMSimpleFDN_init(&fdn,
                          sampleRate,
                          numDelays,
-                         DTM_RELATIVEPRIME,
+                         DTM_VELVETNOISE,
                          minDelayTime,
                          maxDelayTime,
                          FLT_MAX);
@@ -2181,6 +2181,7 @@ void testFDN(int repeat, bool write){
             printf("Completed : %f%% \n", (float)i/(float)repeat * 100);
         }
         
+        BMSimpleFDN_free(&fdn);
     }
     
     char* filename = "OverallStats.csv";
