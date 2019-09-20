@@ -2145,7 +2145,7 @@ void testFDN(int repeat, bool write){
     // variables to set up the reverb
     float sampleRate = 48000;
     size_t numDelays = 16;
-    float minDelayTime = 0.007f;
+    float minDelayTime = 0.0070f;
     float maxDelayTime = 2.0f * minDelayTime;
     size_t IRLength = (size_t)sampleRate * 3;
     float* IR = malloc(sizeof(float)*IRLength);
@@ -2157,7 +2157,7 @@ void testFDN(int repeat, bool write){
         BMSimpleFDN_init(&fdn,
                          sampleRate,
                          numDelays,
-                         DTM_RANDOM,
+                         DTM_RANDOMFIXEDTOTAL,
                          minDelayTime,
                          maxDelayTime,
                          FLT_MAX);
