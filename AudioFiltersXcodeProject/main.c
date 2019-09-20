@@ -42,8 +42,10 @@
 #include "BMNoiseGate.h"
 #include "BMSimpleFDN.h"
 #include "BMSFM.h"
+#include "BMBetaPDF.h"
 
 #define TESTBUFFERLENGTH 128
+#define FFTSIZE 2048
 
 
 void testDelay(){
@@ -2012,16 +2014,54 @@ void getZValue(double* data, int values, double* z){
     
 }
 
+
+void hypothesisTestAlphaBeta(float* data, int values, bool* result){
+    float alpha = FFTSIZE* 0.339989 + 0.495;
+    float beta = FFTSIZE*0.265556 - 0.602;
+    
+    int count_fail = 0;
+    for (int i = 0; i<values; i++){
+        double percentile = BM_betaCDF(data[i], alpha, beta);
+        // left tailed at 10% significance level
+        if (percentile <= 0.1){
+//            printf("SFM value is : %f and it falls in percentile %f\n", data[i], percentile);
+            count_fail ++;
+        }
+    }
+    
+    float p_value = (float) count_fail / (float) values;
+    
+    // left tailed at 10% significance level
+    if (p_value >= 0.1f){
+        printf("Fails, because there's %d fails out of %d tries", count_fail, values);
+        result[0] = false; //fail the test
+    }
+    else{
+        result[0] = true; //doesn't fail the test
+    }
+}
+
+
 //p-value is 0.05
 void hypothesisTest(float* data, int values, bool* result){
     
     //convert all SFM data into W
     double* W = malloc(sizeof(double)*values);
     SFMtoWNormalised(data, W, values);
+    double z = 0;
+    getZValue(W, values, &z);
     
-
+    //two-tailed test, at 10% significance level
+    if (fabs(z) >= 1.645){
+        result[0] = false; //reject
+        printf("H0 is rejected, z value is: %f \n", z);
+    }
+    else{
+        result[0] = true; //does not reject
+        //        printf("H0 is not rejected \n");
+    }
     
-//    // save the normalised W values
+//    // save the normalised W values for debugging
     
 //    float* W_float = malloc(sizeof(float)*values);
 //    for (int i = 0; i < values; i++){
@@ -2031,18 +2071,6 @@ void hypothesisTest(float* data, int values, bool* result){
 //    char *filename = malloc(sizeof(char)*128);
 //    sprintf(filename, "./NormWResults.csv");
 //    arrayToFileWithName(W_float, filename,values);
-    
-    double z = 0;
-    getZValue(W, values, &z);
-    
-    if (fabs(z) >= 1.645){
-        result[0] = false; //reject
-//        printf("H0 is rejected \n");
-    }
-    else{
-        result[0] = true; //does not reject
-//        printf("H0 is not rejected \n");
-    }
     
     free(W);
 //    free(W_float);
@@ -2054,7 +2082,7 @@ void hypothesisTest(float* data, int values, bool* result){
 void SFMStatsAndHypothesisTestFromIR(float* IR, size_t irLength, float* stats, int index, bool write, int* failedIR){
     // set up the SFM
     BMSFM sfm;
-    size_t fftSize = 2048;
+    size_t fftSize = FFTSIZE;
     BMSFM_init(&sfm, fftSize);
     
     // compute the SFM on windows from the impulse response.
@@ -2118,10 +2146,10 @@ void SFMStatsAndHypothesisTestFromIR(float* IR, size_t irLength, float* stats, i
     
     //do hypothesis testing
     bool result = false;
-    hypothesisTest(SFMResultsWithoutZeroes, nonZeroSFM, &result);
-    
+//    hypothesisTest(SFMResultsWithoutZeroes, nonZeroSFM, &result);
+    hypothesisTestAlphaBeta(SFMResultsWithoutZeroes, nonZeroSFM, &result);
     if (result == false){
-        failedIR[0] += 1;
+        failedIR[0] ++;
         
         char *filename = malloc(sizeof(char)*128);
         char *filenameIR = malloc(sizeof(char)*128);
@@ -2316,7 +2344,7 @@ void testFDN(int repeat, bool write){
 
 
 int main(int argc, const char * argv[]) {
-    testFDN(500, false);
+    testFDN(200, false);
     return 0;
 }
 
