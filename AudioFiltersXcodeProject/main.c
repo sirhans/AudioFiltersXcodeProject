@@ -2157,7 +2157,7 @@ void testFDN(int repeat, bool write){
         BMSimpleFDN_init(&fdn,
                          sampleRate,
                          numDelays,
-                         DTM_PSEUDORANDOM,
+                         DTM_RANDOMFIXEDTOTAL,
                          minDelayTime,
                          maxDelayTime,
                          FLT_MAX);
@@ -2211,7 +2211,7 @@ void testFDN(int repeat, bool write){
 
 
 int main(int argc, const char * argv[]) {
-    testFDN(10, false);
+    testFDN(1000, false);
     return 0;
 }
 
