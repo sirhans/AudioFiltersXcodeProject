@@ -1985,7 +1985,73 @@ void testOversamplerImpulseResponse(){
 
 
 
-void SFMStatsFromIR(float* IR, size_t irLength, float* stats, int index, bool write){
+void SFMtoWNormalised(float* SFMwithoutZeroes, double* W, int values){
+    
+    double normalisationConstant = sqrt((double)values)/sqrt(pow(M_PI,2)-1);
+    for (int i = 0; i<values; i++){
+        W[i] = ((double)-1 * log((double)SFMwithoutZeroes[i]) - 0.57721566490153286060651209008240243104215933593992)*normalisationConstant;
+    }
+    
+}
+
+void getZValue(double* data, int values, double* z){
+    
+    //find mean of data
+    double sample_mean = 0;
+    
+    for (int i = 0; i<values; i++){
+        sample_mean += data[i]/(double)values;
+    }
+    
+    double mu_0 = 0.0;
+    double pop_var = 1;
+    z[0] = (sample_mean - mu_0)/(pop_var/sqrt(values));
+    
+//    printf("Sample mean is: %f \n", sample_mean);
+//    printf("Z-value is : %lf \n", z[0]);
+    
+}
+
+//p-value is 0.05
+void hypothesisTest(float* data, int values, bool* result){
+    
+    //convert all SFM data into W
+    double* W = malloc(sizeof(double)*values);
+    SFMtoWNormalised(data, W, values);
+    
+
+    
+//    // save the normalised W values
+    
+//    float* W_float = malloc(sizeof(float)*values);
+//    for (int i = 0; i < values; i++){
+//        W_float[i] = (float) W[i];
+//    }
+    
+//    char *filename = malloc(sizeof(char)*128);
+//    sprintf(filename, "./NormWResults.csv");
+//    arrayToFileWithName(W_float, filename,values);
+    
+    double z = 0;
+    getZValue(W, values, &z);
+    
+    if (fabs(z) >= 1.645){
+        result[0] = false; //reject
+//        printf("H0 is rejected \n");
+    }
+    else{
+        result[0] = true; //does not reject
+//        printf("H0 is not rejected \n");
+    }
+    
+    free(W);
+//    free(W_float);
+    
+}
+
+
+
+void SFMStatsAndHypothesisTestFromIR(float* IR, size_t irLength, float* stats, int index, bool write, int* failedIR){
     // set up the SFM
     BMSFM sfm;
     size_t fftSize = 2048;
@@ -1995,6 +2061,8 @@ void SFMStatsFromIR(float* IR, size_t irLength, float* stats, int index, bool wr
     size_t numWindows = irLength / fftSize;
     size_t numWindowsToSkip = 0; // skip the beginning of the IR
     float* SFMResults = malloc(sizeof(float)*(numWindows-numWindowsToSkip));
+    float* SFMResultsWithoutZeroes = malloc(sizeof(float)*(numWindows-numWindowsToSkip));
+    
     for(size_t i=numWindowsToSkip; i<numWindows; i ++){
         SFMResults[i-numWindowsToSkip] = BMSFM_process(&sfm, IR + (fftSize * i), fftSize);
     }
@@ -2012,6 +2080,7 @@ void SFMStatsFromIR(float* IR, size_t irLength, float* stats, int index, bool wr
             sumSFM += SFMResults[i];
             if(SFMResults[i] > maxSFM) maxSFM = SFMResults[i]; // max
             if(SFMResults[i] < minSFM) minSFM = SFMResults[i]; // min
+            SFMResultsWithoutZeroes[nonZeroSFM] = SFMResults[i];
             nonZeroSFM++;
         }
     }
@@ -2027,7 +2096,7 @@ void SFMStatsFromIR(float* IR, size_t irLength, float* stats, int index, bool wr
             variance += diff*diff;
         }
     }
-    variance /= (float)(nonZeroSFM);
+    variance /= (float)(nonZeroSFM-1);
     float stdDev = sqrtf(variance);
     
 //    printf("*** SFM Stats ***\n");
@@ -2046,7 +2115,27 @@ void SFMStatsFromIR(float* IR, size_t irLength, float* stats, int index, bool wr
         sprintf(filename, "./SFMResults%d.csv", index);
         arrayToFileWithName(SFMResults, filename, numWindows-numWindowsToSkip);
     }
+    
+    //do hypothesis testing
+    bool result = false;
+    hypothesisTest(SFMResultsWithoutZeroes, nonZeroSFM, &result);
+    
+    if (result == false){
+        failedIR[0] += 1;
+        
+        char *filename = malloc(sizeof(char)*128);
+        char *filenameIR = malloc(sizeof(char)*128);
+        sprintf(filename, "./FailedSFMResult%d.csv", index);
+        sprintf(filenameIR, "./FailedIRResult%d.csv", index);
+        arrayToFileWithName(IR, filenameIR, irLength);
+        arrayToFileWithName(SFMResultsWithoutZeroes, filename, nonZeroSFM);
+    
+        free(filename);
+        free(filenameIR);
+    }
    
+    free(SFMResultsWithoutZeroes);
+    free(SFMResults);
 }
 
 
@@ -2089,7 +2178,7 @@ void computeStats(float* data, int repeat, SFM_stats* result){
     for (int i = 0; i<repeat; i++){
         variance += (data[i] - mean_value) * (data[i] - mean_value);
     }
-    variance /= (float) repeat;
+    variance /= (float) (repeat-1);
     stdev = sqrtf(variance);
     
     result->mean = mean_value;
@@ -2138,8 +2227,17 @@ void computeStatsMatrix(float* SFMdata, int values){
     
     print_SFMStats(row1, row2, row3, row4);
     
+    free(allMean);
+    free(allStdev);
+    free(allMin);
+    free(allMax);
+    
+    free(row1);
+    free(row2);
+    free(row3);
+    free(row4);
+    
 }
-
 
 void testFDN(int repeat, bool write){
     // variables to set up the reverb
@@ -2150,6 +2248,7 @@ void testFDN(int repeat, bool write){
     size_t IRLength = (size_t)sampleRate * 3;
     float* IR = malloc(sizeof(float)*IRLength);
     float* SFMStats = malloc(sizeof(float)*repeat*4);
+    int failedIR = 0;
     
     for (int i = 0; i<repeat; i++){
         // initialise the reverberator
@@ -2157,7 +2256,7 @@ void testFDN(int repeat, bool write){
         BMSimpleFDN_init(&fdn,
                          sampleRate,
                          numDelays,
-                         DTM_RANDOMFIXEDTOTAL,
+                         DTM_RANDOM,
                          minDelayTime,
                          maxDelayTime,
                          FLT_MAX);
@@ -2165,9 +2264,9 @@ void testFDN(int repeat, bool write){
         
         // compute the impulse response
         BMSimpleFDN_impulseResponse(&fdn, IR, IRLength);
-        // compute statistics on the SFM
-        SFMStatsFromIR(IR, IRLength, &SFMStats[i*4], i, false);
-        
+        // compute statistics on the SFM and HypothesisTesting
+        SFMStatsAndHypothesisTestFromIR(IR, IRLength, &SFMStats[i*4], i, false, &failedIR);
+    
         if (write){
             // output the impulse response to a file
             char *filename = malloc(sizeof(char)*128);
@@ -2199,8 +2298,14 @@ void testFDN(int repeat, bool write){
     system("pwd");
     printf("%s",filename);
     printf("\n");
+    
+    printf("The number of failed SFMs is %d out of %d signals\n", failedIR, repeat);
 
+    //compute the statistic matrix
     computeStatsMatrix(SFMStats, repeat*4);
+    
+    free(SFMStats);
+    free(IR);
     
 }
 
@@ -2211,7 +2316,7 @@ void testFDN(int repeat, bool write){
 
 
 int main(int argc, const char * argv[]) {
-    testFDN(1, false);
+    testFDN(500, false);
     return 0;
 }
 
