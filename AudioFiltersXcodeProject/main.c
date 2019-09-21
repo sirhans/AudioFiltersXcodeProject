@@ -2016,24 +2016,18 @@ void getZValue(double* data, int values, double* z){
 
 
 void hypothesisTestAlphaBeta(float* data, int values, bool* result){
-    float alpha = FFTSIZE* 0.339989 + 0.495;
+    float alpha = FFTSIZE*0.339989 + 0.495;
     float beta = FFTSIZE*0.265556 - 0.602;
-    
-    int count_fail = 0;
+    float mean_data = 0;
+
     for (int i = 0; i<values; i++){
-        double percentile = BM_betaCDF(data[i], alpha, beta);
-        // left tailed at 10% significance level
-        if (percentile <= 0.1){
-//            printf("SFM value is : %f and it falls in percentile %f\n", data[i], percentile);
-            count_fail ++;
-        }
+        mean_data += data[i]/(float)values;
     }
     
-    float p_value = (float) count_fail / (float) values;
+    float p_value = BM_betaCDF(mean_data, alpha, beta);
     
-    // left tailed at 10% significance level
-    if (p_value >= 0.1f){
-        printf("Fails, because there's %d fails out of %d tries", count_fail, values);
+    // left tailed at 5% significance level
+    if (p_value <= 0.05f){
         result[0] = false; //fail the test
     }
     else{
@@ -2043,7 +2037,7 @@ void hypothesisTestAlphaBeta(float* data, int values, bool* result){
 
 
 //p-value is 0.05
-void hypothesisTest(float* data, int values, bool* result){
+void hypothesisTestNormal(float* data, int values, bool* result){
     
     //convert all SFM data into W
     double* W = malloc(sizeof(double)*values);
@@ -2078,22 +2072,72 @@ void hypothesisTest(float* data, int values, bool* result){
 }
 
 
+void SFMStatsPerIR(float* IR, size_t irLength, float* SFMValue){
+    //set up the FFT
+    BMFFT fft;
+    size_t fftSize = FFTSIZE;
+    size_t outputLengthfft = fftSize / 2;
+    
+    BMFFT_init(&fft, fftSize);
+    
+    // compute the FFT on windows from the impulse response.
+    size_t numWindows = irLength / fftSize;
+    size_t numWindowsToSkip = 1; // skip the beginning of the IR
+    
+    // prepare arrays for result
+    float* absFFTResult = malloc(sizeof(float)*outputLengthfft);
+    float* tempFFTResult = malloc(sizeof(float)*fftSize);
+    
+    for(size_t i=numWindowsToSkip; i<numWindows; i ++){
+        //Take FFT per window
+        BMFFT_absFFTCombinedDCNQ(&fft, IR + (fftSize*i), tempFFTResult, fftSize);
+        //store it to absFFTResult
+        for (int j = 0; j<outputLengthfft; j++){
+            absFFTResult[j] = tempFFTResult[j] / (float) numWindows;
+        }
+    }
+    
+    // square the result
+    vDSP_vsq(absFFTResult, 1, absFFTResult, 1, outputLengthfft);
+    
+    // find the sum of the logs of all elements
+    float logSum = 0.0f;
+    for(size_t i=0; i<outputLengthfft; i++){
+        logSum += log2f(absFFTResult[i]);
+        if(absFFTResult[i]==0)
+            printf("zero");
+    }
+    
+    float geometricMean = powf(2.0f,logSum/(float)outputLengthfft);
+    
+    float arithmeticMean;
+    vDSP_meanv(absFFTResult, 1, &arithmeticMean, outputLengthfft);
+    
+    SFMValue[0] = geometricMean / arithmeticMean;
+}
 
 void SFMStatsAndHypothesisTestFromIR(float* IR, size_t irLength, float* stats, int index, bool write, int* failedIR){
     // set up the SFM
     BMSFM sfm;
+    
     size_t fftSize = FFTSIZE;
+    
     BMSFM_init(&sfm, fftSize);
     
     // compute the SFM on windows from the impulse response.
     size_t numWindows = irLength / fftSize;
     size_t numWindowsToSkip = 0; // skip the beginning of the IR
+    
     float* SFMResults = malloc(sizeof(float)*(numWindows-numWindowsToSkip));
     float* SFMResultsWithoutZeroes = malloc(sizeof(float)*(numWindows-numWindowsToSkip));
     
     for(size_t i=numWindowsToSkip; i<numWindows; i ++){
+        //take SFM per window
         SFMResults[i-numWindowsToSkip] = BMSFM_process(&sfm, IR + (fftSize * i), fftSize);
+        
     }
+    
+    
     
     // calculate the min, max and mean
     float meanSFM = 0.0f;
@@ -2145,8 +2189,9 @@ void SFMStatsAndHypothesisTestFromIR(float* IR, size_t irLength, float* stats, i
     }
     
     //do hypothesis testing
+    //TODO: move this into testFDN  because we are testing the delay line setting
     bool result = false;
-//    hypothesisTest(SFMResultsWithoutZeroes, nonZeroSFM, &result);
+//    hypothesisTestNormal(SFMResultsWithoutZeroes, nonZeroSFM, &result);
     hypothesisTestAlphaBeta(SFMResultsWithoutZeroes, nonZeroSFM, &result);
     if (result == false){
         failedIR[0] ++;
@@ -2267,15 +2312,23 @@ void computeStatsMatrix(float* SFMdata, int values){
     
 }
 
-void testFDN(int repeat, bool write){
+
+/*@param repeat : how many IRs to produce
+ *@param write : enable all IRs produce to file
+ *@param method:
+        - 0 -> take one SFM per IR, average absFFT per window
+        - 1 -> take multiple SFMs per IR from efach windowed absFFT
+ */
+void testFDN(int repeat, bool write, int method){
     // variables to set up the reverb
     float sampleRate = 48000;
     size_t numDelays = 16;
     float minDelayTime = 0.0070f;
-    float maxDelayTime = 2.0f * minDelayTime;
+    float maxDelayTime = 4.f * minDelayTime;
     size_t IRLength = (size_t)sampleRate * 3;
     float* IR = malloc(sizeof(float)*IRLength);
     float* SFMStats = malloc(sizeof(float)*repeat*4);
+    float* SFMPerIR = malloc(sizeof(float)*repeat);
     int failedIR = 0;
     
     for (int i = 0; i<repeat; i++){
@@ -2284,7 +2337,7 @@ void testFDN(int repeat, bool write){
         BMSimpleFDN_init(&fdn,
                          sampleRate,
                          numDelays,
-                         DTM_RANDOM,
+                         DTM_PSEUDORANDOM,
                          minDelayTime,
                          maxDelayTime,
                          FLT_MAX);
@@ -2292,8 +2345,12 @@ void testFDN(int repeat, bool write){
         
         // compute the impulse response
         BMSimpleFDN_impulseResponse(&fdn, IR, IRLength);
+        
+        // compute SFM for the overall IR
+        if (method == 0) SFMStatsPerIR(IR, IRLength, &SFMPerIR[i]);
+        
         // compute statistics on the SFM and HypothesisTesting
-        SFMStatsAndHypothesisTestFromIR(IR, IRLength, &SFMStats[i*4], i, false, &failedIR);
+        if (method == 1) SFMStatsAndHypothesisTestFromIR(IR, IRLength, &SFMStats[i*4], i, false, &failedIR);
     
         if (write){
             // output the impulse response to a file
@@ -2311,26 +2368,50 @@ void testFDN(int repeat, bool write){
         BMSimpleFDN_free(&fdn);
     }
     
-    char* filename = "OverallStats.csv";
-    
-    FILE* audioFile;
-    audioFile = fopen(filename, "w+");
-    
-    // print out all the stats in .csv format
-    fprintf(audioFile,"mean, stdev, min, max\n");
-    for (size_t i=0; i<repeat*4; i = i+4) {
-        fprintf(audioFile, "%f,%f,%f,%f\n",SFMStats[i], SFMStats[i+1], SFMStats[i+2], SFMStats[i+3]);
+    if (method == 0){
+        //do hypothesis testing
+        bool* results = malloc(sizeof(bool)*repeat);
+        int count_fail = 0;
+        
+        for (int i = 0; i<repeat; i++){
+            hypothesisTestAlphaBeta(&SFMPerIR[i], 1, &results[i]);
+//            hypothesisTestNormal(&SFMPerIR[i], 1, &results[i]);
+            if (results[i] == false){
+                count_fail++;
+            }
+        }
+        
+        printf("This batch of %d IRs has %d non-white impulses.\n",repeat, count_fail);
+        SFM_stats* stats = malloc(sizeof(SFM_stats));
+        computeStats(SFMPerIR, repeat, stats);
+        
+        printf("SFM Mean: %f\n SFM stdev: %f \n SFM min: %f \n SFM max: %f \n", stats->mean, stats->stdev, stats->min, stats->max);
+        
+        
     }
     
-    fclose(audioFile);
-    system("pwd");
-    printf("%s",filename);
-    printf("\n");
-    
-    printf("The number of failed SFMs is %d out of %d signals\n", failedIR, repeat);
+    if (method == 1){
+        char* filename = "OverallStats.csv";
+        
+        FILE* audioFile;
+        audioFile = fopen(filename, "w+");
+        
+        // print out all the stats in .csv format
+        fprintf(audioFile,"mean, stdev, min, max\n");
+        for (size_t i=0; i<repeat*4; i = i+4) {
+            fprintf(audioFile, "%f,%f,%f,%f\n",SFMStats[i], SFMStats[i+1], SFMStats[i+2], SFMStats[i+3]);
+        }
+        
+        fclose(audioFile);
+        system("pwd");
+        printf("%s",filename);
+        printf("\n");
+        
+        printf("The number of failed SFMs is %d out of %d signals\n", failedIR, repeat);
 
-    //compute the statistic matrix
-    computeStatsMatrix(SFMStats, repeat*4);
+        //compute the statistic matrix
+        computeStatsMatrix(SFMStats, repeat*4);
+    }
     
     free(SFMStats);
     free(IR);
@@ -2344,7 +2425,7 @@ void testFDN(int repeat, bool write){
 
 
 int main(int argc, const char * argv[]) {
-    testFDN(200, false);
+    testFDN(1000, false,0);
     return 0;
 }
 
