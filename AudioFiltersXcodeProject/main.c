@@ -24,7 +24,6 @@
 #include "BMBiquadArray.h"
 #include "BMMultiTapDelay.h"
 #include "BMReverb.h"
-#include "BMStereoModulator.h"
 #include "TestReverb.h"
 #include "BMLagrangeInterpolation.h"
 #include "BMMultiLevelSVF.h"
@@ -188,7 +187,7 @@ void testButterworthFilter(){
 
 void testVND(){
     BMVelvetNoiseDecorrelator vndFilter;
-    BMVelvetNoiseDecorrelator_init(&vndFilter, true, 80,80, 100,100, 48000,80);
+    BMVelvetNoiseDecorrelator_init(&vndFilter, 0.100, 100, 3.0f, 48000.0f, 1.0f);
 }
 
 void testRRStartNote(BMRoundRobin rrb){
@@ -232,40 +231,6 @@ void testBiquadArray(){
     BMBiquadArray_free(&bqa);
 }
 
-void testStereoModulator(){
-    float sampleRate = 44100;
-    BMStereoModulator stereoModFilter;
-    
-    BMStereoModulator_init(&stereoModFilter, sampleRate,S_Tightness_DV,S_Tightness_Max,S_Density_DV,S_Density_Max,S_Quad_DV);
-    
-    size_t frameCount = 256;
-    float* input = malloc(sizeof(float)*frameCount);
-    float* output = malloc(sizeof(float)*frameCount);
-    int zero = 0;
-    input[0] = 1;
-    memset(input+1, zero, sizeof(float)*(frameCount-1));
-    int random = 0;
-    float factor = 0;
-    while (true) {
-        BMStereoModulator_processStereo(&stereoModFilter, input, input, output, output, frameCount);
-        //Change parameter
-        random = arc4random()%5;
-        factor = (arc4random()%100)/100.;
-        if(random==0){
-            //Change numtap
-            int newNumtap = roundf((S_Density_Max - S_Density_Min)*factor) + S_Density_Min;
-            BMStereoModulator_setNumTap(&stereoModFilter, newNumtap);
-        }else if(random==1){
-            //Change delaytime
-            int tightness = roundf((S_Tightness_Max-S_Tightness_Min)*factor) + S_Tightness_Min;
-            BMStereoModulator_setDelayTime(&stereoModFilter, tightness);
-        }else if(random==2){
-            //Re-init struct
-            BMStereoModulator_destroy(&stereoModFilter);
-            BMStereoModulator_init(&stereoModFilter, sampleRate,S_Tightness_DV,S_Tightness_Max,S_Density_DV,S_Density_Max,S_Quad_DV);
-        }
-    }
-}
 
 void testTestReverb(){
     TestReverb rv;
