@@ -31,7 +31,6 @@
 		4C0FD74D2280186500995864 /* BMBinauralSynthesis.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */; };
 		4C688A382244CF6700E3B1E6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C688A372244CF6700E3B1E6 /* main.c */; };
 		4C8E3C9C22F0288E00B17824 /* BMVAStateVariableFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C8E3C9B22F0288E00B17824 /* BMVAStateVariableFilter.c */; };
-		4CC13A672244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F22244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c */; };
 		4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F52244D80B003FA1B9 /* BMDiffusion.c */; };
 		4CC13A692244D80B003FA1B9 /* BMMultiLevelSVF.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F62244D80B003FA1B9 /* BMMultiLevelSVF.c */; };
 		4CC13A6A2244D80B003FA1B9 /* BMCrossover.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139FA2244D80B003FA1B9 /* BMCrossover.c */; };
@@ -635,7 +634,6 @@
 				4CC13A872244D80B003FA1B9 /* BMUpsampler.c in Sources */,
 				4CC13A712244D80B003FA1B9 /* BMRoundRobinFilter.c in Sources */,
 				4CC13A7B2244D80B003FA1B9 /* BMMultiTapDelay.c in Sources */,
-				4CC13A672244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c in Sources */,
 				4CC13A762244D80B003FA1B9 /* BMQuadratureOscillator.c in Sources */,
 				4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */,
 				3AAEA15422B3420B0066D852 /* BMHoldPeak.c in Sources */,
