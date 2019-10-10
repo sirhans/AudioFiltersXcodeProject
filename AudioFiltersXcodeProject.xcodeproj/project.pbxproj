@@ -23,6 +23,7 @@
 		3AB0E90022CDBC8A00B0394F /* BMWaveshaping.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB0E8FF22CDBC8A00B0394F /* BMWaveshaping.c */; };
 		3AB41758229F843500AECC6E /* BMVariableFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41757229F843500AECC6E /* BMVariableFilter.c */; };
 		3AB4175B22A61DBF00AECC6E /* BMLevelMeter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4175922A61DBF00AECC6E /* BMLevelMeter.c */; };
+		3AB594E6234F3EA3007D31E8 /* BMVelvetNoiseDecorrelator.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F22244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c */; };
 		3ABD5533233496EC002765A6 /* incbeta.c in Sources */ = {isa = PBXBuildFile; fileRef = 3ABD5532233496EC002765A6 /* incbeta.c */; };
 		3AD52136234DBCF3000CC7E0 /* BMMonoToStereo.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AD52135234DBCF3000CC7E0 /* BMMonoToStereo.c */; };
 		3AEB17BC228AAA54004C7E4E /* BMWetDryMixer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB17B9228AAA54004C7E4E /* BMWetDryMixer.c */; };
@@ -659,6 +660,7 @@
 				3A874E9522F157B800B97FC2 /* BMTanhLimiter.c in Sources */,
 				3A9E06C122E1651100ECB53B /* BMIIRDownsampler2x.c in Sources */,
 				4CC13A8C2244D80B003FA1B9 /* BMNoiseGate.c in Sources */,
+				3AB594E6234F3EA3007D31E8 /* BMVelvetNoiseDecorrelator.c in Sources */,
 				4CC13A6E2244D80B003FA1B9 /* BMVelocityFilter.c in Sources */,
 				4CC13A7C2244D80B003FA1B9 /* BMReverb.c in Sources */,
 				3A7FDAF7231684170090EC36 /* BMChamberlinSVF.c in Sources */,
