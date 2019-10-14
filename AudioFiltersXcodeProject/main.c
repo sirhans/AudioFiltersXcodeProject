@@ -2424,7 +2424,7 @@ void testFDN(int repeat, bool write, int method){
 		BMSimpleFDN_init(&fdn,
 						 sampleRate,
 						 numDelays,
-						 DTM_RANDOMFIXEDTOTAL,
+						 DTM_VELVETNOISE,
 						 minDelayTime,
 						 maxDelayTime,
 						 FLT_MAX);
@@ -2535,8 +2535,7 @@ void testFDN(int repeat, bool write, int method){
 
 
 int main(int argc, const char * argv[]) {
-	//testFDN(10000, false, 1);
-	testMonoToStereo();
+	testFDN(10000, false, 1);
 	return 0;
 }
 
