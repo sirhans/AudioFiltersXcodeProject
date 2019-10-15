@@ -45,7 +45,7 @@
 #include "BMBetaPDF.h"
 
 #define TESTBUFFERLENGTH 128
-#define FFTSIZE 2048
+#define FFTSIZE 4096*2*2*2*2*2
 
 
 void testDelay(){
@@ -2108,7 +2108,7 @@ void SFMStatsPerIR(float* IR, size_t irLength, float* SFMValue){
     SFMValue[0] = geometricMean / arithmeticMean;
 }
 
-void SFMStatsMultiplePerIR(float* IR, size_t irLength, float* SFMValue, float* stats){
+void SFMStatsMultiplePerIR(float* IR, size_t irLength, float* SFMValue, float* stats, bool write){
     // set up the SFM
     BMSFM sfm;
     
@@ -2171,6 +2171,14 @@ void SFMStatsMultiplePerIR(float* IR, size_t irLength, float* SFMValue, float* s
     stats[1] = stdDev;
     stats[2] = minSFM;
     stats[3] = maxSFM;
+    
+    if (write){
+        // output the impulse response to a file
+        char *filename = malloc(sizeof(char)*128);
+        sprintf(filename, "./SFMValuesPerIR.csv");
+
+        arrayToFileWithName(SFMResultsWithoutZeroes, filename, nonZeroSFM);
+    }
  
     free(SFMResultsWithoutZeroes);
     free(SFMResults);
@@ -2311,7 +2319,7 @@ void generateStdNormal(float* input, int size){
  */
 void testFDN(int repeat, bool write, int method){
     // variables to set up the reverb
-    float sampleRate = 48000;
+    float sampleRate = 48000*10;
     size_t numDelays = 16;
     float minDelayTime = 0.0070f;
     float maxDelayTime = 5.f * minDelayTime;
@@ -2328,7 +2336,7 @@ void testFDN(int repeat, bool write, int method){
         BMSimpleFDN_init(&fdn,
                          sampleRate,
                          numDelays,
-                         DTM_RANDOMFIXEDTOTAL,
+                         DTM_RANDOM,
                          minDelayTime,
                          maxDelayTime,
                          FLT_MAX);
@@ -2349,10 +2357,10 @@ void testFDN(int repeat, bool write, int method){
         if (method == 0) SFMStatsPerIR(IR, IRLength, &SFMPerIR[i]);
         
         // compute 1 SFM per IR by taking the last window
-        if (method == 1) SFMStatsMultiplePerIR(sampledIR, FFTSIZE, &SFMPerIR[i], &SFMStats[i*4]);
+        if (method == 1) SFMStatsMultiplePerIR(sampledIR, FFTSIZE, &SFMPerIR[i], &SFMStats[i*4], false);
         
         // compute multiple SFMs per IR
-        if (method == 2) SFMStatsMultiplePerIR(IR, IRLength, &SFMPerIR[i], &SFMStats[i*4]);
+        if (method == 2) SFMStatsMultiplePerIR(IR, IRLength, &SFMPerIR[i], &SFMStats[i*4], true);
     
         if (write){
             // output the impulse response to a file
@@ -2369,7 +2377,6 @@ void testFDN(int repeat, bool write, int method){
         
         BMSimpleFDN_free(&fdn);
     }
-    
     
     //write the SFMs to file
     char* filename = "SFMs.csv";
@@ -2439,7 +2446,7 @@ void testFDN(int repeat, bool write, int method){
 
 
 int main(int argc, const char * argv[]) {
-    testFDN(10000, false, 1);
+    testFDN(1, false, 2);
     return 0;
 }
 
