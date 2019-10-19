@@ -2172,10 +2172,13 @@ void SFMStatsPerIR(float* IR, size_t irLength, float* SFMValue){
 	// prepare arrays for result
 	float* absFFTResult = malloc(sizeof(float)*outputLengthfft);
 	float* tempFFTResult = malloc(sizeof(float)*fftSize);
+    float* windowedFFTResult = malloc(sizeof(float)*fftSize);
 	
 	memset(absFFTResult, 0, outputLengthfft);
 	
 	for(size_t i=numWindowsToSkip; i<numWindows; i ++){
+        //Do hamming window
+        BMFFT_hammingWindow(&fft, IR + (fftSize*i), windowedFFTResult, fftSize);
 		//Take FFT per window
 		BMFFT_absFFTCombinedDCNQ(&fft, IR + (fftSize*i), tempFFTResult, fftSize);
 		//store it to absFFTResult
@@ -2202,6 +2205,10 @@ void SFMStatsPerIR(float* IR, size_t irLength, float* SFMValue){
 	vDSP_meanv(absFFTResult, 1, &arithmeticMean, outputLengthfft);
 	
 	SFMValue[0] = geometricMean / arithmeticMean;
+    
+    free(windowedFFTResult);
+    free(tempFFTResult);
+    free(absFFTResult);
 }
 
 
