@@ -2180,7 +2180,7 @@ void SFMStatsPerIR(float* IR, size_t irLength, float* SFMValue){
         //Do hamming window
         BMFFT_hammingWindow(&fft, IR + (fftSize*i), windowedFFTResult, fftSize);
 		//Take FFT per window
-		BMFFT_absFFTCombinedDCNQ(&fft, IR + (fftSize*i), tempFFTResult, fftSize);
+		BMFFT_absFFTCombinedDCNQ(&fft, windowedFFTResult, tempFFTResult, fftSize);
 		//store it to absFFTResult
 		for (int j = 0; j<outputLengthfft; j++){
 			absFFTResult[j] += tempFFTResult[j] / (float) outputLengthfft;
