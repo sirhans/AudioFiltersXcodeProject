@@ -46,7 +46,7 @@
 #include "BMMonoToStereo.h"
 
 #define TESTBUFFERLENGTH 128
-#define FFTSIZE 4096*2*2*2*2*2
+#define FFTSIZE 4096
 
 
 
@@ -2204,7 +2204,7 @@ void SFMStatsPerIR(float* IR, size_t irLength, float* SFMValue){
 	SFMValue[0] = geometricMean / arithmeticMean;
 }
 
-<<<<<<< HEAD
+
 void SFMStatsMultiplePerIR(float* IR, size_t irLength, float* SFMValue, float* stats, bool write){
     // set up the SFM
     BMSFM sfm;
@@ -2258,11 +2258,11 @@ void SFMStatsMultiplePerIR(float* IR, size_t irLength, float* SFMValue, float* s
     variance /= (float)(nonZeroSFM-1);
     float stdDev = sqrtf(variance);
     
-    //    printf("*** SFM Stats ***\n");
-    //    printf("mean: %f\n", meanSFM);
-    //    printf("std. dev.: %f\n", stdDev);
-    //    printf("min: %f\n", minSFM);
-    //    printf("max: %f\n", maxSFM);
+//    printf("*** SFM Stats ***\n");
+//    printf("mean: %f\n", meanSFM);
+//    printf("std. dev.: %f\n", stdDev);
+//    printf("min: %f\n", minSFM);
+//    printf("max: %f\n", maxSFM);
     
     stats[0] = meanSFM;
     stats[1] = stdDev;
@@ -2279,78 +2279,6 @@ void SFMStatsMultiplePerIR(float* IR, size_t irLength, float* SFMValue, float* s
  
     free(SFMResultsWithoutZeroes);
     free(SFMResults);
-    
-    
-=======
-void SFMStatsMultiplePerIR(float* IR, size_t irLength, float* SFMValue, float* stats){
-	// set up the SFM
-	BMSFM sfm;
-	
-	size_t fftSize = FFTSIZE;
-	
-	BMSFM_init(&sfm, fftSize);
-	
-	// compute the SFM on windows from the impulse response.
-	size_t numWindows = irLength / fftSize;
-	size_t numWindowsToSkip = 0; // skip the beginning of the IR
-	
-	float* SFMResults = malloc(sizeof(float)*(numWindows-numWindowsToSkip));
-	float* SFMResultsWithoutZeroes = malloc(sizeof(float)*(numWindows-numWindowsToSkip));
-	
-	for(size_t i=numWindowsToSkip; i<numWindows; i ++){
-		//take SFM per window
-		SFMResults[i-numWindowsToSkip] = BMSFM_process(&sfm, IR + (fftSize * i), fftSize);
-		SFMValue[i-numWindowsToSkip] = SFMResults[i-numWindowsToSkip];
-	}
-	
-	// calculate the min, max and mean
-	float meanSFM = 0.0f;
-	float maxSFM = FLT_MIN;
-	float minSFM = FLT_MAX;
-	float sumSFM = 0;
-	int nonZeroSFM = 0;
-	
-	for(size_t i=0; i<numWindows-numWindowsToSkip; i ++){
-		//skip if 0
-		if (SFMResults[i] > 0.00000001){
-			sumSFM += SFMResults[i];
-			if(SFMResults[i] > maxSFM) maxSFM = SFMResults[i]; // max
-			if(SFMResults[i] < minSFM) minSFM = SFMResults[i]; // min
-			SFMResultsWithoutZeroes[nonZeroSFM] = SFMResults[i];
-			nonZeroSFM++;
-		}
-	}
-	
-	meanSFM = sumSFM / (float)(nonZeroSFM);
-	
-	// calulate the std. dev.
-	float variance = 0.0f;
-	for(size_t i=0; i<numWindows-numWindowsToSkip; i ++){
-		//skip if 0
-		if (SFMResults[i] > 0.00000001){
-			float diff = SFMResults[i] - meanSFM;
-			variance += diff*diff;
-		}
-	}
-	variance /= (float)(nonZeroSFM-1);
-	float stdDev = sqrtf(variance);
-	
-	//    printf("*** SFM Stats ***\n");
-	//    printf("mean: %f\n", meanSFM);
-	//    printf("std. dev.: %f\n", stdDev);
-	//    printf("min: %f\n", minSFM);
-	//    printf("max: %f\n", maxSFM);
-	
-	stats[0] = meanSFM;
-	stats[1] = stdDev;
-	stats[2] = minSFM;
-	stats[3] = maxSFM;
-	
-	free(SFMResultsWithoutZeroes);
-	free(SFMResults);
-	
-	
->>>>>>> 61804e037f7cb9c9d4fcb3e59b3f1ff0405ff254
 }
 
 
@@ -2486,14 +2414,16 @@ void generateStdNormal(float* input, int size){
  */
 void testFDN(int repeat, bool write, int method){
     // variables to set up the reverb
-    float sampleRate = 48000*10;
+    float sampleRate = 48000;
     size_t numDelays = 16;
     float minDelayTime = 0.0070f;
-    float maxDelayTime = 5.f * minDelayTime;
-    size_t IRLength = (size_t)sampleRate * 1;
+    float maxDelayTime = 3.f * minDelayTime;
+    size_t IRLength = (size_t)sampleRate * 3;
     float* IR = malloc(sizeof(float)*IRLength);
     float* SFMStats = malloc(sizeof(float)*repeat*4);
     float* SFMPerIR = malloc(sizeof(float)*repeat);
+    
+    assert(IRLength > maxDelayTime * sampleRate);
     
     float* sampledIR = malloc(sizeof(float)*FFTSIZE);
     
@@ -2510,10 +2440,10 @@ void testFDN(int repeat, bool write, int method){
 
         
         //compute the impulse response
-//        BMSimpleFDN_impulseResponse(&fdn, IR, IRLength);
+        BMSimpleFDN_impulseResponse(&fdn, IR, IRLength);
         
         // generate white noise for testing
-        generateWhiteNoise(IR, (int) IRLength);
+     //   generateWhiteNoise(IR, (int) IRLength);
 
         //sample the last FFTSIZE samples from the IR
         for(int k = 0; k<FFTSIZE; k++){
@@ -2527,7 +2457,7 @@ void testFDN(int repeat, bool write, int method){
         if (method == 1) SFMStatsMultiplePerIR(sampledIR, FFTSIZE, &SFMPerIR[i], &SFMStats[i*4], false);
         
         // compute multiple SFMs per IR
-        if (method == 2) SFMStatsMultiplePerIR(IR, IRLength, &SFMPerIR[i], &SFMStats[i*4], true);
+        if (method == 2) SFMStatsMultiplePerIR(IR, IRLength, &SFMPerIR[i], &SFMStats[i*4], false);
     
         if (write){
             // output the impulse response to a file
@@ -2569,22 +2499,10 @@ void testFDN(int repeat, bool write, int method){
         
         printf("SFM Mean: %f\n SFM stdev: %f \n SFM min: %f \n SFM max: %f \n", stats->mean, stats->stdev, stats->min, stats->max);
         
-        //manual hypothesis testing, not statistically backed
-//        bool* results = malloc(sizeof(bool)*repeat);
-//        int count_fail = 0;
-//
-//        for (int i = 0; i<repeat; i++){
-//            hypothesisTestAlphaBeta(&SFMPerIR[i], 1, &results[i]);
-//            if (results[i] == false){
-//                count_fail++;
-//            }
-//        }
-//        printf("Batch of %d IRs has %d non-white impulses.\n",repeat, count_fail);
-        
     }
 
     
-    //this method doesn't need a hypothesis test because mean of mean of SFM ~ 1
+    //this method doesn't need a hypothesis test because mean of mean of SFM follows normal distribution
     if (method == 2){
         char* filename = "OverallStats.csv";
         
@@ -2614,7 +2532,7 @@ void testFDN(int repeat, bool write, int method){
 
 int main(int argc, const char * argv[]) {
 
-    testFDN(1, false, 2);
+    testFDN(100, false, 2);
     return 0;
 
 }
