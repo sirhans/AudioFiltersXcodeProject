@@ -678,10 +678,10 @@ void testInRangef(){
 
 
 /*
- * This function behaves like the function g(x) = x for x near zero but
+  *This function behaves like the function g(x) = x for x near zero but
  * its response tapers off asymptotically to +- limit as abs(x) increases.
  *
- * THIS FUNCTION DOES NOT WORK IN PLACE. (requires input != output)
+  *This FUNCTION DOES NOT WORK IN PLACE. (requires input != output)
  *
  * Function definition:
  *   f(x,limit) = x / (1 + |x/limit|)
@@ -811,7 +811,7 @@ void asymptoticLimitTest5(float limit,
 
 
 /*
- * This is fastest on ARM processors
+  *This is fastest on ARM processors
  */
 void asymptoticLimitTest6(float limit,
 						  float* input,
@@ -1262,9 +1262,9 @@ void testCriticallyDampedFilterStepResponse(){
 	float filterFrequency = 1.0 / (alpha * attackTimeInSeconds);
 	printf("filter frequency: %f\n", filterFrequency);
 	
-	BMMultiLevelBiquad bqf;
-	BMMultiLevelBiquad_init(&bqf, 4, sampleRate, false, true, false);
-	BMMultiLevelBiquad_setCriticallyDampedLP(&bqf, filterFrequency, 0, 4);
+	BMMultiLevelBiquad This;
+	BMMultiLevelBiquad_init(&This, 4, sampleRate, false, true, false);
+	BMMultiLevelBiquad_setCriticallyDampedLP(&This, filterFrequency, 0, 4);
 	
 	float timeBeforeStart = 0.1;
 	float stepLength = 1.0;
@@ -1282,7 +1282,7 @@ void testCriticallyDampedFilterStepResponse(){
 		input[i] = 1.0f;
 	}
 	
-	BMMultiLevelBiquad_processBufferMono(&bqf, input, input, totalLength);
+	BMMultiLevelBiquad_processBufferMono(&This, input, input, totalLength);
 	
 	arrayToFile(input+beforeStartNumSamples, stepLengthNumSamples);
 	
@@ -1311,10 +1311,10 @@ void testCriticallyDampedFilterFrequencyResponse(){
 	float filterFrequency = 1.0 / (alpha * attackTimeInSeconds);
 	printf("filter frequency: %f\n", filterFrequency);
 	
-	BMMultiLevelBiquad bqf;
+	BMMultiLevelBiquad This;
 	size_t numLevels = 4;
-	BMMultiLevelBiquad_init(&bqf, numLevels, sampleRate, false, true, false);
-	BMMultiLevelBiquad_setCriticallyDampedLP(&bqf, filterFrequency, 0, numLevels);
+	BMMultiLevelBiquad_init(&This, numLevels, sampleRate, false, true, false);
+	BMMultiLevelBiquad_setCriticallyDampedLP(&This, filterFrequency, 0, numLevels);
 	
 	
 	float frequencies [1024];
@@ -1327,7 +1327,7 @@ void testCriticallyDampedFilterFrequencyResponse(){
 		frequencies[i] = powf(2.0f,alpha);
 	}
 	
-	BMMultiLevelBiquad_tfMagVector(&bqf, frequencies, magnitudes, 1024);
+	BMMultiLevelBiquad_tfMagVector(&This, frequencies, magnitudes, 1024);
 	
 	for(size_t i=0; i < 1024; i++){
 		magnitudes[i] = BM_GAIN_TO_DB(magnitudes[i]);
@@ -1740,7 +1740,7 @@ void testUpsampler(){
 	size_t upsampleFactor = 8;
 	
 	BMUpsampler us;
-	BMUpsampler_init(&us, false, upsampleFactor);
+	BMUpsampler_init(&us, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
 	
 	float sampleRate = 48000.0f;
 	size_t testLength = sampleRate * 5 / upsampleFactor;
@@ -1766,7 +1766,7 @@ void testDownsampler(){
 	size_t downsampleFactor = 8;
 	
 	BMDownsampler ds;
-	BMDownsampler_init(&ds, false, downsampleFactor);
+	BMDownsampler_init(&ds, false, downsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
 	
 	float sampleRate = 48000.0f;
 	size_t testLength = sampleRate * 5 * downsampleFactor;
@@ -1791,8 +1791,8 @@ void testUpDownsampler(){
 	
 	BMDownsampler ds;
 	BMUpsampler us;
-	BMUpsampler_init(&us, false, upsampleFactor);
-	BMDownsampler_init(&ds, false, upsampleFactor);
+	BMUpsampler_init(&us, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
+	BMDownsampler_init(&ds, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
 	
 	float sampleRate = 48000.0f;
 	size_t testLength = sampleRate * 5;
@@ -1998,8 +1998,8 @@ void testOversamplerTransientResponse(){
 	
 	BMDownsampler ds;
 	BMUpsampler us;
-	BMUpsampler_init(&us, false, upsampleFactor);
-	BMDownsampler_init(&ds, false, upsampleFactor);
+	BMUpsampler_init(&us, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
+	BMDownsampler_init(&ds, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
 	
 	float* upsampled = malloc(sizeof(float)*testLength*upsampleFactor);
 	float* output = malloc(sizeof(float)*testLength);
@@ -2053,8 +2053,8 @@ void testOversamplerImpulseResponse(){
 	
 	BMDownsampler ds;
 	BMUpsampler us;
-	BMUpsampler_init(&us, false, upsampleFactor);
-	BMDownsampler_init(&ds, false, upsampleFactor);
+	BMUpsampler_init(&us, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
+	BMDownsampler_init(&ds, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
 	
 	float* upsampled = malloc(sizeof(float)*testLength*upsampleFactor);
 	float* output = malloc(sizeof(float)*testLength);
@@ -2535,7 +2535,8 @@ void testFDN(int repeat, bool write, int method){
 
 
 int main(int argc, const char * argv[]) {
-	testFDN(10000, false, 1);
+	// testFDN(10000, false, 1);
+	testMonoToStereo();
 	return 0;
 }
 
