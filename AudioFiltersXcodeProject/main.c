@@ -2617,7 +2617,7 @@ void testClipperSpeed(){
     begin = clock();
     
     for(size_t i=0; i<1000000; i++)
-    BMAsymptoticLimit(testData, testData, testLength);
+    BMAsymptoticLimit(testData, testData, 48000.0f, 1.0f, testLength);
     
     // print the time taken to process
     end = clock();
@@ -2640,7 +2640,8 @@ void testClipperSpeed(){
 
 int main(int argc, const char * argv[]) {
 
-    testFDN(100, false, 2);
+    //testFDN(100, false, 2);
+    testNoiseGate();
     return 0;
 
 }
