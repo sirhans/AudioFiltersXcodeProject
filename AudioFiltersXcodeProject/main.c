@@ -47,7 +47,7 @@
 #include "BMAsymptoticLimiter.h"
 
 #define TESTBUFFERLENGTH 128
-#define FFTSIZE 4096*2*2*2*2*2
+#define FFTSIZE 4096
 
 
 
@@ -679,10 +679,10 @@ void testInRangef(){
 
 
 /*
- * This function behaves like the function g(x) = x for x near zero but
+  *This function behaves like the function g(x) = x for x near zero but
  * its response tapers off asymptotically to +- limit as abs(x) increases.
  *
- * THIS FUNCTION DOES NOT WORK IN PLACE. (requires input != output)
+  *This FUNCTION DOES NOT WORK IN PLACE. (requires input != output)
  *
  * Function definition:
  *   f(x,limit) = x / (1 + |x/limit|)
@@ -812,7 +812,7 @@ void asymptoticLimitTest5(float limit,
 
 
 /*
- * This is fastest on ARM processors
+  *This is fastest on ARM processors
  */
 void asymptoticLimitTest6(float limit,
 						  float* input,
@@ -1263,9 +1263,9 @@ void testCriticallyDampedFilterStepResponse(){
 	float filterFrequency = 1.0 / (alpha * attackTimeInSeconds);
 	printf("filter frequency: %f\n", filterFrequency);
 	
-	BMMultiLevelBiquad bqf;
-	BMMultiLevelBiquad_init(&bqf, 4, sampleRate, false, true, false);
-	BMMultiLevelBiquad_setCriticallyDampedLP(&bqf, filterFrequency, 0, 4);
+	BMMultiLevelBiquad This;
+	BMMultiLevelBiquad_init(&This, 4, sampleRate, false, true, false);
+	BMMultiLevelBiquad_setCriticallyDampedLP(&This, filterFrequency, 0, 4);
 	
 	float timeBeforeStart = 0.1;
 	float stepLength = 1.0;
@@ -1283,7 +1283,7 @@ void testCriticallyDampedFilterStepResponse(){
 		input[i] = 1.0f;
 	}
 	
-	BMMultiLevelBiquad_processBufferMono(&bqf, input, input, totalLength);
+	BMMultiLevelBiquad_processBufferMono(&This, input, input, totalLength);
 	
 	arrayToFile(input+beforeStartNumSamples, stepLengthNumSamples);
 	
@@ -1312,10 +1312,10 @@ void testCriticallyDampedFilterFrequencyResponse(){
 	float filterFrequency = 1.0 / (alpha * attackTimeInSeconds);
 	printf("filter frequency: %f\n", filterFrequency);
 	
-	BMMultiLevelBiquad bqf;
+	BMMultiLevelBiquad This;
 	size_t numLevels = 4;
-	BMMultiLevelBiquad_init(&bqf, numLevels, sampleRate, false, true, false);
-	BMMultiLevelBiquad_setCriticallyDampedLP(&bqf, filterFrequency, 0, numLevels);
+	BMMultiLevelBiquad_init(&This, numLevels, sampleRate, false, true, false);
+	BMMultiLevelBiquad_setCriticallyDampedLP(&This, filterFrequency, 0, numLevels);
 	
 	
 	float frequencies [1024];
@@ -1328,7 +1328,7 @@ void testCriticallyDampedFilterFrequencyResponse(){
 		frequencies[i] = powf(2.0f,alpha);
 	}
 	
-	BMMultiLevelBiquad_tfMagVector(&bqf, frequencies, magnitudes, 1024);
+	BMMultiLevelBiquad_tfMagVector(&This, frequencies, magnitudes, 1024);
 	
 	for(size_t i=0; i < 1024; i++){
 		magnitudes[i] = BM_GAIN_TO_DB(magnitudes[i]);
@@ -1741,7 +1741,7 @@ void testUpsampler(){
 	size_t upsampleFactor = 8;
 	
 	BMUpsampler us;
-	BMUpsampler_init(&us, false, upsampleFactor);
+	BMUpsampler_init(&us, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
 	
 	float sampleRate = 48000.0f;
 	size_t testLength = sampleRate * 5 / upsampleFactor;
@@ -1767,7 +1767,7 @@ void testDownsampler(){
 	size_t downsampleFactor = 8;
 	
 	BMDownsampler ds;
-	BMDownsampler_init(&ds, false, downsampleFactor);
+	BMDownsampler_init(&ds, false, downsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
 	
 	float sampleRate = 48000.0f;
 	size_t testLength = sampleRate * 5 * downsampleFactor;
@@ -1792,8 +1792,8 @@ void testUpDownsampler(){
 	
 	BMDownsampler ds;
 	BMUpsampler us;
-	BMUpsampler_init(&us, false, upsampleFactor);
-	BMDownsampler_init(&ds, false, upsampleFactor);
+	BMUpsampler_init(&us, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
+	BMDownsampler_init(&ds, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
 	
 	float sampleRate = 48000.0f;
 	size_t testLength = sampleRate * 5;
@@ -1999,8 +1999,8 @@ void testOversamplerTransientResponse(){
 	
 	BMDownsampler ds;
 	BMUpsampler us;
-	BMUpsampler_init(&us, false, upsampleFactor);
-	BMDownsampler_init(&ds, false, upsampleFactor);
+	BMUpsampler_init(&us, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
+	BMDownsampler_init(&ds, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
 	
 	float* upsampled = malloc(sizeof(float)*testLength*upsampleFactor);
 	float* output = malloc(sizeof(float)*testLength);
@@ -2054,8 +2054,8 @@ void testOversamplerImpulseResponse(){
 	
 	BMDownsampler ds;
 	BMUpsampler us;
-	BMUpsampler_init(&us, false, upsampleFactor);
-	BMDownsampler_init(&ds, false, upsampleFactor);
+	BMUpsampler_init(&us, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
+	BMDownsampler_init(&ds, false, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
 	
 	float* upsampled = malloc(sizeof(float)*testLength*upsampleFactor);
 	float* output = malloc(sizeof(float)*testLength);
@@ -2173,12 +2173,15 @@ void SFMStatsPerIR(float* IR, size_t irLength, float* SFMValue){
 	// prepare arrays for result
 	float* absFFTResult = malloc(sizeof(float)*outputLengthfft);
 	float* tempFFTResult = malloc(sizeof(float)*fftSize);
+    float* windowedFFTResult = malloc(sizeof(float)*fftSize);
 	
 	memset(absFFTResult, 0, outputLengthfft);
 	
 	for(size_t i=numWindowsToSkip; i<numWindows; i ++){
+        //Do hamming window
+        BMFFT_hammingWindow(&fft, IR + (fftSize*i), windowedFFTResult, fftSize);
 		//Take FFT per window
-		BMFFT_absFFTCombinedDCNQ(&fft, IR + (fftSize*i), tempFFTResult, fftSize);
+		BMFFT_absFFTCombinedDCNQ(&fft, windowedFFTResult, tempFFTResult, fftSize);
 		//store it to absFFTResult
 		for (int j = 0; j<outputLengthfft; j++){
 			absFFTResult[j] += tempFFTResult[j] / (float) outputLengthfft;
@@ -2203,6 +2206,10 @@ void SFMStatsPerIR(float* IR, size_t irLength, float* SFMValue){
 	vDSP_meanv(absFFTResult, 1, &arithmeticMean, outputLengthfft);
 	
 	SFMValue[0] = geometricMean / arithmeticMean;
+    
+    free(windowedFFTResult);
+    free(tempFFTResult);
+    free(absFFTResult);
 }
 
 
@@ -2259,11 +2266,11 @@ void SFMStatsMultiplePerIR(float* IR, size_t irLength, float* SFMValue, float* s
     variance /= (float)(nonZeroSFM-1);
     float stdDev = sqrtf(variance);
     
-    //    printf("*** SFM Stats ***\n");
-    //    printf("mean: %f\n", meanSFM);
-    //    printf("std. dev.: %f\n", stdDev);
-    //    printf("min: %f\n", minSFM);
-    //    printf("max: %f\n", maxSFM);
+//    printf("*** SFM Stats ***\n");
+//    printf("mean: %f\n", meanSFM);
+//    printf("std. dev.: %f\n", stdDev);
+//    printf("min: %f\n", minSFM);
+//    printf("max: %f\n", maxSFM);
     
     stats[0] = meanSFM;
     stats[1] = stdDev;
@@ -2281,7 +2288,6 @@ void SFMStatsMultiplePerIR(float* IR, size_t irLength, float* SFMValue, float* s
     free(SFMResultsWithoutZeroes);
     free(SFMResults);
 }
-    
 
 //void SFMStatsMultiplePerIR(float* IR, size_t irLength, float* SFMValue, float* stats){
 //	// set up the SFM
@@ -2485,14 +2491,16 @@ void generateStdNormal(float* input, int size){
  */
 void testFDN(int repeat, bool write, int method){
     // variables to set up the reverb
-    float sampleRate = 48000*10;
+    float sampleRate = 48000;
     size_t numDelays = 16;
     float minDelayTime = 0.0070f;
-    float maxDelayTime = 5.f * minDelayTime;
-    size_t IRLength = (size_t)sampleRate * 1;
+    float maxDelayTime = 3.f * minDelayTime;
+    size_t IRLength = (size_t)sampleRate * 3;
     float* IR = malloc(sizeof(float)*IRLength);
     float* SFMStats = malloc(sizeof(float)*repeat*4);
     float* SFMPerIR = malloc(sizeof(float)*repeat);
+    
+    assert(IRLength > maxDelayTime * sampleRate);
     
     float* sampledIR = malloc(sizeof(float)*FFTSIZE);
     
@@ -2509,10 +2517,10 @@ void testFDN(int repeat, bool write, int method){
 
         
         //compute the impulse response
-//        BMSimpleFDN_impulseResponse(&fdn, IR, IRLength);
+        BMSimpleFDN_impulseResponse(&fdn, IR, IRLength);
         
         // generate white noise for testing
-        generateWhiteNoise(IR, (int) IRLength);
+     //   generateWhiteNoise(IR, (int) IRLength);
 
         //sample the last FFTSIZE samples from the IR
         for(int k = 0; k<FFTSIZE; k++){
@@ -2526,7 +2534,7 @@ void testFDN(int repeat, bool write, int method){
         if (method == 1) SFMStatsMultiplePerIR(sampledIR, FFTSIZE, &SFMPerIR[i], &SFMStats[i*4], false);
         
         // compute multiple SFMs per IR
-        if (method == 2) SFMStatsMultiplePerIR(IR, IRLength, &SFMPerIR[i], &SFMStats[i*4], true);
+        if (method == 2) SFMStatsMultiplePerIR(IR, IRLength, &SFMPerIR[i], &SFMStats[i*4], false);
     
         if (write){
             // output the impulse response to a file
@@ -2568,22 +2576,10 @@ void testFDN(int repeat, bool write, int method){
         
         printf("SFM Mean: %f\n SFM stdev: %f \n SFM min: %f \n SFM max: %f \n", stats->mean, stats->stdev, stats->min, stats->max);
         
-        //manual hypothesis testing, not statistically backed
-//        bool* results = malloc(sizeof(bool)*repeat);
-//        int count_fail = 0;
-//
-//        for (int i = 0; i<repeat; i++){
-//            hypothesisTestAlphaBeta(&SFMPerIR[i], 1, &results[i]);
-//            if (results[i] == false){
-//                count_fail++;
-//            }
-//        }
-//        printf("Batch of %d IRs has %d non-white impulses.\n",repeat, count_fail);
-        
     }
 
     
-    //this method doesn't need a hypothesis test because mean of mean of SFM ~ 1
+    //this method doesn't need a hypothesis test because mean of mean of SFM follows normal distribution
     if (method == 2){
         char* filename = "OverallStats.csv";
         
@@ -2644,8 +2640,7 @@ void testClipperSpeed(){
 
 int main(int argc, const char * argv[]) {
 
-    //testFDN(1, false, 2);
-    testClipperSpeed();
+    testFDN(100, false, 2);
     return 0;
 
 }
