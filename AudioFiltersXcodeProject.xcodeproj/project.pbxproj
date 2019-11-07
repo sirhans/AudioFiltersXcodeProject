@@ -12,6 +12,12 @@
 		3A442EAE232CFE4D007AE258 /* BMFFT.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A442EAD232CFE4D007AE258 /* BMFFT.c */; };
 		3A442EB1232D0A3E007AE258 /* BMSFM.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A442EB0232D0A3E007AE258 /* BMSFM.c */; };
 		3A6A32A922CF357300DEEDFA /* BMQuadraticThreshold.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */; };
+		3A70D1C82368158D00F464E6 /* BMShortSimpleDelay.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A70D1C72368158D00F464E6 /* BMShortSimpleDelay.c */; };
+		3A70D1C9236815D600F464E6 /* BMDownsampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A502244D80B003FA1B9 /* BMDownsampler.c */; };
+		3A70D1CA236815DC00F464E6 /* BMUpsampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A4F2244D80B003FA1B9 /* BMUpsampler.c */; };
+		3A70D1CB236815E000F464E6 /* BMPolyphaseIIR2Designer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AEEF23A22D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.c */; };
+		3A70D1CE2368163400F464E6 /* BMHysteresis.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A70D1CD2368163400F464E6 /* BMHysteresis.c */; };
+		3A70D1D123681B3300F464E6 /* BMAsymptoticLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A70D1D023681B3300F464E6 /* BMAsymptoticLimiter.c */; };
 		3A7FDAF7231684170090EC36 /* BMChamberlinSVF.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A7FDAF6231684170090EC36 /* BMChamberlinSVF.c */; };
 		3A874E9522F157B800B97FC2 /* BMTanhLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A874E9422F157B800B97FC2 /* BMTanhLimiter.c */; };
 		3A95396422CB50CD0058A586 /* BMZavalishinLPFOrder1.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */; };
@@ -61,8 +67,6 @@
 		4CC13A842244D80B003FA1B9 /* BMTremolo.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A402244D80B003FA1B9 /* BMTremolo.c */; };
 		4CC13A852244D80B003FA1B9 /* BMStereoWidener.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A412244D80B003FA1B9 /* BMStereoWidener.c */; };
 		4CC13A862244D80B003FA1B9 /* BMOffset.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A472244D80B003FA1B9 /* BMOffset.c */; };
-		4CC13A872244D80B003FA1B9 /* BMUpsampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A4F2244D80B003FA1B9 /* BMUpsampler.c */; };
-		4CC13A882244D80B003FA1B9 /* BMDownsampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A502244D80B003FA1B9 /* BMDownsampler.c */; };
 		4CC13A8A2244D80B003FA1B9 /* BMEnvelopeFollower.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A532244D80B003FA1B9 /* BMEnvelopeFollower.c */; };
 		4CC13A8B2244D80B003FA1B9 /* BMGainStage.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A542244D80B003FA1B9 /* BMGainStage.c */; };
 		4CC13A8C2244D80B003FA1B9 /* BMNoiseGate.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A552244D80B003FA1B9 /* BMNoiseGate.c */; };
@@ -96,6 +100,12 @@
 		3A442EAF232D0A3E007AE258 /* BMSFM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMSFM.h; sourceTree = "<group>"; };
 		3A442EB0232D0A3E007AE258 /* BMSFM.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMSFM.c; sourceTree = "<group>"; };
 		3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMQuadraticThreshold.c; sourceTree = "<group>"; };
+		3A70D1C62368158D00F464E6 /* BMShortSimpleDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMShortSimpleDelay.h; sourceTree = "<group>"; };
+		3A70D1C72368158D00F464E6 /* BMShortSimpleDelay.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMShortSimpleDelay.c; sourceTree = "<group>"; };
+		3A70D1CC2368163400F464E6 /* BMHysteresis.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMHysteresis.h; sourceTree = "<group>"; };
+		3A70D1CD2368163400F464E6 /* BMHysteresis.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMHysteresis.c; sourceTree = "<group>"; };
+		3A70D1CF23681B3300F464E6 /* BMAsymptoticLimiter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMAsymptoticLimiter.h; sourceTree = "<group>"; };
+		3A70D1D023681B3300F464E6 /* BMAsymptoticLimiter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMAsymptoticLimiter.c; sourceTree = "<group>"; };
 		3A7FDAF5231684170090EC36 /* BMChamberlinSVF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMChamberlinSVF.h; sourceTree = "<group>"; };
 		3A7FDAF6231684170090EC36 /* BMChamberlinSVF.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMChamberlinSVF.c; sourceTree = "<group>"; };
 		3A874E9322F157B800B97FC2 /* BMTanhLimiter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMTanhLimiter.h; sourceTree = "<group>"; };
@@ -388,6 +398,8 @@
 		4CC13A112244D80B003FA1B9 /* DelayAndReverb */ = {
 			isa = PBXGroup;
 			children = (
+				3A70D1C72368158D00F464E6 /* BMShortSimpleDelay.c */,
+				3A70D1C62368158D00F464E6 /* BMShortSimpleDelay.h */,
 				4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */,
 				4C0FD74B2280186500995864 /* BMBinauralSynthesis.h */,
 				4CC13A122244D80B003FA1B9 /* BMEarlyReflections.c */,
@@ -524,12 +536,16 @@
 		4CC13A522244D80B003FA1B9 /* NonlinearGain */ = {
 			isa = PBXGroup;
 			children = (
+				3A70D1D023681B3300F464E6 /* BMAsymptoticLimiter.c */,
+				3A70D1CF23681B3300F464E6 /* BMAsymptoticLimiter.h */,
 				4CC13A562244D80B003FA1B9 /* BMCompressor.c */,
 				4CC13A5C2244D80B003FA1B9 /* BMCompressor.h */,
 				4CC13A532244D80B003FA1B9 /* BMEnvelopeFollower.c */,
 				4CC13A5A2244D80B003FA1B9 /* BMEnvelopeFollower.h */,
 				4CC13A542244D80B003FA1B9 /* BMGainStage.c */,
 				4CC13A5E2244D80B003FA1B9 /* BMGainStage.h */,
+				3A70D1CD2368163400F464E6 /* BMHysteresis.c */,
+				3A70D1CC2368163400F464E6 /* BMHysteresis.h */,
 				4CC13A552244D80B003FA1B9 /* BMNoiseGate.c */,
 				4CC13A5D2244D80B003FA1B9 /* BMNoiseGate.h */,
 				3AB0E8F822CDB81900B0394F /* BMQuadraticRectifier.c */,
@@ -639,15 +655,15 @@
 				3A442EAB232CD881007AE258 /* BMSimpleFDN.c in Sources */,
 				4CC13A862244D80B003FA1B9 /* BMOffset.c in Sources */,
 				4CC13A742244D80B003FA1B9 /* BMLFO.c in Sources */,
+				3A70D1C9236815D600F464E6 /* BMDownsampler.c in Sources */,
 				4CC13A792244D80B003FA1B9 /* BMSimpleDelay.c in Sources */,
 				4CC13A6C2244D80B003FA1B9 /* BMDynamicSmoothingFilter.c in Sources */,
 				4CC13A852244D80B003FA1B9 /* BMStereoWidener.c in Sources */,
 				4CC13A8A2244D80B003FA1B9 /* BMEnvelopeFollower.c in Sources */,
+				3A70D1C82368158D00F464E6 /* BMShortSimpleDelay.c in Sources */,
 				4CC13A8B2244D80B003FA1B9 /* BMGainStage.c in Sources */,
 				3A9E06C722E1693D00ECB53B /* BMIIRUpsampler2x.c in Sources */,
 				4C0FD74D2280186500995864 /* BMBinauralSynthesis.c in Sources */,
-				3A02FE6B22F2A5A7001438E8 /* BMIIRUpsampler2x.c in Sources */,
-				3A02FE6822F2A5A7001438E8 /* BMIIRDownsampler2x.c in Sources */,
 				4CC13A842244D80B003FA1B9 /* BMTremolo.c in Sources */,
 				3AD52136234DBCF3000CC7E0 /* BMMonoToStereo.c in Sources */,
 				3ABD5533233496EC002765A6 /* incbeta.c in Sources */,
@@ -666,21 +682,23 @@
 				3AB0E8FB22CDB81900B0394F /* BMTransientShaper.c in Sources */,
 				4C8E3C9C22F0288E00B17824 /* BMVAStateVariableFilter.c in Sources */,
 				4CC13A782244D80B003FA1B9 /* TestReverb.c in Sources */,
+				3A70D1CB236815E000F464E6 /* BMPolyphaseIIR2Designer.c in Sources */,
 				3A3C85462344644400C1D697 /* BMVocalRemover.c in Sources */,
 				4CC13A722244D80B003FA1B9 /* BMMultiLevelBiquad.c in Sources */,
-				3A02FE6922F2A5A7001438E8 /* BMUpsampler.c in Sources */,
 				4CC13A822244D80B003FA1B9 /* BMVibrato.c in Sources */,
 				4CC13A7E2244D80B003FA1B9 /* BMVelvetNoise.c in Sources */,
 				4CC13A912244D80B003FA1B9 /* TPCircularBuffer+AudioBufferList.c in Sources */,
 				4CC13A6F2244D80B003FA1B9 /* BMTNFilter.c in Sources */,
+				3A70D1CA236815DC00F464E6 /* BMUpsampler.c in Sources */,
 				4CC13A812244D80B003FA1B9 /* BMGetOSVersion.c in Sources */,
 				4CC13A752244D80B003FA1B9 /* BMOscillatorArray.c in Sources */,
+				3A70D1D123681B3300F464E6 /* BMAsymptoticLimiter.c in Sources */,
 				4CC13A832244D80B003FA1B9 /* BMSpectrum.c in Sources */,
 				4CC13A802244D80B003FA1B9 /* BMLagrangeInterpolation.c in Sources */,
 				4CC13A692244D80B003FA1B9 /* BMMultiLevelSVF.c in Sources */,
+				3A70D1CE2368163400F464E6 /* BMHysteresis.c in Sources */,
 				3AB4175B22A61DBF00AECC6E /* BMLevelMeter.c in Sources */,
 				3AEB17BD228AAA54004C7E4E /* BMSmoothGain.c in Sources */,
-				3A02FE6D22F2A5A7001438E8 /* BMDownsampler.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
