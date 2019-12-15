@@ -7,11 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A3C85462344644400C1D697 /* BMVocalRemover.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C85452344644400C1D697 /* BMVocalRemover.c */; };
 		3A442EAB232CD881007AE258 /* BMSimpleFDN.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A442EAA232CD881007AE258 /* BMSimpleFDN.c */; };
-		3A442EAE232CFE4D007AE258 /* BMFFT.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A442EAD232CFE4D007AE258 /* BMFFT.c */; };
-		3A442EB1232D0A3E007AE258 /* BMSFM.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A442EB0232D0A3E007AE258 /* BMSFM.c */; };
 		3A6A32A922CF357300DEEDFA /* BMQuadraticThreshold.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */; };
+		3A70D1C9236815D600F464E6 /* BMDownsampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A502244D80B003FA1B9 /* BMDownsampler.c */; };
+		3A70D1CA236815DC00F464E6 /* BMUpsampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A4F2244D80B003FA1B9 /* BMUpsampler.c */; };
+		3A70D1CB236815E000F464E6 /* BMPolyphaseIIR2Designer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AEEF23A22D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.c */; };
+		3A70D1D123681B3300F464E6 /* BMAsymptoticLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A70D1D023681B3300F464E6 /* BMAsymptoticLimiter.c */; };
+		3A784AF02373E8B30048920C /* BMSFM.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A784AEE2373E8B30048920C /* BMSFM.c */; };
+		3A784AF42373E8CD0048920C /* BMBetaPDF.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A784AF12373E8CD0048920C /* BMBetaPDF.c */; };
+		3A784AF52373E8CD0048920C /* BMFFT.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A784AF22373E8CD0048920C /* BMFFT.c */; };
+		3A784AFB2373E9D80048920C /* BMHysteresisLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A784AF72373E9D70048920C /* BMHysteresisLimiter.c */; };
+		3A784AFC2373E9D80048920C /* BMQuadraticLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A784AF92373E9D80048920C /* BMQuadraticLimiter.c */; };
 		3A7FDAF7231684170090EC36 /* BMChamberlinSVF.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A7FDAF6231684170090EC36 /* BMChamberlinSVF.c */; };
+		3A8320992360537200B5387B /* BMStereoMod2.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A8320972360537200B5387B /* BMStereoMod2.c */; };
+		3A83209C23629A9A00B5387B /* BMShortSimpleDelay.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A83209A23629A9A00B5387B /* BMShortSimpleDelay.c */; };
 		3A874E9522F157B800B97FC2 /* BMTanhLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A874E9422F157B800B97FC2 /* BMTanhLimiter.c */; };
 		3A95396422CB50CD0058A586 /* BMZavalishinLPFOrder1.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */; };
 		3A9E06C122E1651100ECB53B /* BMIIRDownsampler2x.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A9E06BF22E1651100ECB53B /* BMIIRDownsampler2x.c */; };
@@ -22,19 +32,19 @@
 		3AB0E90022CDBC8A00B0394F /* BMWaveshaping.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB0E8FF22CDBC8A00B0394F /* BMWaveshaping.c */; };
 		3AB41758229F843500AECC6E /* BMVariableFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41757229F843500AECC6E /* BMVariableFilter.c */; };
 		3AB4175B22A61DBF00AECC6E /* BMLevelMeter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4175922A61DBF00AECC6E /* BMLevelMeter.c */; };
+		3AB594E6234F3EA3007D31E8 /* BMVelvetNoiseDecorrelator.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F22244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c */; };
+		3ABD5533233496EC002765A6 /* incbeta.c in Sources */ = {isa = PBXBuildFile; fileRef = 3ABD5532233496EC002765A6 /* incbeta.c */; };
+		3AD52136234DBCF3000CC7E0 /* BMMonoToStereo.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AD52135234DBCF3000CC7E0 /* BMMonoToStereo.c */; };
 		3AEB17BC228AAA54004C7E4E /* BMWetDryMixer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB17B9228AAA54004C7E4E /* BMWetDryMixer.c */; };
 		3AEB17BD228AAA54004C7E4E /* BMSmoothGain.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB17BB228AAA54004C7E4E /* BMSmoothGain.c */; };
-		3AEEF23B22D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AEEF23A22D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.c */; };
 		4C0FD74D2280186500995864 /* BMBinauralSynthesis.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */; };
 		4C688A382244CF6700E3B1E6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C688A372244CF6700E3B1E6 /* main.c */; };
 		4C8E3C9C22F0288E00B17824 /* BMVAStateVariableFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C8E3C9B22F0288E00B17824 /* BMVAStateVariableFilter.c */; };
-		4CC13A672244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F22244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c */; };
 		4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F52244D80B003FA1B9 /* BMDiffusion.c */; };
 		4CC13A692244D80B003FA1B9 /* BMMultiLevelSVF.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F62244D80B003FA1B9 /* BMMultiLevelSVF.c */; };
 		4CC13A6A2244D80B003FA1B9 /* BMCrossover.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139FA2244D80B003FA1B9 /* BMCrossover.c */; };
 		4CC13A6B2244D80B003FA1B9 /* BMFIRFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139FB2244D80B003FA1B9 /* BMFIRFilter.c */; };
 		4CC13A6C2244D80B003FA1B9 /* BMDynamicSmoothingFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139FC2244D80B003FA1B9 /* BMDynamicSmoothingFilter.c */; };
-		4CC13A6D2244D80B003FA1B9 /* BMStereoModulator.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139FD2244D80B003FA1B9 /* BMStereoModulator.c */; };
 		4CC13A6E2244D80B003FA1B9 /* BMVelocityFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139FF2244D80B003FA1B9 /* BMVelocityFilter.c */; };
 		4CC13A6F2244D80B003FA1B9 /* BMTNFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A002244D80B003FA1B9 /* BMTNFilter.c */; };
 		4CC13A702244D80B003FA1B9 /* BMBiquadArray.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A022244D80B003FA1B9 /* BMBiquadArray.c */; };
@@ -60,8 +70,6 @@
 		4CC13A842244D80B003FA1B9 /* BMTremolo.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A402244D80B003FA1B9 /* BMTremolo.c */; };
 		4CC13A852244D80B003FA1B9 /* BMStereoWidener.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A412244D80B003FA1B9 /* BMStereoWidener.c */; };
 		4CC13A862244D80B003FA1B9 /* BMOffset.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A472244D80B003FA1B9 /* BMOffset.c */; };
-		4CC13A872244D80B003FA1B9 /* BMUpsampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A4F2244D80B003FA1B9 /* BMUpsampler.c */; };
-		4CC13A882244D80B003FA1B9 /* BMDownsampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A502244D80B003FA1B9 /* BMDownsampler.c */; };
 		4CC13A8A2244D80B003FA1B9 /* BMEnvelopeFollower.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A532244D80B003FA1B9 /* BMEnvelopeFollower.c */; };
 		4CC13A8B2244D80B003FA1B9 /* BMGainStage.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A542244D80B003FA1B9 /* BMGainStage.c */; };
 		4CC13A8C2244D80B003FA1B9 /* BMNoiseGate.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A552244D80B003FA1B9 /* BMNoiseGate.c */; };
@@ -86,15 +94,29 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3A3C85442344644400C1D697 /* BMVocalRemover.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMVocalRemover.h; sourceTree = "<group>"; };
+		3A3C85452344644400C1D697 /* BMVocalRemover.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMVocalRemover.c; sourceTree = "<group>"; };
 		3A442EA9232CD881007AE258 /* BMSimpleFDN.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMSimpleFDN.h; sourceTree = "<group>"; };
 		3A442EAA232CD881007AE258 /* BMSimpleFDN.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMSimpleFDN.c; sourceTree = "<group>"; };
-		3A442EAC232CFE4D007AE258 /* BMFFT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMFFT.h; sourceTree = "<group>"; };
-		3A442EAD232CFE4D007AE258 /* BMFFT.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMFFT.c; sourceTree = "<group>"; };
-		3A442EAF232D0A3E007AE258 /* BMSFM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMSFM.h; sourceTree = "<group>"; };
-		3A442EB0232D0A3E007AE258 /* BMSFM.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMSFM.c; sourceTree = "<group>"; };
 		3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMQuadraticThreshold.c; sourceTree = "<group>"; };
+		3A70D1CF23681B3300F464E6 /* BMAsymptoticLimiter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMAsymptoticLimiter.h; sourceTree = "<group>"; };
+		3A70D1D023681B3300F464E6 /* BMAsymptoticLimiter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMAsymptoticLimiter.c; sourceTree = "<group>"; };
+		3A784AEE2373E8B30048920C /* BMSFM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMSFM.c; sourceTree = "<group>"; };
+		3A784AEF2373E8B30048920C /* BMSFM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSFM.h; sourceTree = "<group>"; };
+		3A784AF12373E8CD0048920C /* BMBetaPDF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMBetaPDF.c; sourceTree = "<group>"; };
+		3A784AF22373E8CD0048920C /* BMFFT.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMFFT.c; sourceTree = "<group>"; };
+		3A784AF32373E8CD0048920C /* BMFFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMFFT.h; sourceTree = "<group>"; };
+		3A784AF62373E9D70048920C /* BMNoiseGate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMNoiseGate.h; sourceTree = "<group>"; };
+		3A784AF72373E9D70048920C /* BMHysteresisLimiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMHysteresisLimiter.c; sourceTree = "<group>"; };
+		3A784AF82373E9D70048920C /* BMHysteresisLimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMHysteresisLimiter.h; sourceTree = "<group>"; };
+		3A784AF92373E9D80048920C /* BMQuadraticLimiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMQuadraticLimiter.c; sourceTree = "<group>"; };
+		3A784AFA2373E9D80048920C /* BMQuadraticLimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMQuadraticLimiter.h; sourceTree = "<group>"; };
 		3A7FDAF5231684170090EC36 /* BMChamberlinSVF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMChamberlinSVF.h; sourceTree = "<group>"; };
 		3A7FDAF6231684170090EC36 /* BMChamberlinSVF.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMChamberlinSVF.c; sourceTree = "<group>"; };
+		3A8320972360537200B5387B /* BMStereoMod2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMStereoMod2.c; sourceTree = "<group>"; };
+		3A8320982360537200B5387B /* BMStereoMod2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMStereoMod2.h; sourceTree = "<group>"; };
+		3A83209A23629A9A00B5387B /* BMShortSimpleDelay.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMShortSimpleDelay.c; sourceTree = "<group>"; };
+		3A83209B23629A9A00B5387B /* BMShortSimpleDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMShortSimpleDelay.h; sourceTree = "<group>"; };
 		3A874E9322F157B800B97FC2 /* BMTanhLimiter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMTanhLimiter.h; sourceTree = "<group>"; };
 		3A874E9422F157B800B97FC2 /* BMTanhLimiter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMTanhLimiter.c; sourceTree = "<group>"; };
 		3A95396222CB50CD0058A586 /* BMZavalishinLPFOrder1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMZavalishinLPFOrder1.h; sourceTree = "<group>"; };
@@ -117,6 +139,11 @@
 		3AB41757229F843500AECC6E /* BMVariableFilter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMVariableFilter.c; sourceTree = "<group>"; };
 		3AB4175922A61DBF00AECC6E /* BMLevelMeter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMLevelMeter.c; sourceTree = "<group>"; };
 		3AB4175A22A61DBF00AECC6E /* BMLevelMeter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMLevelMeter.h; sourceTree = "<group>"; };
+		3ABD552E23347661002765A6 /* BMBetaPDF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMBetaPDF.h; sourceTree = "<group>"; };
+		3ABD5531233496EC002765A6 /* incbeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = incbeta.h; sourceTree = "<group>"; };
+		3ABD5532233496EC002765A6 /* incbeta.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = incbeta.c; sourceTree = "<group>"; };
+		3AD52134234DBCF3000CC7E0 /* BMMonoToStereo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMMonoToStereo.h; sourceTree = "<group>"; };
+		3AD52135234DBCF3000CC7E0 /* BMMonoToStereo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMMonoToStereo.c; sourceTree = "<group>"; };
 		3AEB17B8228AAA54004C7E4E /* BMSmoothGain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSmoothGain.h; sourceTree = "<group>"; };
 		3AEB17B9228AAA54004C7E4E /* BMWetDryMixer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMWetDryMixer.c; sourceTree = "<group>"; };
 		3AEB17BA228AAA54004C7E4E /* BMWetDryMixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWetDryMixer.h; sourceTree = "<group>"; };
@@ -133,7 +160,6 @@
 		4C8E3C9D22F0331D00B17824 /* DspUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DspUtilities.h; sourceTree = "<group>"; };
 		4C8E3C9E22F0331D00B17824 /* LinearSmoothedValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinearSmoothedValue.h; sourceTree = "<group>"; };
 		4CC139F02244D80B003FA1B9 /* BMVelocityFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMVelocityFilter.h; sourceTree = "<group>"; };
-		4CC139F12244D80B003FA1B9 /* BMStereoModulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMStereoModulator.h; sourceTree = "<group>"; };
 		4CC139F22244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMVelvetNoiseDecorrelator.c; sourceTree = "<group>"; };
 		4CC139F32244D80B003FA1B9 /* BMTNFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMTNFilter.h; sourceTree = "<group>"; };
 		4CC139F42244D80B003FA1B9 /* BMRoundRobinFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMRoundRobinFilter.h; sourceTree = "<group>"; };
@@ -145,7 +171,6 @@
 		4CC139FA2244D80B003FA1B9 /* BMCrossover.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMCrossover.c; sourceTree = "<group>"; };
 		4CC139FB2244D80B003FA1B9 /* BMFIRFilter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMFIRFilter.c; sourceTree = "<group>"; };
 		4CC139FC2244D80B003FA1B9 /* BMDynamicSmoothingFilter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMDynamicSmoothingFilter.c; sourceTree = "<group>"; };
-		4CC139FD2244D80B003FA1B9 /* BMStereoModulator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMStereoModulator.c; sourceTree = "<group>"; };
 		4CC139FE2244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMVelvetNoiseDecorrelator.h; sourceTree = "<group>"; };
 		4CC139FF2244D80B003FA1B9 /* BMVelocityFilter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMVelocityFilter.c; sourceTree = "<group>"; };
 		4CC13A002244D80B003FA1B9 /* BMTNFilter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMTNFilter.c; sourceTree = "<group>"; };
@@ -228,7 +253,6 @@
 		4CC13A592244D80B003FA1B9 /* BMRMSPower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMRMSPower.h; sourceTree = "<group>"; };
 		4CC13A5A2244D80B003FA1B9 /* BMEnvelopeFollower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMEnvelopeFollower.h; sourceTree = "<group>"; };
 		4CC13A5C2244D80B003FA1B9 /* BMCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCompressor.h; sourceTree = "<group>"; };
-		4CC13A5D2244D80B003FA1B9 /* BMNoiseGate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMNoiseGate.h; sourceTree = "<group>"; };
 		4CC13A5E2244D80B003FA1B9 /* BMGainStage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMGainStage.h; sourceTree = "<group>"; };
 		4CC13A5F2244D80B003FA1B9 /* BMDCBlocker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMDCBlocker.h; sourceTree = "<group>"; };
 		4CC13A602244D80B003FA1B9 /* BMRMSPower.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMRMSPower.c; sourceTree = "<group>"; };
@@ -255,6 +279,8 @@
 		3A3F95C7228E9DC000AD4794 /* Measurement */ = {
 			isa = PBXGroup;
 			children = (
+				3A784AEE2373E8B30048920C /* BMSFM.c */,
+				3A784AEF2373E8B30048920C /* BMSFM.h */,
 				3AB4175922A61DBF00AECC6E /* BMLevelMeter.c */,
 				3AB4175A22A61DBF00AECC6E /* BMLevelMeter.h */,
 				4CC13A602244D80B003FA1B9 /* BMRMSPower.c */,
@@ -267,19 +293,11 @@
 			path = Measurement;
 			sourceTree = "<group>";
 		};
-		3A6A32A722CF350800DEEDFA /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		4C688A2B2244CF6700E3B1E6 = {
 			isa = PBXGroup;
 			children = (
 				4C688A362244CF6700E3B1E6 /* AudioFiltersXcodeProject */,
 				4C688A352244CF6700E3B1E6 /* Products */,
-				3A6A32A722CF350800DEEDFA /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -350,8 +368,6 @@
 				4CC139F82244D80B003FA1B9 /* BMRoundRobin.h */,
 				4CC13A042244D80B003FA1B9 /* BMRoundRobinFilter.c */,
 				4CC139F42244D80B003FA1B9 /* BMRoundRobinFilter.h */,
-				4CC139FD2244D80B003FA1B9 /* BMStereoModulator.c */,
-				4CC139F12244D80B003FA1B9 /* BMStereoModulator.h */,
 				4CC13A002244D80B003FA1B9 /* BMTNFilter.c */,
 				4CC139F32244D80B003FA1B9 /* BMTNFilter.h */,
 				3AB41757229F843500AECC6E /* BMVariableFilter.c */,
@@ -360,8 +376,6 @@
 				4C8E3C9A22F0288E00B17824 /* BMVAStateVariableFilter.h */,
 				4CC139FF2244D80B003FA1B9 /* BMVelocityFilter.c */,
 				4CC139F02244D80B003FA1B9 /* BMVelocityFilter.h */,
-				4CC139F22244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c */,
-				4CC139FE2244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.h */,
 				3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */,
 				3A95396222CB50CD0058A586 /* BMZavalishinLPFOrder1.h */,
 				3A7FDAF5231684170090EC36 /* BMChamberlinSVF.h */,
@@ -386,6 +400,8 @@
 		4CC13A112244D80B003FA1B9 /* DelayAndReverb */ = {
 			isa = PBXGroup;
 			children = (
+				3A83209A23629A9A00B5387B /* BMShortSimpleDelay.c */,
+				3A83209B23629A9A00B5387B /* BMShortSimpleDelay.h */,
 				4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */,
 				4C0FD74B2280186500995864 /* BMBinauralSynthesis.h */,
 				4CC13A122244D80B003FA1B9 /* BMEarlyReflections.c */,
@@ -398,16 +414,18 @@
 				4CC13A142244D80B003FA1B9 /* BMReverb.h */,
 				4CC13A182244D80B003FA1B9 /* BMSimpleDelay.c */,
 				4CC13A212244D80B003FA1B9 /* BMSimpleDelay.h */,
+				3A442EAA232CD881007AE258 /* BMSimpleFDN.c */,
+				3A442EA9232CD881007AE258 /* BMSimpleFDN.h */,
 				4CC13A1B2244D80B003FA1B9 /* BMStaticDelay.c */,
 				4CC13A132244D80B003FA1B9 /* BMStaticDelay.h */,
 				4CC13A942244D85C003FA1B9 /* BMStereoLagTime.c */,
 				4CC13A932244D85C003FA1B9 /* BMStereoLagTime.h */,
 				4CC13A202244D80B003FA1B9 /* BMVelvetNoise.c */,
 				4CC13A192244D80B003FA1B9 /* BMVelvetNoise.h */,
+				4CC139F22244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c */,
+				4CC139FE2244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.h */,
 				4CC13A172244D80B003FA1B9 /* TestReverb.c */,
 				4CC13A1E2244D80B003FA1B9 /* TestReverb.h */,
-				3A442EA9232CD881007AE258 /* BMSimpleFDN.h */,
-				3A442EAA232CD881007AE258 /* BMSimpleFDN.c */,
 			);
 			path = DelayAndReverb;
 			sourceTree = "<group>";
@@ -415,22 +433,24 @@
 		4CC13A222244D80B003FA1B9 /* MathUtilities */ = {
 			isa = PBXGroup;
 			children = (
-				4C8E3C9D22F0331D00B17824 /* DspUtilities.h */,
-				3A442EAC232CFE4D007AE258 /* BMFFT.h */,
-				3A442EAD232CFE4D007AE258 /* BMFFT.c */,
-				4C8E3C9E22F0331D00B17824 /* LinearSmoothedValue.h */,
 				4CC13A262244D80B003FA1B9 /* BM2x2Matrix.h */,
+				3A784AF12373E8CD0048920C /* BMBetaPDF.c */,
+				3ABD552E23347661002765A6 /* BMBetaPDF.h */,
 				4CC13A362244D80B003FA1B9 /* BMComplexMath.h */,
 				4CC13A372244D80B003FA1B9 /* BMFastHadamard.h */,
+				3A784AF22373E8CD0048920C /* BMFFT.c */,
+				3A784AF32373E8CD0048920C /* BMFFT.h */,
 				4CC13A282244D80B003FA1B9 /* BMIntegerMath.h */,
 				4CC13A252244D80B003FA1B9 /* BMLagrangeInterpolation.c */,
 				4CC13A382244D80B003FA1B9 /* BMLagrangeInterpolation.h */,
 				4CC13A232244D80B003FA1B9 /* BMLagrangeInterpolationTable.c */,
 				4CC13A272244D80B003FA1B9 /* BMLagrangeInterpolationTable.h */,
 				4CC13A242244D80B003FA1B9 /* BMVectorOps.h */,
+				4C8E3C9D22F0331D00B17824 /* DspUtilities.h */,
 				4CC13A292244D80B003FA1B9 /* fastApproximation */,
-				3A442EAF232D0A3E007AE258 /* BMSFM.h */,
-				3A442EB0232D0A3E007AE258 /* BMSFM.c */,
+				3ABD5532233496EC002765A6 /* incbeta.c */,
+				3ABD5531233496EC002765A6 /* incbeta.h */,
+				4C8E3C9E22F0331D00B17824 /* LinearSmoothedValue.h */,
 			);
 			path = MathUtilities;
 			sourceTree = "<group>";
@@ -466,19 +486,25 @@
 		4CC13A3D2244D80B003FA1B9 /* OtherEffects */ = {
 			isa = PBXGroup;
 			children = (
-				3AEB17BB228AAA54004C7E4E /* BMSmoothGain.c */,
-				3AEB17B8228AAA54004C7E4E /* BMSmoothGain.h */,
-				3AEB17B9228AAA54004C7E4E /* BMWetDryMixer.c */,
-				3AEB17BA228AAA54004C7E4E /* BMWetDryMixer.h */,
 				4CC13A432244D80B003FA1B9 /* BMMidSide.h */,
+				3AD52135234DBCF3000CC7E0 /* BMMonoToStereo.c */,
+				3AD52134234DBCF3000CC7E0 /* BMMonoToStereo.h */,
 				4CC13A472244D80B003FA1B9 /* BMOffset.c */,
 				4CC13A422244D80B003FA1B9 /* BMOffset.h */,
+				3AEB17BB228AAA54004C7E4E /* BMSmoothGain.c */,
+				3AEB17B8228AAA54004C7E4E /* BMSmoothGain.h */,
+				3A8320972360537200B5387B /* BMStereoMod2.c */,
+				3A8320982360537200B5387B /* BMStereoMod2.h */,
 				4CC13A412244D80B003FA1B9 /* BMStereoWidener.c */,
 				4CC13A482244D80B003FA1B9 /* BMStereoWidener.h */,
 				4CC13A402244D80B003FA1B9 /* BMTremolo.c */,
 				4CC13A442244D80B003FA1B9 /* BMTremolo.h */,
 				4CC13A3E2244D80B003FA1B9 /* BMVibrato.c */,
 				4CC13A462244D80B003FA1B9 /* BMVibrato.h */,
+				3A3C85452344644400C1D697 /* BMVocalRemover.c */,
+				3A3C85442344644400C1D697 /* BMVocalRemover.h */,
+				3AEB17B9228AAA54004C7E4E /* BMWetDryMixer.c */,
+				3AEB17BA228AAA54004C7E4E /* BMWetDryMixer.h */,
 			);
 			path = OtherEffects;
 			sourceTree = "<group>";
@@ -513,14 +539,20 @@
 		4CC13A522244D80B003FA1B9 /* NonlinearGain */ = {
 			isa = PBXGroup;
 			children = (
+				3A70D1D023681B3300F464E6 /* BMAsymptoticLimiter.c */,
+				3A70D1CF23681B3300F464E6 /* BMAsymptoticLimiter.h */,
 				4CC13A562244D80B003FA1B9 /* BMCompressor.c */,
 				4CC13A5C2244D80B003FA1B9 /* BMCompressor.h */,
 				4CC13A532244D80B003FA1B9 /* BMEnvelopeFollower.c */,
 				4CC13A5A2244D80B003FA1B9 /* BMEnvelopeFollower.h */,
 				4CC13A542244D80B003FA1B9 /* BMGainStage.c */,
 				4CC13A5E2244D80B003FA1B9 /* BMGainStage.h */,
+				3A784AF72373E9D70048920C /* BMHysteresisLimiter.c */,
+				3A784AF82373E9D70048920C /* BMHysteresisLimiter.h */,
 				4CC13A552244D80B003FA1B9 /* BMNoiseGate.c */,
-				4CC13A5D2244D80B003FA1B9 /* BMNoiseGate.h */,
+				3A784AF62373E9D70048920C /* BMNoiseGate.h */,
+				3A784AF92373E9D80048920C /* BMQuadraticLimiter.c */,
+				3A784AFA2373E9D80048920C /* BMQuadraticLimiter.h */,
 				3AB0E8F822CDB81900B0394F /* BMQuadraticRectifier.c */,
 				3AB0E8F722CDB81900B0394F /* BMQuadraticRectifier.h */,
 				3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */,
@@ -606,41 +638,43 @@
 				4CC13A732244D80B003FA1B9 /* BMRoundRobin.c in Sources */,
 				3AB0E90022CDBC8A00B0394F /* BMWaveshaping.c in Sources */,
 				4CC13A6B2244D80B003FA1B9 /* BMFIRFilter.c in Sources */,
+				3A784AF52373E8CD0048920C /* BMFFT.c in Sources */,
 				4C688A382244CF6700E3B1E6 /* main.c in Sources */,
 				3A6A32A922CF357300DEEDFA /* BMQuadraticThreshold.c in Sources */,
-				3AEEF23B22D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.c in Sources */,
+				3A784AFB2373E9D80048920C /* BMHysteresisLimiter.c in Sources */,
 				4CC13A8D2244D80B003FA1B9 /* BMCompressor.c in Sources */,
 				4CC13A952244D85C003FA1B9 /* BMStereoLagTime.c in Sources */,
 				4CC13A702244D80B003FA1B9 /* BMBiquadArray.c in Sources */,
-				3A442EAE232CFE4D007AE258 /* BMFFT.c in Sources */,
 				4CC13A6A2244D80B003FA1B9 /* BMCrossover.c in Sources */,
+				3A8320992360537200B5387B /* BMStereoMod2.c in Sources */,
 				4CC13A7A2244D80B003FA1B9 /* BMStaticDelay.c in Sources */,
 				4CC13A772244D80B003FA1B9 /* BMEarlyReflections.c in Sources */,
-				3A442EB1232D0A3E007AE258 /* BMSFM.c in Sources */,
 				3AB41758229F843500AECC6E /* BMVariableFilter.c in Sources */,
 				4CC13A7D2244D80B003FA1B9 /* BMInterpolatedDelay.c in Sources */,
 				3A95396422CB50CD0058A586 /* BMZavalishinLPFOrder1.c in Sources */,
-				4CC13A872244D80B003FA1B9 /* BMUpsampler.c in Sources */,
 				4CC13A712244D80B003FA1B9 /* BMRoundRobinFilter.c in Sources */,
 				4CC13A7B2244D80B003FA1B9 /* BMMultiTapDelay.c in Sources */,
-				4CC13A672244D80B003FA1B9 /* BMVelvetNoiseDecorrelator.c in Sources */,
 				4CC13A762244D80B003FA1B9 /* BMQuadratureOscillator.c in Sources */,
-				4CC13A6D2244D80B003FA1B9 /* BMStereoModulator.c in Sources */,
 				4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */,
 				3AAEA15422B3420B0066D852 /* BMHoldPeak.c in Sources */,
 				3AEB17BC228AAA54004C7E4E /* BMWetDryMixer.c in Sources */,
 				3A442EAB232CD881007AE258 /* BMSimpleFDN.c in Sources */,
 				4CC13A862244D80B003FA1B9 /* BMOffset.c in Sources */,
 				4CC13A742244D80B003FA1B9 /* BMLFO.c in Sources */,
+				3A70D1C9236815D600F464E6 /* BMDownsampler.c in Sources */,
 				4CC13A792244D80B003FA1B9 /* BMSimpleDelay.c in Sources */,
 				4CC13A6C2244D80B003FA1B9 /* BMDynamicSmoothingFilter.c in Sources */,
+				3A784AF42373E8CD0048920C /* BMBetaPDF.c in Sources */,
 				4CC13A852244D80B003FA1B9 /* BMStereoWidener.c in Sources */,
 				4CC13A8A2244D80B003FA1B9 /* BMEnvelopeFollower.c in Sources */,
 				4CC13A8B2244D80B003FA1B9 /* BMGainStage.c in Sources */,
+				3A83209C23629A9A00B5387B /* BMShortSimpleDelay.c in Sources */,
 				3A9E06C722E1693D00ECB53B /* BMIIRUpsampler2x.c in Sources */,
 				4C0FD74D2280186500995864 /* BMBinauralSynthesis.c in Sources */,
-				4CC13A882244D80B003FA1B9 /* BMDownsampler.c in Sources */,
+				3A784AFC2373E9D80048920C /* BMQuadraticLimiter.c in Sources */,
 				4CC13A842244D80B003FA1B9 /* BMTremolo.c in Sources */,
+				3AD52136234DBCF3000CC7E0 /* BMMonoToStereo.c in Sources */,
+				3ABD5533233496EC002765A6 /* incbeta.c in Sources */,
 				4CC13A7F2244D80B003FA1B9 /* BMLagrangeInterpolationTable.c in Sources */,
 				4CC13A902244D80B003FA1B9 /* BMRMSPower.c in Sources */,
 				3AB0E8FC22CDB81900B0394F /* BMQuadraticRectifier.c in Sources */,
@@ -648,6 +682,8 @@
 				3A874E9522F157B800B97FC2 /* BMTanhLimiter.c in Sources */,
 				3A9E06C122E1651100ECB53B /* BMIIRDownsampler2x.c in Sources */,
 				4CC13A8C2244D80B003FA1B9 /* BMNoiseGate.c in Sources */,
+				3AB594E6234F3EA3007D31E8 /* BMVelvetNoiseDecorrelator.c in Sources */,
+				3A784AF02373E8B30048920C /* BMSFM.c in Sources */,
 				4CC13A6E2244D80B003FA1B9 /* BMVelocityFilter.c in Sources */,
 				4CC13A7C2244D80B003FA1B9 /* BMReverb.c in Sources */,
 				3A7FDAF7231684170090EC36 /* BMChamberlinSVF.c in Sources */,
@@ -655,13 +691,17 @@
 				3AB0E8FB22CDB81900B0394F /* BMTransientShaper.c in Sources */,
 				4C8E3C9C22F0288E00B17824 /* BMVAStateVariableFilter.c in Sources */,
 				4CC13A782244D80B003FA1B9 /* TestReverb.c in Sources */,
+				3A70D1CB236815E000F464E6 /* BMPolyphaseIIR2Designer.c in Sources */,
+				3A3C85462344644400C1D697 /* BMVocalRemover.c in Sources */,
 				4CC13A722244D80B003FA1B9 /* BMMultiLevelBiquad.c in Sources */,
 				4CC13A822244D80B003FA1B9 /* BMVibrato.c in Sources */,
 				4CC13A7E2244D80B003FA1B9 /* BMVelvetNoise.c in Sources */,
 				4CC13A912244D80B003FA1B9 /* TPCircularBuffer+AudioBufferList.c in Sources */,
 				4CC13A6F2244D80B003FA1B9 /* BMTNFilter.c in Sources */,
+				3A70D1CA236815DC00F464E6 /* BMUpsampler.c in Sources */,
 				4CC13A812244D80B003FA1B9 /* BMGetOSVersion.c in Sources */,
 				4CC13A752244D80B003FA1B9 /* BMOscillatorArray.c in Sources */,
+				3A70D1D123681B3300F464E6 /* BMAsymptoticLimiter.c in Sources */,
 				4CC13A832244D80B003FA1B9 /* BMSpectrum.c in Sources */,
 				4CC13A802244D80B003FA1B9 /* BMLagrangeInterpolation.c in Sources */,
 				4CC13A692244D80B003FA1B9 /* BMMultiLevelSVF.c in Sources */,
@@ -705,7 +745,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -764,7 +804,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -788,7 +828,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DMM8533PS6;
+				DEVELOPMENT_TEAM = A8UU6B3KC9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -797,7 +837,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DMM8533PS6;
+				DEVELOPMENT_TEAM = A8UU6B3KC9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

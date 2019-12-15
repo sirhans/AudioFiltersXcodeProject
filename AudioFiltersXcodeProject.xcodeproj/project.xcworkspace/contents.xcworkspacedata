@@ -2,6 +2,57 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:AudioFiltersXcodeProject.xcodeproj">
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMDownsampler.c">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMDownsampler.h">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMHIIRDownsampler2xFPU.c">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMHIIRDownsampler2xFPU.h">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMHIIRMath.h">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMHIIRStageFPU.h">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMHIIRUpsampler2xFPU.c">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMHIIRUpsampler2xFPU.h">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMIIRDownsampler2x.c">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMIIRDownsampler2x.h">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMIIRUpsampler2x.c">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMIIRUpsampler2x.h">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMInterleaver.h">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMPolyphaseIIR2Designer.c">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMPolyphaseIIR2Designer.h">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMUpsampler.c">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/hans/Desktop/Blue Mangoo/AudioFiltersXcodeProject/AudioFiltersSubmodule/AudioFilters/SampleRate/BMUpsampler.h">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
