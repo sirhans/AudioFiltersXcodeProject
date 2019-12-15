@@ -45,6 +45,7 @@
 #include "BMCrossover.h"
 #include "BMMonoToStereo.h"
 #include "BMAsymptoticLimiter.h"
+#include "BMAudioStreamConverter.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -270,7 +271,7 @@ void testVND(){
 void testMonoToStereo(){
 	float sampleRate = 48000.0f;
 	BMMonoToStereo m2s;
-	BMMonoToStereo_init(&m2s, sampleRate);
+	BMMonoToStereo_init(&m2s, sampleRate, true);
 	
 	
 	size_t testLength = sampleRate * 5;
@@ -2638,10 +2639,61 @@ void testClipperSpeed(){
 }
 
 
+void testFormatConverter(){
+    BMAudioStreamConverter converter;
+    AudioStreamBasicDescription input, output;
+    input.mSampleRate = 16000.0f;
+    output.mSampleRate = 48000.0f;
+    input.mChannelsPerFrame = 1;
+    output.mChannelsPerFrame = 2;
+    input.mFormatID = output.mFormatID = kAudioFormatLinearPCM;
+    input.mFormatFlags = kAudioFormatFlagIsPacked | kAudioFormatFlagIsNonInterleaved;
+    output.mFormatFlags = input.mFormatFlags | kAudioFormatFlagIsFloat;
+    input.mFramesPerPacket = output.mFramesPerPacket = 1;
+    input.mBytesPerFrame = sizeof(short) * input.mFramesPerPacket;
+    output.mBytesPerFrame = sizeof(float) * output.mFramesPerPacket;
+
+    BMAudioStreamConverter_init(&converter, input, output);
+    
+    size_t inputLength = 16000 * 5;
+    
+    // generate short int sine sweep
+    float *testSignal_f = malloc(sizeof(float)*inputLength);
+    generateSineSweep(testSignal_f, 20.0, 8000.0, 16000.0, inputLength);
+    float toShortScale = (float)INT16_MAX;
+    vDSP_vsmul(testSignal_f, 1, &toShortScale, testSignal_f, 1, inputLength);
+    short *testSignal_si = malloc(sizeof(short)*inputLength);
+    vDSP_vfix16(testSignal_f, 1, testSignal_si, 1, inputLength);
+    
+    // convert the audio stream format
+    size_t outputLength = 1 + (double)inputLength * output.mSampleRate / input.mSampleRate;
+    float *outputSignal = malloc(outputLength*sizeof(float));
+    float *outPointer = outputSignal;
+    short *inPointer = testSignal_si;
+    
+    size_t numSamples = inputLength;
+    outputLength = 0;
+    while(numSamples > 0){
+        size_t samplesIn = BM_MIN(numSamples, 71);
+        size_t samplesOut;
+        samplesOut = BMAudioStreamConverter_convert(&converter, (const void**)&inPointer, (void**)&outPointer, samplesIn);
+        numSamples -= samplesIn;
+        outPointer += samplesOut;
+        inPointer += samplesIn;
+        printf("samplesOut: %zu\n",samplesOut);
+        outputLength += samplesOut;
+    }
+    
+    char* filename = "./sineSweep.csv";
+    arrayToFileWithName(outputSignal, filename, outputLength);
+}
+
+
 int main(int argc, const char * argv[]) {
 
     //testFDN(100, false, 2);
-    testNoiseGate();
+    //testNoiseGate();
+    testFormatConverter();
     return 0;
 
 }
