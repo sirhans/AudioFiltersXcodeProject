@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+<<<<<<< Updated upstream
 		3A1A0E9623A607F8003DEE0E /* BMAudioStreamConverter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1A0E9423A607F8003DEE0E /* BMAudioStreamConverter.c */; };
 		3A1A0E9B23A60A24003DEE0E /* BMHugeReverb.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1A0E9823A60A24003DEE0E /* BMHugeReverb.c */; };
 		3A1A0EA123A610CE003DEE0E /* BMFirstOrderArray.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1A0E9E23A610CE003DEE0E /* BMFirstOrderArray.c */; };
 		3A1A0EA223A610CE003DEE0E /* BMFirstOrderDirectForm.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1A0E9F23A610CE003DEE0E /* BMFirstOrderDirectForm.c */; };
 		3A1A0EA323A6112A003DEE0E /* BMMonoToStereo.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1A0E9923A60A24003DEE0E /* BMMonoToStereo.c */; };
+=======
+		3A11799F23A6401A00EFCE5D /* BMAudioStreamConverter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A11799E23A6401A00EFCE5D /* BMAudioStreamConverter.c */; };
+>>>>>>> Stashed changes
 		3A3C85462344644400C1D697 /* BMVocalRemover.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C85452344644400C1D697 /* BMVocalRemover.c */; };
 		3A442EAB232CD881007AE258 /* BMSimpleFDN.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A442EAA232CD881007AE258 /* BMSimpleFDN.c */; };
 		3A6A32A922CF357300DEEDFA /* BMQuadraticThreshold.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */; };
@@ -98,6 +102,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+<<<<<<< Updated upstream
 		3A1A0E9423A607F8003DEE0E /* BMAudioStreamConverter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMAudioStreamConverter.c; sourceTree = "<group>"; };
 		3A1A0E9523A607F8003DEE0E /* BMAudioStreamConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAudioStreamConverter.h; sourceTree = "<group>"; };
 		3A1A0E9723A60A24003DEE0E /* BMHugeReverb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMHugeReverb.h; sourceTree = "<group>"; };
@@ -108,6 +113,10 @@
 		3A1A0E9E23A610CE003DEE0E /* BMFirstOrderArray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMFirstOrderArray.c; sourceTree = "<group>"; };
 		3A1A0E9F23A610CE003DEE0E /* BMFirstOrderDirectForm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMFirstOrderDirectForm.c; sourceTree = "<group>"; };
 		3A1A0EA023A610CE003DEE0E /* BMFirstOrderDirectForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMFirstOrderDirectForm.h; sourceTree = "<group>"; };
+=======
+		3A11799D23A6401A00EFCE5D /* BMAudioStreamConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAudioStreamConverter.h; sourceTree = "<group>"; };
+		3A11799E23A6401A00EFCE5D /* BMAudioStreamConverter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMAudioStreamConverter.c; sourceTree = "<group>"; };
+>>>>>>> Stashed changes
 		3A3C85442344644400C1D697 /* BMVocalRemover.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMVocalRemover.h; sourceTree = "<group>"; };
 		3A3C85452344644400C1D697 /* BMVocalRemover.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMVocalRemover.c; sourceTree = "<group>"; };
 		3A442EA9232CD881007AE258 /* BMSimpleFDN.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMSimpleFDN.h; sourceTree = "<group>"; };
@@ -538,8 +547,13 @@
 		4CC13A4B2244D80B003FA1B9 /* SampleRate */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< Updated upstream
 				3A1A0E9423A607F8003DEE0E /* BMAudioStreamConverter.c */,
 				3A1A0E9523A607F8003DEE0E /* BMAudioStreamConverter.h */,
+=======
+				3A11799E23A6401A00EFCE5D /* BMAudioStreamConverter.c */,
+				3A11799D23A6401A00EFCE5D /* BMAudioStreamConverter.h */,
+>>>>>>> Stashed changes
 				4CC13A502244D80B003FA1B9 /* BMDownsampler.c */,
 				4CC13A4D2244D80B003FA1B9 /* BMDownsampler.h */,
 				3AEEF23C22D88B1800A3C5B5 /* BMHIIRMath.h */,
@@ -674,7 +688,11 @@
 				3A95396422CB50CD0058A586 /* BMZavalishinLPFOrder1.c in Sources */,
 				3A1A0EA223A610CE003DEE0E /* BMFirstOrderDirectForm.c in Sources */,
 				4CC13A712244D80B003FA1B9 /* BMRoundRobinFilter.c in Sources */,
+<<<<<<< Updated upstream
 				3A1A0E9623A607F8003DEE0E /* BMAudioStreamConverter.c in Sources */,
+=======
+				3A11799F23A6401A00EFCE5D /* BMAudioStreamConverter.c in Sources */,
+>>>>>>> Stashed changes
 				4CC13A7B2244D80B003FA1B9 /* BMMultiTapDelay.c in Sources */,
 				4CC13A762244D80B003FA1B9 /* BMQuadratureOscillator.c in Sources */,
 				4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */,
