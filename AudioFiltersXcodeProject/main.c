@@ -1718,16 +1718,27 @@ void testUpDownsampler2x(){
 	
 	generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
 	
-	// upsample
-	BMIIRUpsampler2x_processBufferMono(&us, sineSweep, upsampled, testLength);
+	size_t samplesRemaining = testLength;
+	float* inputP = sineSweep;
+	float* outputP = output;
+	while(samplesRemaining > 0){
+		size_t samplesProcessing = BM_MIN(samplesRemaining, 80);
+		
+		// upsample
+		BMIIRUpsampler2x_processBufferMono(&us, inputP, upsampled, samplesProcessing);
+		
+		// waveshape
+		//BMWaveshaper_processBufferBidirectional(upsampled, upsampled, testLength*2);
+		
+		// downsample
+		BMIIRDownsampler2x_processBufferMono(&ds, upsampled, outputP, samplesProcessing*2);
+		outputP += samplesProcessing;
+		inputP += samplesProcessing;
+		samplesRemaining -= samplesProcessing;
+	}
 	
-	// waveshape
-	BMWaveshaper_processBufferBidirectional(upsampled, upsampled, testLength*2);
-	
-	// downsample
-	BMIIRDownsampler2x_processBufferMono(&ds, upsampled, output, testLength*2);
-	
-	arrayToFile(output,testLength);
+	char* filename = "./sineSweepResponse.csv";
+	arrayToFileWithName(output, filename, testLength);
 	
 	BMIIRUpsampler2x_free(&us);
 	BMIIRDownsampler2x_free(&ds);
@@ -1809,20 +1820,29 @@ void testUpDownsampler(){
 	//float boost = BM_DB_TO_GAIN(100.0f);
 	//vDSP_vsmul(sineSweep,1,&boost,sineSweep,1,testLength);
 	
-	if(upsampleFactor > 1)
-		BMUpsampler_processBufferMono(&us, sineSweep, upsampled, testLength);
-	else
-		memcpy(upsampled,sineSweep,sizeof(float)*testLength);
-	
-	// waveshape
-	//int length = (int)testLength*(int)upsampleFactor;
-	//vvtanhf(upsampled, upsampled, &length);
-	
-	if(upsampleFactor > 1)
-		BMDownsampler_processBufferMono(&ds, upsampled, output, testLength*upsampleFactor);
-	else
-		memcpy(output,upsampled,sizeof(float)*testLength);
-	
+	size_t samplesRemaining = testLength;
+	float *inputP = sineSweep;
+	float *outputP = output;
+	while(samplesRemaining > 0){
+		size_t samplesProcessing = BM_MIN(samplesRemaining, 80);
+		if(upsampleFactor > 1)
+			BMUpsampler_processBufferMono(&us, inputP, upsampled, samplesProcessing);
+		else
+			memcpy(upsampled,inputP,sizeof(float)*samplesProcessing);
+		
+		// waveshape
+		//int length = (int)testLength*(int)upsampleFactor;
+		//vvtanhf(upsampled, upsampled, &length);
+		
+		if(upsampleFactor > 1)
+			BMDownsampler_processBufferMono(&ds, upsampled, outputP, samplesProcessing*upsampleFactor);
+		else
+			memcpy(outputP,upsampled,sizeof(float)*samplesProcessing);
+		
+		inputP += samplesProcessing;
+		outputP += samplesProcessing;
+		samplesRemaining -= samplesProcessing;
+	}
 	
 	char* filename = "./sineSweepResponse.csv";
 	arrayToFileWithName(output, filename, testLength);
@@ -2645,7 +2665,7 @@ void testFormatConverter(){
     input.mSampleRate = 16000.0f;
     output.mSampleRate = 48000.0f;
     input.mChannelsPerFrame = 1;
-    output.mChannelsPerFrame = 2;
+    output.mChannelsPerFrame = 1;
     input.mFormatID = output.mFormatID = kAudioFormatLinearPCM;
     input.mFormatFlags = kAudioFormatFlagIsPacked | kAudioFormatFlagIsNonInterleaved;
     output.mFormatFlags = input.mFormatFlags | kAudioFormatFlagIsFloat;
@@ -2659,7 +2679,7 @@ void testFormatConverter(){
     
     // generate short int sine sweep
     float *testSignal_f = malloc(sizeof(float)*inputLength);
-    generateSineSweep(testSignal_f, 20.0, 8000.0, 16000.0, inputLength);
+    generateSineSweep(testSignal_f, 20.0, 8000.0, input.mSampleRate, inputLength);
     float toShortScale = (float)INT16_MAX;
     vDSP_vsmul(testSignal_f, 1, &toShortScale, testSignal_f, 1, inputLength);
     short *testSignal_si = malloc(sizeof(short)*inputLength);
@@ -2667,14 +2687,15 @@ void testFormatConverter(){
     
     // convert the audio stream format
     size_t outputLength = 1 + (double)inputLength * output.mSampleRate / input.mSampleRate;
-    float *outputSignal = malloc(outputLength*sizeof(float));
+    float *outputSignal = malloc(8*inputLength*sizeof(float));
     float *outPointer = outputSignal;
     short *inPointer = testSignal_si;
     
     size_t numSamples = inputLength;
     outputLength = 0;
     while(numSamples > 0){
-        size_t samplesIn = BM_MIN(numSamples, 71);
+		size_t nextBufferSize = 1 + arc4random() % 100;
+        size_t samplesIn = BM_MIN(numSamples, nextBufferSize);
         size_t samplesOut;
         samplesOut = BMAudioStreamConverter_convert(&converter, (const void**)&inPointer, (void**)&outPointer, samplesIn);
         numSamples -= samplesIn;
@@ -2683,8 +2704,14 @@ void testFormatConverter(){
         printf("samplesOut: %zu\n",samplesOut);
         outputLength += samplesOut;
     }
-    
-    char* filename = "./sineSweep.csv";
+	
+//	// convert without changing sample rates
+//	vDSP_vflt16(testSignal_si, 1, outputSignal, 1, inputLength);
+//	float toFloatScale = 1.0f / toShortScale;
+//	vDSP_vsmul(outputSignal, 1, &toFloatScale, outputSignal, 1, inputLength);
+	
+	char* filename = "./sineSweepResponse.csv";
+//    arrayToFileWithName(outputSignal, filename, inputLength);
     arrayToFileWithName(outputSignal, filename, outputLength);
 }
 
@@ -2694,6 +2721,7 @@ int main(int argc, const char * argv[]) {
     //testFDN(100, false, 2);
     //testNoiseGate();
     testFormatConverter();
+	//testUpDownsampler();
     return 0;
 
 }
