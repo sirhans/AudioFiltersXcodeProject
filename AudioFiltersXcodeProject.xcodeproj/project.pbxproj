@@ -50,6 +50,11 @@
 		3AEB17BD228AAA54004C7E4E /* BMSmoothGain.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB17BB228AAA54004C7E4E /* BMSmoothGain.c */; };
 		4C0FD74D2280186500995864 /* BMBinauralSynthesis.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */; };
 		4C688A382244CF6700E3B1E6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C688A372244CF6700E3B1E6 /* main.c */; };
+		4C6FA2122410EAA1003043FE /* BMSmoothDelay.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FA20C2410EAA1003043FE /* BMSmoothDelay.c */; };
+		4C6FA2132410EAA1003043FE /* BMCloudReverb.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FA20E2410EAA1003043FE /* BMCloudReverb.c */; };
+		4C6FA2142410EAA1003043FE /* BMPitchShiftDelay.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FA2102410EAA1003043FE /* BMPitchShiftDelay.c */; };
+		4C6FA2192410EAB2003043FE /* BMExportWavFile.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FA2152410EAB2003043FE /* BMExportWavFile.c */; };
+		4C6FA21A2410EAB2003043FE /* BMSmoothSwitch.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FA2172410EAB2003043FE /* BMSmoothSwitch.c */; };
 		4C8E3C9C22F0288E00B17824 /* BMVAStateVariableFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C8E3C9B22F0288E00B17824 /* BMVAStateVariableFilter.c */; };
 		4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F52244D80B003FA1B9 /* BMDiffusion.c */; };
 		4CC13A692244D80B003FA1B9 /* BMMultiLevelSVF.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC139F62244D80B003FA1B9 /* BMMultiLevelSVF.c */; };
@@ -189,6 +194,16 @@
 		4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMBinauralSynthesis.c; sourceTree = "<group>"; };
 		4C688A342244CF6700E3B1E6 /* AudioFiltersXcodeProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AudioFiltersXcodeProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C688A372244CF6700E3B1E6 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		4C6FA20C2410EAA1003043FE /* BMSmoothDelay.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMSmoothDelay.c; sourceTree = "<group>"; };
+		4C6FA20D2410EAA1003043FE /* BMSmoothDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSmoothDelay.h; sourceTree = "<group>"; };
+		4C6FA20E2410EAA1003043FE /* BMCloudReverb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMCloudReverb.c; sourceTree = "<group>"; };
+		4C6FA20F2410EAA1003043FE /* BMPitchShiftDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMPitchShiftDelay.h; sourceTree = "<group>"; };
+		4C6FA2102410EAA1003043FE /* BMPitchShiftDelay.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMPitchShiftDelay.c; sourceTree = "<group>"; };
+		4C6FA2112410EAA1003043FE /* BMCloudReverb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCloudReverb.h; sourceTree = "<group>"; };
+		4C6FA2152410EAB2003043FE /* BMExportWavFile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMExportWavFile.c; sourceTree = "<group>"; };
+		4C6FA2162410EAB2003043FE /* BMSmoothSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSmoothSwitch.h; sourceTree = "<group>"; };
+		4C6FA2172410EAB2003043FE /* BMSmoothSwitch.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMSmoothSwitch.c; sourceTree = "<group>"; };
+		4C6FA2182410EAB2003043FE /* BMExportWavFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMExportWavFile.h; sourceTree = "<group>"; };
 		4C8E3C9A22F0288E00B17824 /* BMVAStateVariableFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMVAStateVariableFilter.h; sourceTree = "<group>"; };
 		4C8E3C9B22F0288E00B17824 /* BMVAStateVariableFilter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMVAStateVariableFilter.c; sourceTree = "<group>"; };
 		4C8E3C9D22F0331D00B17824 /* DspUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DspUtilities.h; sourceTree = "<group>"; };
@@ -436,6 +451,12 @@
 		4CC13A112244D80B003FA1B9 /* DelayAndReverb */ = {
 			isa = PBXGroup;
 			children = (
+				4C6FA20E2410EAA1003043FE /* BMCloudReverb.c */,
+				4C6FA2112410EAA1003043FE /* BMCloudReverb.h */,
+				4C6FA2102410EAA1003043FE /* BMPitchShiftDelay.c */,
+				4C6FA20F2410EAA1003043FE /* BMPitchShiftDelay.h */,
+				4C6FA20C2410EAA1003043FE /* BMSmoothDelay.c */,
+				4C6FA20D2410EAA1003043FE /* BMSmoothDelay.h */,
 				3AD24AF523A641DA003F8A0F /* BMMultiTapDelay.c */,
 				3AD24AF423A641DA003F8A0F /* BMMultiTapDelay.h */,
 				3A1A0E9823A60A24003DEE0E /* BMHugeReverb.c */,
@@ -528,6 +549,10 @@
 		4CC13A3D2244D80B003FA1B9 /* OtherEffects */ = {
 			isa = PBXGroup;
 			children = (
+				4C6FA2152410EAB2003043FE /* BMExportWavFile.c */,
+				4C6FA2182410EAB2003043FE /* BMExportWavFile.h */,
+				4C6FA2172410EAB2003043FE /* BMSmoothSwitch.c */,
+				4C6FA2162410EAB2003043FE /* BMSmoothSwitch.h */,
 				4CC13A432244D80B003FA1B9 /* BMMidSide.h */,
 				4CC13A472244D80B003FA1B9 /* BMOffset.c */,
 				4CC13A422244D80B003FA1B9 /* BMOffset.h */,
@@ -693,6 +718,7 @@
 				3AB0E90022CDBC8A00B0394F /* BMWaveshaping.c in Sources */,
 				4CC13A6B2244D80B003FA1B9 /* BMFIRFilter.c in Sources */,
 				3A784AF52373E8CD0048920C /* BMFFT.c in Sources */,
+				4C6FA2132410EAA1003043FE /* BMCloudReverb.c in Sources */,
 				4C688A382244CF6700E3B1E6 /* main.c in Sources */,
 				3A6A32A922CF357300DEEDFA /* BMQuadraticThreshold.c in Sources */,
 				3A784AFB2373E9D80048920C /* BMHysteresisLimiter.c in Sources */,
@@ -712,6 +738,8 @@
 				4CC13A762244D80B003FA1B9 /* BMQuadratureOscillator.c in Sources */,
 				4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */,
 				3AAEA15422B3420B0066D852 /* BMHoldPeak.c in Sources */,
+				4C6FA2122410EAA1003043FE /* BMSmoothDelay.c in Sources */,
+				4C6FA2192410EAB2003043FE /* BMExportWavFile.c in Sources */,
 				3AEB17BC228AAA54004C7E4E /* BMWetDryMixer.c in Sources */,
 				3A442EAB232CD881007AE258 /* BMSimpleFDN.c in Sources */,
 				4CC13A862244D80B003FA1B9 /* BMOffset.c in Sources */,
@@ -723,6 +751,7 @@
 				4CC13A6C2244D80B003FA1B9 /* BMDynamicSmoothingFilter.c in Sources */,
 				3A784AF42373E8CD0048920C /* BMBetaPDF.c in Sources */,
 				3A1A0E9B23A60A24003DEE0E /* BMHugeReverb.c in Sources */,
+				4C6FA21A2410EAB2003043FE /* BMSmoothSwitch.c in Sources */,
 				4CC13A852244D80B003FA1B9 /* BMStereoWidener.c in Sources */,
 				4CC13A8A2244D80B003FA1B9 /* BMEnvelopeFollower.c in Sources */,
 				4CC13A8B2244D80B003FA1B9 /* BMGainStage.c in Sources */,
@@ -764,6 +793,7 @@
 				4CC13A752244D80B003FA1B9 /* BMOscillatorArray.c in Sources */,
 				3AD24AF623A641DA003F8A0F /* BMMultiTapDelay.c in Sources */,
 				3A70D1D123681B3300F464E6 /* BMAsymptoticLimiter.c in Sources */,
+				4C6FA2142410EAA1003043FE /* BMPitchShiftDelay.c in Sources */,
 				3A1A0EA123A610CE003DEE0E /* BMFirstOrderArray.c in Sources */,
 				4CC13A832244D80B003FA1B9 /* BMSpectrum.c in Sources */,
 				4CC13A802244D80B003FA1B9 /* BMLagrangeInterpolation.c in Sources */,
