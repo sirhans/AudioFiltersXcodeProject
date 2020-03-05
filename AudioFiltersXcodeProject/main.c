@@ -1908,7 +1908,7 @@ void testCrossover(){
 	char* filename = "./sineSweepResponse.csv";
 	arrayToFileWithName(outputLLow, filename, testLength);
 	
-	BMCrossover3way_free(&cvr);
+	BMCrossover4way_free(&cvr);
 	free(sineSweep);
 	free(outputLLow);
 }
@@ -2716,12 +2716,19 @@ void testFormatConverter(){
 }
 
 
+
+void testExtremeCompressor(){
+    
+}
+
+
 int main(int argc, const char * argv[]) {
 
     //testFDN(100, false, 2);
     //testNoiseGate();
-    testFormatConverter();
+    // testFormatConverter();
 	//testUpDownsampler();
+    testVND();
     return 0;
 
 }
