@@ -2740,7 +2740,7 @@ void testExport(){
 
 void testCloudReverb(){
     uint32_t sr = 48000;
-    uint32_t length = sr * 2;
+    uint32_t length = sr * 10;
     
     BMCloudReverb reverb;
     BMCloudReverb_init(&reverb, sr);
