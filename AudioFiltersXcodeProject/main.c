@@ -46,6 +46,8 @@
 #include "BMMonoToStereo.h"
 #include "BMAsymptoticLimiter.h"
 #include "BMAudioStreamConverter.h"
+#include "BMCloudReverb.h"
+#include "BMExportWavFile.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -1916,7 +1918,7 @@ void testCrossover(){
 	char* filename = "./sineSweepResponse.csv";
 	arrayToFileWithName(outputLLow, filename, testLength);
 	
-	BMCrossover3way_free(&cvr);
+	BMCrossover4way_free(&cvr);
 	free(sineSweep);
 	free(outputLLow);
 }
@@ -2735,6 +2737,44 @@ void testGroupDelay(){
 		groupDelay = BMMultiLevelBiquad_groupDelay(&bqf, frequency);
 		printf("group delay at %f Hz: %f\n", frequency, groupDelay);
 	}
+}
+
+
+void testExtremeCompressor(){
+    
+}
+
+void testExport(){
+    uint32_t sr = 48000;
+    uint32_t length = sr * 10;
+    
+    BMExportWavFile exportWavFile;
+    BMExportWavFile_init(&exportWavFile,sr);
+    
+    float* dataL = malloc(sizeof(float)*length);
+    memset(dataL, 0, sizeof(float)*length);
+    dataL[0] = 1;
+    
+    char* filePath = "./sawtooth_test.wav";
+    BMExportWavFile_exportAudioFloat(&exportWavFile,filePath, dataL, dataL, length);
+}
+
+void testCloudReverb(){
+    uint32_t sr = 48000;
+    uint32_t length = sr * 10;
+    
+    BMCloudReverb reverb;
+    BMCloudReverb_init(&reverb, sr);
+    
+    float* outputL = malloc(sizeof(float)*length);
+    float* outputR = malloc(sizeof(float)*length);
+    BMCloudReverb_impulseResponse(&reverb, outputL, outputR, length);
+    
+    //Export wav file
+    BMExportWavFile exportWavFile;
+    BMExportWavFile_init(&exportWavFile,sr);
+    char* filePath = "./sawtooth_test.wav";
+    BMExportWavFile_exportAudioFloat(&exportWavFile,filePath, outputL, outputR, length);
 }
 
 int main(int argc, const char * argv[]) {
