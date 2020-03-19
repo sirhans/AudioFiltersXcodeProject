@@ -46,6 +46,8 @@
 #include "BMMonoToStereo.h"
 #include "BMAsymptoticLimiter.h"
 #include "BMAudioStreamConverter.h"
+#include "BMCloudReverb.h"
+#include "BMExportWavFile.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -243,7 +245,6 @@ void testButterworthFilter(){
 
 void testVND(){
 	BMVelvetNoiseDecorrelator vndFilter;
-	BMVelvetNoiseDecorrelator_init(&vndFilter, 0.1, 100, 3.0f, 0.5f, 48000.0f);
 	
 	float sampleRate = 48000.0f;
 	size_t testLength = sampleRate * 0.5;
@@ -252,18 +253,27 @@ void testVND(){
 	float* outputL = inputR + testLength;
 	float* outputR = outputL + testLength;
 	
+	float maxDelay = 1.0 / 3.0;
+	size_t numTaps = 16;
+	float rt60 = 100.0f;
+	bool hasDryTap = false;
+	BMVelvetNoiseDecorrelator_initWithEvenTapDensity(&vndFilter, maxDelay, numTaps, rt60, hasDryTap, sampleRate);
+	
 	inputL[0] = 1.0f;
 	inputR[0] = 1.0f;
 	
+	for(size_t i=0; i<10000; i++)
 	BMVelvetNoiseDecorrelator_processBufferStereo(&vndFilter,
 												  inputL, inputR,
 												  outputL, outputR,
 												  testLength);
 	
+	
 	char* filename = "./impulseResponse.csv";
 	arrayToFileWithName(outputL, filename, testLength);
 	
 	free(inputL);
+	inputL = NULL;
 	BMVelvetNoiseDecorrelator_free(&vndFilter);
 }
 
@@ -2716,11 +2726,38 @@ void testFormatConverter(){
 }
 
 
+void testGroupDelay(){
+	BMMultiLevelBiquad bqf;
+	BMMultiLevelBiquad_init(&bqf, 1, 48000.0f, false, true, false);
+	BMMultiLevelBiquad_setHighPass6db(&bqf, 3000.0f, 0);
+	float groupDelay;
+	float frequency;
+	for(size_t i=0; i<100; i++){
+		frequency = 0.01 + (float)i * 10000.0f / 100.0f;
+		groupDelay = BMMultiLevelBiquad_groupDelay(&bqf, frequency);
+		printf("group delay at %f Hz: %f\n", frequency, groupDelay);
+	}
+}
+
 
 void testExtremeCompressor(){
     
 }
 
+void testExport(){
+    uint32_t sr = 48000;
+    uint32_t length = sr * 10;
+    
+    BMExportWavFile exportWavFile;
+    BMExportWavFile_init(&exportWavFile,sr);
+    
+    float* dataL = malloc(sizeof(float)*length);
+    memset(dataL, 0, sizeof(float)*length);
+    dataL[0] = 1;
+    
+    char* filePath = "./sawtooth_test.wav";
+    BMExportWavFile_exportAudioFloat(&exportWavFile,filePath, dataL, dataL, length);
+}
 
 void testRandomsInRange(){
     size_t randoms [20];
@@ -2732,6 +2769,24 @@ void testRandomsInRange(){
     printf("%zu}\n",randoms[19]);
 }
 
+
+void testCloudReverb(){
+    uint32_t sr = 48000;
+    uint32_t length = sr * 10;
+    
+    BMCloudReverb reverb;
+    BMCloudReverb_init(&reverb, sr);
+    
+    float* outputL = malloc(sizeof(float)*length);
+    float* outputR = malloc(sizeof(float)*length);
+    BMCloudReverb_impulseResponse(&reverb, outputL, outputR, length);
+    
+    //Export wav file
+    BMExportWavFile exportWavFile;
+    BMExportWavFile_init(&exportWavFile,sr);
+    char* filePath = "./sawtooth_test.wav";
+    BMExportWavFile_exportAudioFloat(&exportWavFile,filePath, outputL, outputR, length);
+}
 
 int main(int argc, const char * argv[]) {
 
