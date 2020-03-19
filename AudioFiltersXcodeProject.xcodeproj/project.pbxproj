@@ -12,6 +12,9 @@
 		3A03B20B2410CA54004F2776 /* BMSorting.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A03B2092410CA54004F2776 /* BMSorting.c */; };
 		3A03B2102410CDBA004F2776 /* BMLowpassedLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A03B20E2410CDBA004F2776 /* BMLowpassedLimiter.c */; };
 		3A03B2112410CDBA004F2776 /* BMPeakLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A03B20F2410CDBA004F2776 /* BMPeakLimiter.c */; };
+		3A03B21524188ACB004F2776 /* BMCepstrum.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A03B21424188ACB004F2776 /* BMCepstrum.c */; };
+		3A03B2182418AA70004F2776 /* BMHarmonicityMeasure.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A03B2172418AA70004F2776 /* BMHarmonicityMeasure.c */; };
+		3A03B21B2418AD51004F2776 /* BMMeasurementBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A03B21A2418AD51004F2776 /* BMMeasurementBuffer.c */; };
 		3A1A0E9623A607F8003DEE0E /* BMAudioStreamConverter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1A0E9423A607F8003DEE0E /* BMAudioStreamConverter.c */; };
 		3A1A0E9B23A60A24003DEE0E /* BMHugeReverb.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1A0E9823A60A24003DEE0E /* BMHugeReverb.c */; };
 		3A1A0EA123A610CE003DEE0E /* BMFirstOrderArray.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1A0E9E23A610CE003DEE0E /* BMFirstOrderArray.c */; };
@@ -119,6 +122,12 @@
 		3A03B20D2410CDBA004F2776 /* BMPeakLimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMPeakLimiter.h; sourceTree = "<group>"; };
 		3A03B20E2410CDBA004F2776 /* BMLowpassedLimiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMLowpassedLimiter.c; sourceTree = "<group>"; };
 		3A03B20F2410CDBA004F2776 /* BMPeakLimiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMPeakLimiter.c; sourceTree = "<group>"; };
+		3A03B21324188ACB004F2776 /* BMCepstrum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMCepstrum.h; sourceTree = "<group>"; };
+		3A03B21424188ACB004F2776 /* BMCepstrum.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMCepstrum.c; sourceTree = "<group>"; };
+		3A03B2162418AA70004F2776 /* BMHarmonicityMeasure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMHarmonicityMeasure.h; sourceTree = "<group>"; };
+		3A03B2172418AA70004F2776 /* BMHarmonicityMeasure.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMHarmonicityMeasure.c; sourceTree = "<group>"; };
+		3A03B2192418AD51004F2776 /* BMMeasurementBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMMeasurementBuffer.h; sourceTree = "<group>"; };
+		3A03B21A2418AD51004F2776 /* BMMeasurementBuffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMMeasurementBuffer.c; sourceTree = "<group>"; };
 		3A1A0E9423A607F8003DEE0E /* BMAudioStreamConverter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMAudioStreamConverter.c; sourceTree = "<group>"; };
 		3A1A0E9523A607F8003DEE0E /* BMAudioStreamConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAudioStreamConverter.h; sourceTree = "<group>"; };
 		3A1A0E9723A60A24003DEE0E /* BMHugeReverb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMHugeReverb.h; sourceTree = "<group>"; };
@@ -326,16 +335,22 @@
 		3A3F95C7228E9DC000AD4794 /* Measurement */ = {
 			isa = PBXGroup;
 			children = (
-				3A784AEE2373E8B30048920C /* BMSFM.c */,
-				3A784AEF2373E8B30048920C /* BMSFM.h */,
+				3A03B21424188ACB004F2776 /* BMCepstrum.c */,
+				3A03B21324188ACB004F2776 /* BMCepstrum.h */,
+				3AAEA15322B3420B0066D852 /* BMHoldPeak.c */,
+				3AAEA15222B3420B0066D852 /* BMHoldPeak.h */,
 				3AB4175922A61DBF00AECC6E /* BMLevelMeter.c */,
 				3AB4175A22A61DBF00AECC6E /* BMLevelMeter.h */,
 				4CC13A602244D80B003FA1B9 /* BMRMSPower.c */,
 				4CC13A592244D80B003FA1B9 /* BMRMSPower.h */,
-				3AAEA15222B3420B0066D852 /* BMHoldPeak.h */,
-				3AAEA15322B3420B0066D852 /* BMHoldPeak.c */,
+				3A784AEE2373E8B30048920C /* BMSFM.c */,
+				3A784AEF2373E8B30048920C /* BMSFM.h */,
 				4CC13A3F2244D80B003FA1B9 /* BMSpectrum.c */,
 				4CC13A452244D80B003FA1B9 /* BMSpectrum.h */,
+				3A03B2162418AA70004F2776 /* BMHarmonicityMeasure.h */,
+				3A03B2172418AA70004F2776 /* BMHarmonicityMeasure.c */,
+				3A03B2192418AD51004F2776 /* BMMeasurementBuffer.h */,
+				3A03B21A2418AD51004F2776 /* BMMeasurementBuffer.c */,
 			);
 			path = Measurement;
 			sourceTree = "<group>";
@@ -716,6 +731,7 @@
 			files = (
 				4CC13A732244D80B003FA1B9 /* BMRoundRobin.c in Sources */,
 				3AB0E90022CDBC8A00B0394F /* BMWaveshaping.c in Sources */,
+				3A03B21B2418AD51004F2776 /* BMMeasurementBuffer.c in Sources */,
 				4CC13A6B2244D80B003FA1B9 /* BMFIRFilter.c in Sources */,
 				3A784AF52373E8CD0048920C /* BMFFT.c in Sources */,
 				4C6FA2132410EAA1003043FE /* BMCloudReverb.c in Sources */,
@@ -730,6 +746,7 @@
 				4CC13A7A2244D80B003FA1B9 /* BMStaticDelay.c in Sources */,
 				4CC13A772244D80B003FA1B9 /* BMEarlyReflections.c in Sources */,
 				3AB41758229F843500AECC6E /* BMVariableFilter.c in Sources */,
+				3A03B2182418AA70004F2776 /* BMHarmonicityMeasure.c in Sources */,
 				4CC13A7D2244D80B003FA1B9 /* BMInterpolatedDelay.c in Sources */,
 				3A95396422CB50CD0058A586 /* BMZavalishinLPFOrder1.c in Sources */,
 				3A1A0EA223A610CE003DEE0E /* BMFirstOrderDirectForm.c in Sources */,
@@ -779,6 +796,7 @@
 				3AB0E8FB22CDB81900B0394F /* BMTransientShaper.c in Sources */,
 				3A5DA92623FCF19200C7E19D /* BMPeakLimiter.c in Sources */,
 				4C8E3C9C22F0288E00B17824 /* BMVAStateVariableFilter.c in Sources */,
+				3A03B21524188ACB004F2776 /* BMCepstrum.c in Sources */,
 				4CC13A782244D80B003FA1B9 /* TestReverb.c in Sources */,
 				3A70D1CB236815E000F464E6 /* BMPolyphaseIIR2Designer.c in Sources */,
 				3A3C85462344644400C1D697 /* BMVocalRemover.c in Sources */,

@@ -2759,6 +2759,17 @@ void testExport(){
     BMExportWavFile_exportAudioFloat(&exportWavFile,filePath, dataL, dataL, length);
 }
 
+void testRandomsInRange(){
+    size_t randoms [20];
+    BMReverbRandomsInRange(0, 100, randoms, 20);
+    
+    printf("{");
+    for(size_t i=0; i<19; i++)
+        printf("%zu, ",randoms[i]);
+    printf("%zu}\n",randoms[19]);
+}
+
+
 void testCloudReverb(){
     uint32_t sr = 48000;
     uint32_t length = sr * 10;
@@ -2779,7 +2790,12 @@ void testCloudReverb(){
 
 int main(int argc, const char * argv[]) {
 
-	testGroupDelay();
+    //testFDN(100, false, 2);
+    //testNoiseGate();
+    // testFormatConverter();
+	//testUpDownsampler();
+    // testVND();
+    testRandomsInRange();
     return 0;
 
 }
