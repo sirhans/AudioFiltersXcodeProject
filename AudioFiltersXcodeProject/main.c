@@ -2722,13 +2722,25 @@ void testExtremeCompressor(){
 }
 
 
+void testRandomsInRange(){
+    size_t randoms [20];
+    BMReverbRandomsInRange(0, 100, randoms, 20);
+    
+    printf("{");
+    for(size_t i=0; i<19; i++)
+        printf("%zu, ",randoms[i]);
+    printf("%zu}\n",randoms[19]);
+}
+
+
 int main(int argc, const char * argv[]) {
 
     //testFDN(100, false, 2);
     //testNoiseGate();
     // testFormatConverter();
 	//testUpDownsampler();
-    testVND();
+    // testVND();
+    testRandomsInRange();
     return 0;
 
 }
