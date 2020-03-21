@@ -51,6 +51,7 @@
 		3AD24AF623A641DA003F8A0F /* BMMultiTapDelay.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AD24AF523A641DA003F8A0F /* BMMultiTapDelay.c */; };
 		3AEB17BC228AAA54004C7E4E /* BMWetDryMixer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB17B9228AAA54004C7E4E /* BMWetDryMixer.c */; };
 		3AEB17BD228AAA54004C7E4E /* BMSmoothGain.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB17BB228AAA54004C7E4E /* BMSmoothGain.c */; };
+		3AF84C372425D06D00EADCEF /* BMLongLoopFDN.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AF84C352425D06D00EADCEF /* BMLongLoopFDN.c */; };
 		4C0FD74D2280186500995864 /* BMBinauralSynthesis.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */; };
 		4C688A382244CF6700E3B1E6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C688A372244CF6700E3B1E6 /* main.c */; };
 		4C6FA2122410EAA1003043FE /* BMSmoothDelay.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FA20C2410EAA1003043FE /* BMSmoothDelay.c */; };
@@ -199,6 +200,8 @@
 		3AEEF23922D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMPolyphaseIIR2Designer.h; sourceTree = "<group>"; };
 		3AEEF23A22D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMPolyphaseIIR2Designer.c; sourceTree = "<group>"; };
 		3AEEF23C22D88B1800A3C5B5 /* BMHIIRMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMHIIRMath.h; sourceTree = "<group>"; };
+		3AF84C352425D06D00EADCEF /* BMLongLoopFDN.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMLongLoopFDN.c; sourceTree = "<group>"; };
+		3AF84C362425D06D00EADCEF /* BMLongLoopFDN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMLongLoopFDN.h; sourceTree = "<group>"; };
 		4C0FD74B2280186500995864 /* BMBinauralSynthesis.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMBinauralSynthesis.h; sourceTree = "<group>"; };
 		4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMBinauralSynthesis.c; sourceTree = "<group>"; };
 		4C688A342244CF6700E3B1E6 /* AudioFiltersXcodeProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AudioFiltersXcodeProject; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -466,6 +469,8 @@
 		4CC13A112244D80B003FA1B9 /* DelayAndReverb */ = {
 			isa = PBXGroup;
 			children = (
+				3AF84C352425D06D00EADCEF /* BMLongLoopFDN.c */,
+				3AF84C362425D06D00EADCEF /* BMLongLoopFDN.h */,
 				4C6FA20E2410EAA1003043FE /* BMCloudReverb.c */,
 				4C6FA2112410EAA1003043FE /* BMCloudReverb.h */,
 				4C6FA2102410EAA1003043FE /* BMPitchShiftDelay.c */,
@@ -730,6 +735,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CC13A732244D80B003FA1B9 /* BMRoundRobin.c in Sources */,
+				3AF84C372425D06D00EADCEF /* BMLongLoopFDN.c in Sources */,
 				3AB0E90022CDBC8A00B0394F /* BMWaveshaping.c in Sources */,
 				3A03B21B2418AD51004F2776 /* BMMeasurementBuffer.c in Sources */,
 				4CC13A6B2244D80B003FA1B9 /* BMFIRFilter.c in Sources */,

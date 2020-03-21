@@ -48,6 +48,7 @@
 #include "BMAudioStreamConverter.h"
 #include "BMCloudReverb.h"
 #include "BMExportWavFile.h"
+#include "BMLongLoopFDN.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -2756,7 +2757,7 @@ void testExport(){
     dataL[0] = 1;
     
     char* filePath = "./sawtooth_test.wav";
-    BMExportWavFile_exportAudioFloat(&exportWavFile,filePath, dataL, dataL, length);
+    BMExportWavFile_exportAudioFloatToInt16(&exportWavFile,filePath, dataL, dataL, length);
 }
 
 void testRandomsInRange(){
@@ -2785,8 +2786,32 @@ void testCloudReverb(){
     BMExportWavFile exportWavFile;
     BMExportWavFile_init(&exportWavFile,sr);
     char* filePath = "./sawtooth_test.wav";
-    BMExportWavFile_exportAudioFloat(&exportWavFile,filePath, outputL, outputR, length);
+    BMExportWavFile_exportAudioFloatToInt16(&exportWavFile,filePath, outputL, outputR, length);
 }
+
+
+void testLongLoopFDN(){
+	uint32_t sr = 48000;
+    uint32_t length = sr * 10;
+    
+	BMLongLoopFDN llRv;
+	BMLongLoopFDN_init(&llRv, 16, 0.2, 0.8, true, sr);
+    
+	float* inputL = calloc(length,sizeof(float));
+    float* inputR = calloc(length,sizeof(float));
+	inputL[10] = 1.0f;
+	inputR[10] = 1.0f;
+    float* outputL = calloc(length,sizeof(float));
+    float* outputR = calloc(length,sizeof(float));
+	BMLongLoopFDN_process(&llRv, inputL, inputR, outputL, outputR, length);
+    
+    //Export wav file
+    BMExportWavFile exportWavFile;
+    BMExportWavFile_init(&exportWavFile,sr);
+    char* filePath = "./longLoop_test.wav";
+    BMExportWavFile_exportAudioFloatToInt16(&exportWavFile,filePath, outputL, outputR, length);
+}
+
 
 int main(int argc, const char * argv[]) {
 
@@ -2795,7 +2820,8 @@ int main(int argc, const char * argv[]) {
     // testFormatConverter();
 	//testUpDownsampler();
     // testVND();
-    testRandomsInRange();
+    // testRandomsInRange();
+	testLongLoopFDN();
     return 0;
 
 }
