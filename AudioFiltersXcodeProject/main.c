@@ -2795,7 +2795,7 @@ void testLongLoopFDN(){
     uint32_t length = sr * 10;
     
 	BMLongLoopFDN llRv;
-	BMLongLoopFDN_init(&llRv, 16, 0.2, 0.8, true, sr);
+	BMLongLoopFDN_init(&llRv, 24, 0.05, 0.70, true, 4, 4, sr);
     
 	float* inputL = calloc(length,sizeof(float));
     float* inputR = calloc(length,sizeof(float));
@@ -2809,6 +2809,9 @@ void testLongLoopFDN(){
     BMExportWavFile exportWavFile;
     BMExportWavFile_init(&exportWavFile,sr);
     char* filePath = "./longLoop_test.wav";
+	float attenuation = 0.25;
+	vDSP_vsmul(outputL, 1, &attenuation, outputL, 1, length);
+	vDSP_vsmul(outputR, 1, &attenuation, outputR, 1, length);
     BMExportWavFile_exportAudioFloatToInt16(&exportWavFile,filePath, outputL, outputR, length);
 }
 
