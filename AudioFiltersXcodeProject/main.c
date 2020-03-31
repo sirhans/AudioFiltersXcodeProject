@@ -2795,7 +2795,12 @@ void testLongLoopFDN(){
     uint32_t length = sr * 10;
     
 	BMLongLoopFDN llRv;
-	BMLongLoopFDN_init(&llRv, 24, 0.05, 0.70, true, 4, 4, sr);
+	size_t numTaps = 32;
+	float maxDelay = 0.50;
+	float minDelay = maxDelay / (float) numTaps;
+	BMLongLoopFDN_init(&llRv, numTaps, minDelay, maxDelay, true, 8, 1, sr);
+	BMLongLoopFDN_setInputPan(&llRv, 0.8);
+	BMLongLoopFDN_setRT60Decay(&llRv, 100.0f);
     
 	float* inputL = calloc(length,sizeof(float));
     float* inputR = calloc(length,sizeof(float));

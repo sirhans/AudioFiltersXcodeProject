@@ -119,8 +119,6 @@
 		3A03B20323FBCD0A004F2776 /* BMAttackShaper.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMAttackShaper.c; sourceTree = "<group>"; };
 		3A03B2092410CA54004F2776 /* BMSorting.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMSorting.c; sourceTree = "<group>"; };
 		3A03B20A2410CA54004F2776 /* BMSorting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSorting.h; sourceTree = "<group>"; };
-		3A03B20C2410CDBA004F2776 /* BMLowpassedLimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMLowpassedLimiter.h; sourceTree = "<group>"; };
-		3A03B20D2410CDBA004F2776 /* BMPeakLimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMPeakLimiter.h; sourceTree = "<group>"; };
 		3A03B20E2410CDBA004F2776 /* BMLowpassedLimiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMLowpassedLimiter.c; sourceTree = "<group>"; };
 		3A03B20F2410CDBA004F2776 /* BMPeakLimiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMPeakLimiter.c; sourceTree = "<group>"; };
 		3A03B21324188ACB004F2776 /* BMCepstrum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMCepstrum.h; sourceTree = "<group>"; };
@@ -469,34 +467,34 @@
 		4CC13A112244D80B003FA1B9 /* DelayAndReverb */ = {
 			isa = PBXGroup;
 			children = (
-				3AF84C352425D06D00EADCEF /* BMLongLoopFDN.c */,
-				3AF84C362425D06D00EADCEF /* BMLongLoopFDN.h */,
-				4C6FA20E2410EAA1003043FE /* BMCloudReverb.c */,
-				4C6FA2112410EAA1003043FE /* BMCloudReverb.h */,
-				4C6FA2102410EAA1003043FE /* BMPitchShiftDelay.c */,
-				4C6FA20F2410EAA1003043FE /* BMPitchShiftDelay.h */,
-				4C6FA20C2410EAA1003043FE /* BMSmoothDelay.c */,
-				4C6FA20D2410EAA1003043FE /* BMSmoothDelay.h */,
-				3AD24AF523A641DA003F8A0F /* BMMultiTapDelay.c */,
-				3AD24AF423A641DA003F8A0F /* BMMultiTapDelay.h */,
-				3A1A0E9823A60A24003DEE0E /* BMHugeReverb.c */,
-				3A1A0E9723A60A24003DEE0E /* BMHugeReverb.h */,
-				3A1A0E9923A60A24003DEE0E /* BMMonoToStereo.c */,
-				3A1A0E9A23A60A24003DEE0E /* BMMonoToStereo.h */,
-				3A83209A23629A9A00B5387B /* BMShortSimpleDelay.c */,
-				3A83209B23629A9A00B5387B /* BMShortSimpleDelay.h */,
 				4C0FD74C2280186500995864 /* BMBinauralSynthesis.c */,
 				4C0FD74B2280186500995864 /* BMBinauralSynthesis.h */,
+				4C6FA20E2410EAA1003043FE /* BMCloudReverb.c */,
+				4C6FA2112410EAA1003043FE /* BMCloudReverb.h */,
 				4CC13A122244D80B003FA1B9 /* BMEarlyReflections.c */,
 				4CC13A1A2244D80B003FA1B9 /* BMEarlyReflections.h */,
+				3A1A0E9823A60A24003DEE0E /* BMHugeReverb.c */,
+				3A1A0E9723A60A24003DEE0E /* BMHugeReverb.h */,
 				4CC13A1F2244D80B003FA1B9 /* BMInterpolatedDelay.c */,
 				4CC13A162244D80B003FA1B9 /* BMInterpolatedDelay.h */,
+				3AF84C352425D06D00EADCEF /* BMLongLoopFDN.c */,
+				3AF84C362425D06D00EADCEF /* BMLongLoopFDN.h */,
+				3A1A0E9923A60A24003DEE0E /* BMMonoToStereo.c */,
+				3A1A0E9A23A60A24003DEE0E /* BMMonoToStereo.h */,
+				3AD24AF523A641DA003F8A0F /* BMMultiTapDelay.c */,
+				3AD24AF423A641DA003F8A0F /* BMMultiTapDelay.h */,
+				4C6FA2102410EAA1003043FE /* BMPitchShiftDelay.c */,
+				4C6FA20F2410EAA1003043FE /* BMPitchShiftDelay.h */,
 				4CC13A1D2244D80B003FA1B9 /* BMReverb.c */,
 				4CC13A142244D80B003FA1B9 /* BMReverb.h */,
+				3A83209A23629A9A00B5387B /* BMShortSimpleDelay.c */,
+				3A83209B23629A9A00B5387B /* BMShortSimpleDelay.h */,
 				4CC13A182244D80B003FA1B9 /* BMSimpleDelay.c */,
 				4CC13A212244D80B003FA1B9 /* BMSimpleDelay.h */,
 				3A442EAA232CD881007AE258 /* BMSimpleFDN.c */,
 				3A442EA9232CD881007AE258 /* BMSimpleFDN.h */,
+				4C6FA20C2410EAA1003043FE /* BMSmoothDelay.c */,
+				4C6FA20D2410EAA1003043FE /* BMSmoothDelay.h */,
 				4CC13A1B2244D80B003FA1B9 /* BMStaticDelay.c */,
 				4CC13A132244D80B003FA1B9 /* BMStaticDelay.h */,
 				4CC13A942244D85C003FA1B9 /* BMStereoLagTime.c */,
@@ -626,10 +624,6 @@
 		4CC13A522244D80B003FA1B9 /* NonlinearGain */ = {
 			isa = PBXGroup;
 			children = (
-				3A03B20E2410CDBA004F2776 /* BMLowpassedLimiter.c */,
-				3A03B20C2410CDBA004F2776 /* BMLowpassedLimiter.h */,
-				3A03B20F2410CDBA004F2776 /* BMPeakLimiter.c */,
-				3A03B20D2410CDBA004F2776 /* BMPeakLimiter.h */,
 				3A70D1D023681B3300F464E6 /* BMAsymptoticLimiter.c */,
 				3A70D1CF23681B3300F464E6 /* BMAsymptoticLimiter.h */,
 				3A03B20323FBCD0A004F2776 /* BMAttackShaper.c */,
@@ -644,8 +638,11 @@
 				4CC13A5E2244D80B003FA1B9 /* BMGainStage.h */,
 				3A784AF72373E9D70048920C /* BMHysteresisLimiter.c */,
 				3A784AF82373E9D70048920C /* BMHysteresisLimiter.h */,
+				3A03B20E2410CDBA004F2776 /* BMLowpassedLimiter.c */,
+				3A5DA92723FD1F1500C7E19D /* BMLowpassedLimiter.h */,
 				4CC13A552244D80B003FA1B9 /* BMNoiseGate.c */,
 				3A784AF62373E9D70048920C /* BMNoiseGate.h */,
+				3A03B20F2410CDBA004F2776 /* BMPeakLimiter.c */,
 				3A5DA92323FCF19200C7E19D /* BMPeakLimiter.c */,
 				3A5DA91F23FCF19200C7E19D /* BMPeakLimiter.h */,
 				3A784AF92373E9D80048920C /* BMQuadraticLimiter.c */,
@@ -660,6 +657,7 @@
 				3AB0E8F922CDB81900B0394F /* BMTransientShaper.h */,
 				3AB0E8FF22CDBC8A00B0394F /* BMWaveshaping.c */,
 				3AB0E8FE22CDBC8A00B0394F /* BMWaveshaping.h */,
+				3A5DA91F23FCF19200C7E19D /* BMPeakLimiter.h */,
 				3A5DA92723FD1F1500C7E19D /* BMLowpassedLimiter.h */,
 				3A5DA92823FD1F1500C7E19D /* BMLowpassedLimiter.c */,
 			);
