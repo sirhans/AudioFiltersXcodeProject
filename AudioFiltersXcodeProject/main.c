@@ -17,7 +17,6 @@
 #include "BMUpsampler.h"
 #include "BMDownsampler.h"
 #include "BMFIRFilter.h"
-#include "BMGainStage.h"
 #include "BMMultiLevelBiquad.h"
 #include "BMVelvetNoiseDecorrelator.h"
 #include "BMRoundRobin.h"
@@ -1190,39 +1189,6 @@ void arrayXYToFile(float* arrayX,float* arrayY, size_t length){
 #define BM_GAINSTAGE_TEST_SAMPLE_RATE 48000 * BM_GAINSTAGE_TEST_OVERSAMPLE
 #define BM_GAINSTAGE_TEST_LENGTH BM_GAINSTAGE_TEST_SAMPLE_RATE / 7
 
-void testGainStage(){
-	BMGainStage gs;
-	BMGainStage_init(&gs, BM_GAINSTAGE_TEST_SAMPLE_RATE, 10000.0f);
-	
-	// create sine wave for input test
-	float frequency = 300.0f;
-	float t [BM_GAINSTAGE_TEST_LENGTH];
-	float sr = BM_GAINSTAGE_TEST_SAMPLE_RATE;
-	for (size_t i=0; i<BM_GAINSTAGE_TEST_LENGTH; i++) {
-		t[i] = sinf(frequency * 2.0 * M_PI * (float)i / sr);
-		
-		if (i>20000 && i < 30000) t[i] = 0.0f;
-	}
-	
-	// set up output array
-	float o [BM_GAINSTAGE_TEST_LENGTH];
-	
-	// set the tightness
-	BMGainStage_setTightness(&gs, 0.6f);
-	
-	// set the bias
-	BMGainStage_setBiasRatio(&gs, 0.0f);
-	
-	// set the input gain
-	BMGainStage_setGain(&gs, BM_DB_TO_GAIN(15.0f));
-	
-	// process the test signal
-	BMGainStage_processBufferMono(&gs, t, o, BM_GAINSTAGE_TEST_LENGTH);
-	
-	// print the output
-	arrayToFile(o,BM_GAINSTAGE_TEST_LENGTH);
-	
-}
 
 #define BMCOMPRESSOR_TEST_SAMPLERATE 48000
 #define BMCOMPRESSOR_TEST_LENGTH BMCOMPRESSOR_TEST_SAMPLERATE
@@ -2780,7 +2746,7 @@ void testCloudReverb(){
     
     float* outputL = malloc(sizeof(float)*length);
     float* outputR = malloc(sizeof(float)*length);
-    BMCloudReverb_impulseResponse(&reverb, outputL, outputR, length);
+    //BMCloudReverb_impulseResponse(&reverb, outputL, outputR, length);
     
     //Export wav file
     BMExportWavFile exportWavFile;
@@ -2799,7 +2765,7 @@ void testLongLoopFDN(){
 	float maxDelay = 0.50;
 	float minDelay = maxDelay / (float) numTaps;
 	BMLongLoopFDN_init(&llRv, numTaps, minDelay, maxDelay, true, 8, 1, sr);
-	BMLongLoopFDN_setInputPan(&llRv, 0.8);
+	//BMLongLoopFDN_setInputPan(&llRv, 0.8);
 	BMLongLoopFDN_setRT60Decay(&llRv, 100.0f);
     
 	float* inputL = calloc(length,sizeof(float));
