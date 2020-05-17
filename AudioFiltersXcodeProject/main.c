@@ -2789,11 +2789,11 @@ void testLongLoopFDN(){
 
 void testBMSincUpsampler(){
 	float sineSweep [10000];
-	generateSineSweep(sineSweep, 10000, 12000, 48000, 10000);
+	generateSineSweep(sineSweep, 300, 400, 48000, 10000);
 	
 	BMSincUpsampler us;
 	size_t upsampleFactor = 10;
-	size_t numInterpolationPoints = 12;
+	size_t numInterpolationPoints = 8;
 	BMSincUpsampler_init(&us, numInterpolationPoints, upsampleFactor);
 	
 	float upsampledSineSweep [100000];
