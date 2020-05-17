@@ -48,6 +48,7 @@
 #include "BMCloudReverb.h"
 #include "BMExportWavFile.h"
 #include "BMLongLoopFDN.h"
+#include "BMSincUpsampler.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -2786,16 +2787,34 @@ void testLongLoopFDN(){
     BMExportWavFile_exportAudioFloatToInt16(&exportWavFile,filePath, outputL, outputR, length);
 }
 
+void testBMSincUpsampler(){
+	float sineSweep [10000];
+	generateSineSweep(sineSweep, 10000, 12000, 48000, 10000);
+	
+	BMSincUpsampler us;
+	size_t upsampleFactor = 10;
+	size_t numInterpolationPoints = 12;
+	BMSincUpsampler_init(&us, numInterpolationPoints, upsampleFactor);
+	
+	float upsampledSineSweep [100000];
+	BMSincUpsampler_process(&us, sineSweep, upsampledSineSweep, 10000);
+	
+	printf("{%f, ",upsampledSineSweep[0]);
+	for(size_t i=1; i<300; i++)
+		printf("%f, ",upsampledSineSweep[i]);
+	printf("%f}\n",upsampledSineSweep[300]);
+}
+
 
 int main(int argc, const char * argv[]) {
-
+	testBMSincUpsampler();
     //testFDN(100, false, 2);
     //testNoiseGate();
     // testFormatConverter();
 	//testUpDownsampler();
     // testVND();
     // testRandomsInRange();
-	testLongLoopFDN();
+	// testLongLoopFDN();
     return 0;
 
 }
