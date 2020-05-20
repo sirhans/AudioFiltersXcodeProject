@@ -2860,14 +2860,24 @@ void testBMSpectrogram(){
 	
 	size_t inputLength = sampleRate;
 	float *testInput = malloc(sizeof(float)*inputLength);
+	float *buffer = malloc(sizeof(float)*inputLength);
 	
-	generateSineSweep(testInput, 3000.0f, 15000.0f, sampleRate, inputLength);
+	generateSineSweep(testInput, 20.0f, 10000.0f, sampleRate, inputLength);
+	generateSineSweep(buffer, 40.0f, 20000.0f, sampleRate, inputLength);
+	vDSP_vadd(testInput,1,buffer,1,testInput,1,inputLength);
+	
+	// add noise
+	float noiseLevel = BM_DB_TO_GAIN(-60.0);
+	for(size_t i=0; i<inputLength; i++){
+		testInput[i] += noiseLevel * (-1.0 + 2.0 * (double)arc4random() / (double)UINT32_MAX);
+	}
+	
 	
 	int startSampleIndex = 2000;
 	int endSampleIndex = 40000;
 	int fftSize = 2048;
-	int pixelWidth = 170;
-	int pixelHeight = 170;
+	int pixelWidth = 300;
+	int pixelHeight = 300;
 	float minFrequency = 50.0f;
 	float maxFrequency = sampleRate / 2;
 	BMHSBPixel **imageOutput = malloc(sizeof(BMHSBPixel*)*pixelWidth);
