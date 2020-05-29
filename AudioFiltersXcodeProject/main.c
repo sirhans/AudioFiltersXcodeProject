@@ -2830,9 +2830,49 @@ void testLongLoopFDN(){
     BMExportWavFile_exportAudioFloatToInt16(&exportWavFile,filePath, outputL, outputR, length);
 }
 
+
+void resampleToTarget(size_t sampleWidth, size_t targetSampleWidth, size_t *upsampleFactor, size_t *downsampleFactor){
+    
+    // more than 2x extra samples
+    if (sampleWidth > 2 * targetSampleWidth){
+        *upsampleFactor = 1;
+        *downsampleFactor = floor((float)sampleWidth/(float)targetSampleWidth);
+        return;
+    }
+    
+    // more than 3/2 extra samples
+    if (2*sampleWidth > 3*targetSampleWidth){
+        *upsampleFactor = 2;
+        *downsampleFactor = 3;
+        return;
+    }
+    
+    // near target samples (between 2/3 and 3/2 of target)
+    if (3*sampleWidth > 2*targetSampleWidth){
+        *upsampleFactor = 1;
+        *downsampleFactor = 1;
+        return;
+    }
+    
+    // less than 1/2 of target samples
+    if(2*sampleWidth < targetSampleWidth){
+        *upsampleFactor = floor((float)targetSampleWidth/(float)sampleWidth);
+        *downsampleFactor = 1;
+        return;
+    }
+    
+    // between 1/2 and 2/3 of target
+    // else
+    *upsampleFactor = 3;
+    *downsampleFactor = 2;
+}
+
+
 void testBMSincUpsampler(){
 	float sineSweep [10000];
+    memset(sineSweep,0,sizeof(float)*10000);
 	generateSineSweep(sineSweep, 300, 400, 48000, 10000);
+    //memset(sineSweep+10,0,sizeof(float)*20);
 	
 	BMSincUpsampler us;
 	size_t upsampleFactor = 10;
@@ -2840,12 +2880,23 @@ void testBMSincUpsampler(){
 	BMSincUpsampler_init(&us, numInterpolationPoints, upsampleFactor);
 	
 	float upsampledSineSweep [100000];
-	BMSincUpsampler_process(&us, sineSweep, upsampledSineSweep, 10000);
+    memset(upsampledSineSweep,0,sizeof(float)*100000);
+	size_t outputLength = BMSincUpsampler_process(&us, sineSweep, upsampledSineSweep, 1000);
+    
+    printf("outputLength: %zu",outputLength);
+    
+    size_t leftPadding = BMSincUpsampler_inputPaddingBefore(&us);
+    size_t rightPadding = BMSincUpsampler_inputPaddingAfter(&us);
 	
-	printf("{%f, ",upsampledSineSweep[0]);
-	for(size_t i=1; i<300; i++)
-		printf("%f, ",upsampledSineSweep[i]);
-	printf("%f}\n",upsampledSineSweep[300]);
+//	printf("{%f, ",upsampledSineSweep[0]);
+//	for(size_t i=1; i<outputLength-1; i++)
+//		printf("%f, ",upsampledSineSweep[i]);
+//	printf("%f}\n\n",upsampledSineSweep[outputLength-1]);
+    
+    printf("{%f, ", sineSweep[leftPadding]);
+    for(size_t i=leftPadding+1; i<999-rightPadding; i++)
+        printf("%f, ", sineSweep[i]);
+    printf("%f}\n", sineSweep[999-rightPadding]);
 }
 
 
