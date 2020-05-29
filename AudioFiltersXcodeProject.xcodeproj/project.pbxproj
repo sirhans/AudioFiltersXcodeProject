@@ -623,7 +623,6 @@
 		4CC13A4B2244D80B003FA1B9 /* SampleRate */ = {
 			isa = PBXGroup;
 			children = (
-				3ADD67D42470148A00CEFBC7 /* BMInterleaver.c */,
 				3A1A0E9423A607F8003DEE0E /* BMAudioStreamConverter.c */,
 				3A1A0E9523A607F8003DEE0E /* BMAudioStreamConverter.h */,
 				4CC13A502244D80B003FA1B9 /* BMDownsampler.c */,
@@ -633,13 +632,14 @@
 				3A9E06C022E1651100ECB53B /* BMIIRDownsampler2x.h */,
 				3A9E06C622E1693D00ECB53B /* BMIIRUpsampler2x.c */,
 				3A9E06C522E1693D00ECB53B /* BMIIRUpsampler2x.h */,
+				3ADD67D42470148A00CEFBC7 /* BMInterleaver.c */,
+				3A9E06C822E16FE800ECB53B /* BMInterleaver.h */,
 				3AEEF23A22D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.c */,
 				3AEEF23922D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.h */,
+				3ADD67C9246FD71F00CEFBC7 /* BMSincUpsampler.c */,
+				3ADD67C8246FD71F00CEFBC7 /* BMSincUpsampler.h */,
 				4CC13A4F2244D80B003FA1B9 /* BMUpsampler.c */,
 				4CC13A4C2244D80B003FA1B9 /* BMUpsampler.h */,
-				3A9E06C822E16FE800ECB53B /* BMInterleaver.h */,
-				3ADD67C8246FD71F00CEFBC7 /* BMSincUpsampler.h */,
-				3ADD67C9246FD71F00CEFBC7 /* BMSincUpsampler.c */,
 			);
 			path = SampleRate;
 			sourceTree = "<group>";
