@@ -49,6 +49,7 @@
 #include "BMExportWavFile.h"
 #include "BMLongLoopFDN.h"
 #include "BMSincUpsampler.h"
+#include "BMSpectrogram.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -70,6 +71,48 @@ void arrayToFileWithName(float* array, char* name, size_t length){
 	}
 	
 	fclose(audioFile);
+	
+	system("pwd");
+	printf(name);
+	printf("\n");
+}
+
+
+
+void printHSB(FILE *f, BMHSBPixel p){
+	fprintf(f, "{%f, %f, %f}",p.x, p.y, p.z);
+}
+
+
+
+void printHSBArray(FILE *f, BMHSBPixel *column, size_t length){
+	fprintf(f,"{");
+	for(size_t i=0; i<length-1; i++){
+		printHSB(f,column[i]);
+		fprintf(f,", ");
+	}
+	printHSB(f,column[length-1]);
+	fprintf(f, "}");
+}
+
+
+
+
+void imageToFileWithName(BMHSBPixel **image, char *name, size_t width, size_t height){
+	// open a file for writing
+	FILE* af;
+	af = fopen(name, "w+");
+	
+	// print out the image in array-as-text format
+	fprintf(af, "{");
+	for(size_t i=0; i<width-1; i++){
+		printHSBArray(af, image[i], height);
+		fprintf(af,", ");
+	}
+	printHSBArray(af, image[width-1], height);
+	fprintf(af, "}");
+
+	fclose(af);
 	
 	system("pwd");
 	printf(name);
@@ -2857,8 +2900,55 @@ void testBMSincUpsampler(){
 }
 
 
+
+void testBMSpectrogram(){
+	BMSpectrogram sg;
+	
+	size_t maxFFTSize = 4096;
+	size_t maxImageHeight = 1000;
+	float sampleRate = 48000.0f;
+	BMSpectrogram_init(&sg, maxFFTSize, maxImageHeight, sampleRate);
+	
+	size_t inputLength = sampleRate;
+	float *testInput = malloc(sizeof(float)*inputLength);
+	float *buffer = malloc(sizeof(float)*inputLength);
+	
+	generateSineSweep(testInput, 20.0f, 10000.0f, sampleRate, inputLength);
+	generateSineSweep(buffer, 40.0f, 20000.0f, sampleRate, inputLength);
+	vDSP_vadd(testInput,1,buffer,1,testInput,1,inputLength);
+	
+	// add noise
+	float noiseLevel = BM_DB_TO_GAIN(-60.0);
+	for(size_t i=0; i<inputLength; i++){
+		testInput[i] += noiseLevel * (-1.0 + 2.0 * (double)arc4random() / (double)UINT32_MAX);
+	}
+	
+	
+	int startSampleIndex = 2000;
+	int endSampleIndex = 40000;
+	int fftSize = 2048;
+	int pixelWidth = 300;
+	int pixelHeight = 300;
+	float minFrequency = 50.0f;
+	float maxFrequency = sampleRate / 2;
+	BMHSBPixel **imageOutput = malloc(sizeof(BMHSBPixel*)*pixelWidth);
+	for(size_t i=0; i<pixelHeight; i++)
+		imageOutput[i] = malloc(sizeof(BMHSBPixel)*pixelHeight);
+	
+	BMSpectrogram_process(&sg, testInput, (SInt32)inputLength, startSampleIndex, endSampleIndex, fftSize, imageOutput, pixelWidth, pixelHeight, minFrequency, maxFrequency);
+	
+	char* filename = "./spectrogramImage.txt";
+	imageToFileWithName(imageOutput, filename, pixelWidth, pixelHeight);
+	
+	for(size_t i=0; i<pixelHeight; i++)
+		free(imageOutput[i]);
+}
+
+
+
 int main(int argc, const char * argv[]) {
-	testBMSincUpsampler();
+	testBMSpectrogram();
+	// testBMSincUpsampler();
     //testFDN(100, false, 2);
     //testNoiseGate();
     // testFormatConverter();
