@@ -639,15 +639,12 @@
 				3A9E06C822E16FE800ECB53B /* BMInterleaver.h */,
 				3AEEF23A22D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.c */,
 				3AEEF23922D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.h */,
+				3A0DB86C247FB352002FD6E7 /* BMSincDownsampler.c */,
+				3A0DB86B247FB352002FD6E7 /* BMSincDownsampler.h */,
 				3ADD67C9246FD71F00CEFBC7 /* BMSincUpsampler.c */,
 				3ADD67C8246FD71F00CEFBC7 /* BMSincUpsampler.h */,
 				4CC13A4F2244D80B003FA1B9 /* BMUpsampler.c */,
 				4CC13A4C2244D80B003FA1B9 /* BMUpsampler.h */,
-				3A9E06C822E16FE800ECB53B /* BMInterleaver.h */,
-				3ADD67C8246FD71F00CEFBC7 /* BMSincUpsampler.h */,
-				3ADD67C9246FD71F00CEFBC7 /* BMSincUpsampler.c */,
-				3A0DB86B247FB352002FD6E7 /* BMSincDownsampler.h */,
-				3A0DB86C247FB352002FD6E7 /* BMSincDownsampler.c */,
 			);
 			path = SampleRate;
 			sourceTree = "<group>";

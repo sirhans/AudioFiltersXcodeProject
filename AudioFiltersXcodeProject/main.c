@@ -50,6 +50,7 @@
 #include "BMLongLoopFDN.h"
 #include "BMSincUpsampler.h"
 #include "BMSpectrogram.h"
+#include "BMSincDownsampler.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -2808,7 +2809,7 @@ void testLongLoopFDN(){
 	size_t numTaps = 32;
 	float maxDelay = 0.50;
 	float minDelay = maxDelay / (float) numTaps;
-	BMLongLoopFDN_init(&llRv, numTaps, minDelay, maxDelay, true, 8, 1, sr);
+//	BMLongLoopFDN_init(&llRv, numTaps, minDelay, maxDelay, true, 8, 1, sr);
 	//BMLongLoopFDN_setInputPan(&llRv, 0.8);
 	BMLongLoopFDN_setRT60Decay(&llRv, 100.0f);
     
@@ -2888,15 +2889,15 @@ void testBMSincUpsampler(){
     size_t leftPadding = BMSincUpsampler_inputPaddingBefore(&us);
     size_t rightPadding = BMSincUpsampler_inputPaddingAfter(&us);
 	
-//	printf("{%f, ",upsampledSineSweep[0]);
-//	for(size_t i=1; i<outputLength-1; i++)
-//		printf("%f, ",upsampledSineSweep[i]);
-//	printf("%f}\n\n",upsampledSineSweep[outputLength-1]);
+	printf("{%f, ",upsampledSineSweep[0]);
+	for(size_t i=1; i<outputLength-1; i++)
+		printf("%f, ",upsampledSineSweep[i]);
+	printf("%f}\n\n",upsampledSineSweep[outputLength-1]);
     
-    printf("{%f, ", sineSweep[leftPadding]);
-    for(size_t i=leftPadding+1; i<999-rightPadding; i++)
-        printf("%f, ", sineSweep[i]);
-    printf("%f}\n", sineSweep[999-rightPadding]);
+//    printf("{%f, ", sineSweep[leftPadding]);
+//    for(size_t i=leftPadding+1; i<999-rightPadding; i++)
+//        printf("%f, ", sineSweep[i]);
+//    printf("%f}\n", sineSweep[999-rightPadding]);
 }
 
 
@@ -2947,8 +2948,8 @@ void testBMSpectrogram(){
 
 
 int main(int argc, const char * argv[]) {
-	testBMSpectrogram();
-	// testBMSincUpsampler();
+	// testBMSpectrogram();
+	testBMSincUpsampler();
     //testFDN(100, false, 2);
     //testNoiseGate();
     // testFormatConverter();
