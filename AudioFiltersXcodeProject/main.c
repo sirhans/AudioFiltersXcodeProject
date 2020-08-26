@@ -127,7 +127,9 @@ double frequencyToPhaseIncrement(double frequency, double sampleRate){
 }
 
 
-
+/*!
+ *generateSineSweep
+ */
 void generateSineSweep(float* output, double startFrequency, double endFrequency, double sampleRate, size_t numSamples){
 	/*
 	 * logarithmic sweep, direct method
@@ -1536,7 +1538,7 @@ void quadraticThresholdTest(){
 #define LT_TestRange 50
 void testBMLagTime(){
 	BMStereoLagTime stereoLagTime;
-	BMStereoLagTime_init(&stereoLagTime, 500, LT_SampleRate);
+	//BMStereoLagTime_init(&stereoLagTime, 500, LT_SampleRate);
 	
 	
 	size_t length = LT_SampleRate *4;
@@ -1565,7 +1567,7 @@ void testBMLagTime(){
 	size_t processedSample = 0;
 	size_t processingSample = 1024;
 	for(int i=0;i<LT_TestRange;i++){
-		BMStereoLagTime_setDelayLeft(&stereoLagTime, delayTime[i]);
+		// BMStereoLagTime_setDelayLeft(&stereoLagTime, delayTime[i]);
 		BMStereoLagTime_process(&stereoLagTime, inLAudioY+processedSample, inRAudioY+processedSample, outLAudioY+processedSample, outRAudioY+processedSample, processingSample);
 		processedSample += processingSample;
 	}
@@ -2870,9 +2872,9 @@ void resampleToTarget(size_t sampleWidth, size_t targetSampleWidth, size_t *upsa
 
 
 void testBMSincUpsampler(){
-	float sineSweep [10000];
-    memset(sineSweep,0,sizeof(float)*10000);
-	generateSineSweep(sineSweep, 300, 400, 48000, 10000);
+	size_t length = 100;
+	float *sineSweep = calloc(length,sizeof(float));
+	generateSineSweep(sineSweep, 3000, 3000, 48000, length);
     //memset(sineSweep+10,0,sizeof(float)*20);
 	
 	BMSincUpsampler us;
@@ -2880,9 +2882,8 @@ void testBMSincUpsampler(){
 	size_t numInterpolationPoints = 8;
 	BMSincUpsampler_init(&us, numInterpolationPoints, upsampleFactor);
 	
-	float upsampledSineSweep [100000];
-    memset(upsampledSineSweep,0,sizeof(float)*100000);
-	size_t outputLength = BMSincUpsampler_process(&us, sineSweep, upsampledSineSweep, 1000);
+	float *upsampledSineSweep = calloc(length*upsampleFactor,sizeof(float));
+	size_t outputLength = BMSincUpsampler_process(&us, sineSweep, upsampledSineSweep, length);
     
     printf("outputLength: %zu",outputLength);
     
@@ -2894,6 +2895,9 @@ void testBMSincUpsampler(){
 		printf("%f, ",upsampledSineSweep[i]);
 	printf("%f}\n\n",upsampledSineSweep[outputLength-1]);
     
+	
+	free(upsampledSineSweep);
+	free(sineSweep);
 //    printf("{%f, ", sineSweep[leftPadding]);
 //    for(size_t i=leftPadding+1; i<999-rightPadding; i++)
 //        printf("%f, ", sineSweep[i]);
@@ -2949,7 +2953,8 @@ void testBMSpectrogram(){
 
 int main(int argc, const char * argv[]) {
 	// testBMSpectrogram();
-	testBMSincUpsampler();
+	// testBMSincUpsampler();
+	// testBMSincDownsampler();
     //testFDN(100, false, 2);
     //testNoiseGate();
     // testFormatConverter();

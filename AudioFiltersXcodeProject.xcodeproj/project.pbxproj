@@ -20,6 +20,8 @@
 		3A1A0EA123A610CE003DEE0E /* BMFirstOrderArray.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1A0E9E23A610CE003DEE0E /* BMFirstOrderArray.c */; };
 		3A1A0EA223A610CE003DEE0E /* BMFirstOrderDirectForm.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1A0E9F23A610CE003DEE0E /* BMFirstOrderDirectForm.c */; };
 		3A1A0EA323A6112A003DEE0E /* BMMonoToStereo.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1A0E9923A60A24003DEE0E /* BMMonoToStereo.c */; };
+		3A25959E249369F10098FBEE /* BMMIDITranslation.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A25959D249369F10098FBEE /* BMMIDITranslation.c */; };
+		3A2595A1249385780098FBEE /* BMIntonationOptimiser.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A2595A0249385780098FBEE /* BMIntonationOptimiser.c */; };
 		3A3C85462344644400C1D697 /* BMVocalRemover.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A3C85452344644400C1D697 /* BMVocalRemover.c */; };
 		3A442EAB232CD881007AE258 /* BMSimpleFDN.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A442EAA232CD881007AE258 /* BMSimpleFDN.c */; };
 		3A5DA92623FCF19200C7E19D /* BMPeakLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A5DA92323FCF19200C7E19D /* BMPeakLimiter.c */; };
@@ -143,6 +145,10 @@
 		3A1A0E9E23A610CE003DEE0E /* BMFirstOrderArray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMFirstOrderArray.c; sourceTree = "<group>"; };
 		3A1A0E9F23A610CE003DEE0E /* BMFirstOrderDirectForm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMFirstOrderDirectForm.c; sourceTree = "<group>"; };
 		3A1A0EA023A610CE003DEE0E /* BMFirstOrderDirectForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMFirstOrderDirectForm.h; sourceTree = "<group>"; };
+		3A25959C249369F10098FBEE /* BMMIDITranslation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMMIDITranslation.h; sourceTree = "<group>"; };
+		3A25959D249369F10098FBEE /* BMMIDITranslation.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMMIDITranslation.c; sourceTree = "<group>"; };
+		3A25959F249385780098FBEE /* BMIntonationOptimiser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMIntonationOptimiser.h; sourceTree = "<group>"; };
+		3A2595A0249385780098FBEE /* BMIntonationOptimiser.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMIntonationOptimiser.c; sourceTree = "<group>"; };
 		3A3C85442344644400C1D697 /* BMVocalRemover.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMVocalRemover.h; sourceTree = "<group>"; };
 		3A3C85452344644400C1D697 /* BMVocalRemover.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMVocalRemover.c; sourceTree = "<group>"; };
 		3A442EA9232CD881007AE258 /* BMSimpleFDN.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMSimpleFDN.h; sourceTree = "<group>"; };
@@ -349,6 +355,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A25959A249369440098FBEE /* MIDIProcessing */ = {
+			isa = PBXGroup;
+			children = (
+				3A25959C249369F10098FBEE /* BMMIDITranslation.h */,
+				3A25959D249369F10098FBEE /* BMMIDITranslation.c */,
+				3A25959F249385780098FBEE /* BMIntonationOptimiser.h */,
+				3A2595A0249385780098FBEE /* BMIntonationOptimiser.c */,
+			);
+			path = MIDIProcessing;
+			sourceTree = "<group>";
+		};
 		3A3F95C7228E9DC000AD4794 /* Measurement */ = {
 			isa = PBXGroup;
 			children = (
@@ -410,6 +427,7 @@
 		4CC139EE2244D80B003FA1B9 /* AudioFilters */ = {
 			isa = PBXGroup;
 			children = (
+				3A25959A249369440098FBEE /* MIDIProcessing */,
 				3A3F95C7228E9DC000AD4794 /* Measurement */,
 				4CC139EF2244D80B003FA1B9 /* Filters */,
 				4CC13A0A2244D80B003FA1B9 /* Oscillators */,
@@ -765,6 +783,7 @@
 				4C6FA2132410EAA1003043FE /* BMCloudReverb.c in Sources */,
 				4C688A382244CF6700E3B1E6 /* main.c in Sources */,
 				3A6A32A922CF357300DEEDFA /* BMQuadraticThreshold.c in Sources */,
+				3A25959E249369F10098FBEE /* BMMIDITranslation.c in Sources */,
 				3A784AFB2373E9D80048920C /* BMHysteresisLimiter.c in Sources */,
 				4CC13A8D2244D80B003FA1B9 /* BMCompressor.c in Sources */,
 				4CC13A952244D85C003FA1B9 /* BMStereoLagTime.c in Sources */,
@@ -784,6 +803,7 @@
 				4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */,
 				3AAEA15422B3420B0066D852 /* BMHoldPeak.c in Sources */,
 				4C6FA2122410EAA1003043FE /* BMSmoothDelay.c in Sources */,
+				3A2595A1249385780098FBEE /* BMIntonationOptimiser.c in Sources */,
 				4C6FA2192410EAB2003043FE /* BMExportWavFile.c in Sources */,
 				3AEB17BC228AAA54004C7E4E /* BMWetDryMixer.c in Sources */,
 				3A442EAB232CD881007AE258 /* BMSimpleFDN.c in Sources */,
