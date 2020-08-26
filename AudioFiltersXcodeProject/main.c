@@ -80,37 +80,39 @@ void arrayToFileWithName(float* array, char* name, size_t length){
 
 
 
-void printHSB(FILE *f, BMHSBPixel p){
-	fprintf(f, "{%f, %f, %f}",p.x, p.y, p.z);
+void printRGBA(FILE *f, uint8_t *p){
+	fprintf(f, "{%i, %i, %i, %i}",p[0], p[1], p[2], p[3]);
 }
 
 
 
-void printHSBArray(FILE *f, BMHSBPixel *column, size_t length){
+void printRGBAArray(FILE *f, uint8_t *column, size_t length){
 	fprintf(f,"{");
-	for(size_t i=0; i<length-1; i++){
-		printHSB(f,column[i]);
+	for(size_t i=0; i<length-4; i+=4){
+		printRGBA(f,&column[i]);
 		fprintf(f,", ");
 	}
-	printHSB(f,column[length-1]);
+	printRGBA(f,&column[length-4]);
 	fprintf(f, "}");
 }
 
 
 
 
-void imageToFileWithName(BMHSBPixel **image, char *name, size_t width, size_t height){
+void imageToFileWithName(uint8_t *image, char *name, size_t width, size_t height){
 	// open a file for writing
 	FILE* af;
 	af = fopen(name, "w+");
 	
+    size_t bytesPerPixel = 4;
+    
 	// print out the image in array-as-text format
 	fprintf(af, "{");
 	for(size_t i=0; i<width-1; i++){
-		printHSBArray(af, image[i], height);
+		printRGBAArray(af, &image[i*bytesPerPixel], height*bytesPerPixel);
 		fprintf(af,", ");
 	}
-	printHSBArray(af, image[width-1], height);
+	printRGBAArray(af, &image[(width-1)*bytesPerPixel], height*bytesPerPixel);
 	fprintf(af, "}");
 
 	fclose(af);
@@ -2936,25 +2938,21 @@ void testBMSpectrogram(){
 	int pixelHeight = 300;
 	float minFrequency = 50.0f;
 	float maxFrequency = sampleRate / 2;
-	BMHSBPixel **imageOutput = malloc(sizeof(BMHSBPixel*)*pixelWidth);
-	for(size_t i=0; i<pixelHeight; i++)
-		imageOutput[i] = malloc(sizeof(BMHSBPixel)*pixelHeight);
-	
+    size_t bytesPerPixel = 4;
+	uint8_t *imageOutput = malloc(sizeof(uint8_t)*bytesPerPixel*pixelWidth*pixelHeight);
 	BMSpectrogram_process(&sg, testInput, (SInt32)inputLength, startSampleIndex, endSampleIndex, fftSize, imageOutput, pixelWidth, pixelHeight, minFrequency, maxFrequency);
 	
 	char* filename = "./spectrogramImage.txt";
 	imageToFileWithName(imageOutput, filename, pixelWidth, pixelHeight);
 	
-	for(size_t i=0; i<pixelHeight; i++)
-		free(imageOutput[i]);
+    free(imageOutput);
 }
 
 
 
 int main(int argc, const char * argv[]) {
-	// testBMSpectrogram();
+	testBMSpectrogram();
 	// testBMSincUpsampler();
-	// testBMSincDownsampler();
     //testFDN(100, false, 2);
     //testNoiseGate();
     // testFormatConverter();
