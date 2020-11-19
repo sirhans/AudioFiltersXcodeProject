@@ -51,6 +51,7 @@
 #include "BMSincUpsampler.h"
 #include "BMSpectrogram.h"
 #include "BMSincDownsampler.h"
+#include "BMDPWOscillator.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -2950,16 +2951,32 @@ void testBMSpectrogram(){
 
 
 
+void testBMDPWOscillator(){
+	size_t length = 48000;
+	float * frequencies = malloc(sizeof(float) * length);
+	float * output = malloc(sizeof(float) * length);
+	
+	BMDPWOscillator osc;
+	BMDPWOscillator_init(&osc, BMDPWO_SAW, 10, 2, 48000);
+	
+	// populate the frequencies array with a linear sweep
+	float startFreq = 80;
+	float increment = (1000.0 - 80.0) / (float)length;
+	vDSP_vramp(&startFreq, &increment, frequencies, 1, length);
+	
+	// produce the sound
+	BMDPWOscillator_process(&osc, frequencies, output, length);
+	
+	char* filePath = "./osc_test.wav";
+	BMExportWavFile exp;
+	BMExportWavFile_init(&exp, 48000.0f);
+	BMExportWavFile_exportAudioFloatToInt16(&exp, filePath, output, output, length);
+}
+
+
+
 int main(int argc, const char * argv[]) {
-	testBMSpectrogram();
-	// testBMSincUpsampler();
-    //testFDN(100, false, 2);
-    //testNoiseGate();
-    // testFormatConverter();
-	//testUpDownsampler();
-    // testVND();
-    // testRandomsInRange();
-	// testLongLoopFDN();
+	testBMDPWOscillator();
     return 0;
 
 }
