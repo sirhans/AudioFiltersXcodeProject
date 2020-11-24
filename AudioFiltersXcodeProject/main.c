@@ -2987,6 +2987,12 @@ void testDPWOscillator(){
         frequencies[i] = 300.0f;
     
     BMDPWOscillator_process(&osc, frequencies, output, length);
+    
+    //Export wav file
+    BMExportWavFile exportWavFile;
+    BMExportWavFile_init(&exportWavFile,48000);
+    char* filePath = "./osc_test.wav";
+    BMExportWavFile_exportAudioFloatToInt16(&exportWavFile,filePath, output, output, length);
 }
 
 
