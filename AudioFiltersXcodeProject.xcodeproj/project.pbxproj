@@ -29,6 +29,7 @@
 		3A4EDF1925664C4A00ED5873 /* Decimation.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A4EDF1625664C4A00ED5873 /* Decimation.c */; };
 		3A4EDF1D25664CC200ED5873 /* BMSlidingWindowSum.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A4EDF1B25664CC200ED5873 /* BMSlidingWindowSum.c */; };
 		3A4EDF2125664D0800ED5873 /* BMUnitConversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A4EDF1F25664D0800ED5873 /* BMUnitConversion.c */; };
+		3A4EDF26256F98C200ED5873 /* BMCDBlepOscillator.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A4EDF25256F98C100ED5873 /* BMCDBlepOscillator.c */; };
 		3A5DA92623FCF19200C7E19D /* BMPeakLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A5DA92323FCF19200C7E19D /* BMPeakLimiter.c */; };
 		3A6A32A922CF357300DEEDFA /* BMQuadraticThreshold.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */; };
 		3A70D1C9236815D600F464E6 /* BMDownsampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A502244D80B003FA1B9 /* BMDownsampler.c */; };
@@ -168,6 +169,8 @@
 		3A4EDF1C25664CC200ED5873 /* BMSlidingWindowSum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSlidingWindowSum.h; sourceTree = "<group>"; };
 		3A4EDF1F25664D0800ED5873 /* BMUnitConversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMUnitConversion.c; sourceTree = "<group>"; };
 		3A4EDF2025664D0800ED5873 /* BMUnitConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMUnitConversion.h; sourceTree = "<group>"; };
+		3A4EDF24256F98C100ED5873 /* BMCDBlepOscillator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMCDBlepOscillator.h; sourceTree = "<group>"; };
+		3A4EDF25256F98C100ED5873 /* BMCDBlepOscillator.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMCDBlepOscillator.c; sourceTree = "<group>"; };
 		3A5DA91F23FCF19200C7E19D /* BMPeakLimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMPeakLimiter.h; sourceTree = "<group>"; };
 		3A5DA92323FCF19200C7E19D /* BMPeakLimiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMPeakLimiter.c; sourceTree = "<group>"; };
 		3A5DA92723FD1F1500C7E19D /* BMLowpassedLimiter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMLowpassedLimiter.h; sourceTree = "<group>"; };
@@ -509,16 +512,18 @@
 		4CC13A0A2244D80B003FA1B9 /* Oscillators */ = {
 			isa = PBXGroup;
 			children = (
+				3A4EDF25256F98C100ED5873 /* BMCDBlepOscillator.c */,
+				3A4EDF24256F98C100ED5873 /* BMCDBlepOscillator.h */,
 				3A4EDF1025664C3C00ED5873 /* BMDPWOscillator.c */,
 				3A4EDF1125664C3C00ED5873 /* BMDPWOscillator.h */,
+				4CC13A0C2244D80B003FA1B9 /* BMLFO.c */,
+				4CC13A0F2244D80B003FA1B9 /* BMLFO.h */,
+				4CC13A0D2244D80B003FA1B9 /* BMOscillatorArray.c */,
+				4CC13A102244D80B003FA1B9 /* BMOscillatorArray.h */,
 				3ADD67CF2470137800CEFBC7 /* BMPanLFO.c */,
 				3ADD67CE2470137800CEFBC7 /* BMPanLFO.h */,
-				4CC13A0B2244D80B003FA1B9 /* BMQuadratureOscillator.h */,
-				4CC13A0C2244D80B003FA1B9 /* BMLFO.c */,
-				4CC13A0D2244D80B003FA1B9 /* BMOscillatorArray.c */,
 				4CC13A0E2244D80B003FA1B9 /* BMQuadratureOscillator.c */,
-				4CC13A0F2244D80B003FA1B9 /* BMLFO.h */,
-				4CC13A102244D80B003FA1B9 /* BMOscillatorArray.h */,
+				4CC13A0B2244D80B003FA1B9 /* BMQuadratureOscillator.h */,
 			);
 			path = Oscillators;
 			sourceTree = "<group>";
@@ -817,6 +822,7 @@
 				4CC13A6A2244D80B003FA1B9 /* BMCrossover.c in Sources */,
 				3A8320992360537200B5387B /* BMStereoMod2.c in Sources */,
 				4CC13A7A2244D80B003FA1B9 /* BMStaticDelay.c in Sources */,
+				3A4EDF26256F98C200ED5873 /* BMCDBlepOscillator.c in Sources */,
 				4CC13A772244D80B003FA1B9 /* BMEarlyReflections.c in Sources */,
 				3AB41758229F843500AECC6E /* BMVariableFilter.c in Sources */,
 				3A03B2182418AA70004F2776 /* BMHarmonicityMeasure.c in Sources */,
