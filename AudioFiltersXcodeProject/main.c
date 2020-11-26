@@ -51,6 +51,7 @@
 #include "BMSincUpsampler.h"
 #include "BMSpectrogram.h"
 #include "BMSincDownsampler.h"
+#include "BMStaticDelay.h"
 #include "BMDPWOscillator.h"
 
 #define TESTBUFFERLENGTH 128
@@ -1536,85 +1537,85 @@ void quadraticThresholdTest(){
 	arrayToFile(o,BMCOMPRESSOR_TEST_LENGTH);
 }
 
-#define LT_SampleRate 48000.
-#define LT_Frequency 10.
-#define LT_TestRange 50
-void testBMLagTime(){
-	BMStereoLagTime stereoLagTime;
-	//BMStereoLagTime_init(&stereoLagTime, 500, LT_SampleRate);
-	
-	
-	size_t length = LT_SampleRate *4;
-	float* audioX = malloc(sizeof(float)*length);
-	float* inLAudioY = malloc(sizeof(float)*length);
-	float* outLAudioY = malloc(sizeof(float)*length);
-	float* inRAudioY = malloc(sizeof(float)*length);
-	float* outRAudioY = malloc(sizeof(float)*length);
-	
-	float scale = 1.;
-	float xFactor = 20;
-	for(int i=0;i<length;i++){
-		audioX[i] = (i*xFactor)/length;
-		inLAudioY[i] = sinf(LT_Frequency * 2.0 * M_PI * (float)i / LT_SampleRate) * scale;
-		inRAudioY[i] = sinf(LT_Frequency * 2.0 * M_PI * (float)i / LT_SampleRate) * scale;
-	}
-	
-	float delayTime[LT_TestRange];
-	for(int i=0;i<30;i++){
-		delayTime[i] = (LT_TestRange - i)*1;
-	}
-	
-	for(int i=10;i<LT_TestRange;i++){
-		delayTime[i] = i*2;
-	}
-	size_t processedSample = 0;
-	size_t processingSample = 1024;
-	for(int i=0;i<LT_TestRange;i++){
-		// BMStereoLagTime_setDelayLeft(&stereoLagTime, delayTime[i]);
-		BMStereoLagTime_process(&stereoLagTime, inLAudioY+processedSample, inRAudioY+processedSample, outLAudioY+processedSample, outRAudioY+processedSample, processingSample);
-		processedSample += processingSample;
-	}
-	
-	arrayXYToFile(audioX,outLAudioY, length);
-}
+//#define LT_SampleRate 48000.
+//#define LT_Frequency 10.
+//#define LT_TestRange 50
+//void testBMLagTime(){
+//	BMStereoLagTime stereoLagTime;
+//	BMStereoLagTime_init(&stereoLagTime, 500, LT_SampleRate);
+//
+//
+//	size_t length = LT_SampleRate *4;
+//	float* audioX = malloc(sizeof(float)*length);
+//	float* inLAudioY = malloc(sizeof(float)*length);
+//	float* outLAudioY = malloc(sizeof(float)*length);
+//	float* inRAudioY = malloc(sizeof(float)*length);
+//	float* outRAudioY = malloc(sizeof(float)*length);
+//
+//	float scale = 1.;
+//	float xFactor = 20;
+//	for(int i=0;i<length;i++){
+//		audioX[i] = (i*xFactor)/length;
+//		inLAudioY[i] = sinf(LT_Frequency * 2.0 * M_PI * (float)i / LT_SampleRate) * scale;
+//		inRAudioY[i] = sinf(LT_Frequency * 2.0 * M_PI * (float)i / LT_SampleRate) * scale;
+//	}
+//
+//	float delayTime[LT_TestRange];
+//	for(int i=0;i<30;i++){
+//		delayTime[i] = (LT_TestRange - i)*1;
+//	}
+//
+//	for(int i=10;i<LT_TestRange;i++){
+//		delayTime[i] = i*2;
+//	}
+//	size_t processedSample = 0;
+//	size_t processingSample = 1024;
+//	for(int i=0;i<LT_TestRange;i++){
+//		BMStereoLagTime_setDelayLeft(&stereoLagTime, delayTime[i]);
+//		BMStereoLagTime_process(&stereoLagTime, inLAudioY+processedSample, inRAudioY+processedSample, outLAudioY+processedSample, outRAudioY+processedSample, processingSample);
+//		processedSample += processingSample;
+//	}
+//
+//	arrayXYToFile(audioX,outLAudioY, length);
+//}
 
-#define BS_Range 10
-#define BS_Freq_Range 1000.0f
-#define BS_Freq_Start 1.0f
-#define BS_Freq_End 20000.0f
-void testBinauralSynthesis(){
-	float* input = malloc(sizeof(float) * BS_Range);
-	float* output = malloc(sizeof(float) * BS_Range);
-	float* frequency = malloc(sizeof(float)*BS_Freq_Range);
-	float* magnitude = malloc(sizeof(float)*BS_Freq_Range);
-	
-	float alpha = powf(BS_Freq_End/BS_Freq_Start, 1.0f/BS_Freq_Range);
-	
-	float* xArray = malloc(sizeof(float)*BS_Freq_Range);
-	
-	for(int i = 0;i< BS_Freq_Range;i++){
-		frequency[i] = BS_Freq_Start * powf(alpha, i);
-		xArray[i] = i * 10;
-	}
-	
-	
-	
-	BMBinauralSynthesis bs;
-	BMBinauralSynthesis_init(&bs, false, LT_SampleRate);
-	
-	BMBinauralSynthesis_setAngleLeft(&bs, 0);
-	
-	BMBinauralSynthesis_processMono(&bs, input, output, BS_Range);
-	
-	BMBinauralSynthesis_getTFMagVectorData(&bs,frequency, magnitude, BS_Freq_Range, 0);
-	//Convert from gain to db
-	for(int i=0;i<BS_Freq_Range;i++){
-		magnitude[i] = BM_GAIN_TO_DB(magnitude[i]) * 1000;
-	}
-	
-	arrayXYToFile(xArray,magnitude, BS_Freq_Range);
-	
-}
+//#define BS_Range 10
+//#define BS_Freq_Range 1000.0f
+//#define BS_Freq_Start 1.0f
+//#define BS_Freq_End 20000.0f
+//void testBinauralSynthesis(){
+//	float* input = malloc(sizeof(float) * BS_Range);
+//	float* output = malloc(sizeof(float) * BS_Range);
+//	float* frequency = malloc(sizeof(float)*BS_Freq_Range);
+//	float* magnitude = malloc(sizeof(float)*BS_Freq_Range);
+//	
+//	float alpha = powf(BS_Freq_End/BS_Freq_Start, 1.0f/BS_Freq_Range);
+//	
+//	float* xArray = malloc(sizeof(float)*BS_Freq_Range);
+//	
+//	for(int i = 0;i< BS_Freq_Range;i++){
+//		frequency[i] = BS_Freq_Start * powf(alpha, i);
+//		xArray[i] = i * 10;
+//	}
+//	
+//	
+//	
+//	BMBinauralSynthesis bs;
+//	BMBinauralSynthesis_init(&bs, false, LT_SampleRate);
+//	
+//	BMBinauralSynthesis_setAngleLeft(&bs, 0);
+//	
+//	BMBinauralSynthesis_processMono(&bs, input, output, BS_Range);
+//	
+//	BMBinauralSynthesis_getTFMagVectorData(&bs,frequency, magnitude, BS_Freq_Range, 0);
+//	//Convert from gain to db
+//	for(int i=0;i<BS_Freq_Range;i++){
+//		magnitude[i] = BM_GAIN_TO_DB(magnitude[i]) * 1000;
+//	}
+//	
+//	arrayXYToFile(xArray,magnitude, BS_Freq_Range);
+//	
+//}
 
 
 
@@ -2951,32 +2952,55 @@ void testBMSpectrogram(){
 
 
 
-void testBMDPWOscillator(){
-	size_t length = 48000;
-	float * frequencies = malloc(sizeof(float) * length);
-	float * output = malloc(sizeof(float) * length);
-	
-	BMDPWOscillator osc;
-	BMDPWOscillator_init(&osc, BMDPWO_SAW, 10, 2, 48000);
-	
-	// populate the frequencies array with a linear sweep
-	float startFreq = 80;
-	float increment = (1000.0 - 80.0) / (float)length;
-	vDSP_vramp(&startFreq, &increment, frequencies, 1, length);
-	
-	// produce the sound
-	BMDPWOscillator_process(&osc, frequencies, output, length);
-	
-	char* filePath = "./osc_test.wav";
-	BMExportWavFile exp;
-	BMExportWavFile_init(&exp, 48000.0f);
-	BMExportWavFile_exportAudioFloatToInt16(&exp, filePath, output, output, length);
+void testBMStaticDelay(){
+    BMStaticDelay d;
+    BMStaticDelay_init(&d, 2, 2, 0.001, 1.0, -6.0, 0.3, 1000.0, 30.0, 48000);
+    
+    size_t length = 10000;
+    float *input = calloc(length, sizeof(float));
+    float *outL = malloc(length * sizeof(float));
+    float *outR = malloc(length * sizeof(float));
+    
+    BMStaticDelay_processBufferStereo(&d, input, input, outL, outR, (int)length);
+//    BMStaticDelay_processBufferStereo(&d, input, input, outL, outR, 256);
+//    BMStaticDelay_processBufferStereo(&d, input, input, outL, outR, 256);
+//    BMStaticDelay_processBufferStereo(&d, input, input, outL, outR, 256);
+//    BMStaticDelay_processBufferStereo(&d, input, input, outL, outR, 256);
+//    BMStaticDelay_processBufferStereo(&d, input, input, outL, outR, 256);
+    
+    free(input);
+    free(outL);
+    free(outR);
 }
 
 
 
+void testDPWOscillator(){
+    BMDPWOscillator osc;
+    size_t length = 48000;
+    BMDPWOscillator_init(&osc, BMDPWO_SAW, 10, 2, length);
+
+    float *output = malloc(sizeof(float)*length);
+    float *frequencies = malloc(sizeof(float)*length);
+    
+    for(size_t i=0; i<length; i++)
+        frequencies[i] = 300.0f;
+    
+    BMDPWOscillator_process(&osc, frequencies, output, length);
+    
+    //Export wav file
+    BMExportWavFile exportWavFile;
+    BMExportWavFile_init(&exportWavFile,48000);
+    char* filePath = "./osc_test.wav";
+    BMExportWavFile_exportAudioFloatToInt16(&exportWavFile,filePath, output, output, length);
+}
+
+
+
+
 int main(int argc, const char * argv[]) {
-	testBMDPWOscillator();
+    //testBMStaticDelay();
+    testDPWOscillator();
     return 0;
 
 }
