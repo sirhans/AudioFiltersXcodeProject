@@ -53,6 +53,7 @@
 #include "BMSincDownsampler.h"
 #include "BMStaticDelay.h"
 #include "BMDPWOscillator.h"
+#include "BMCDBlepOscillator.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -2998,9 +2999,35 @@ void testDPWOscillator(){
 
 
 
+void testCDBlepOscillator(){
+	BMCDBlepOscillator osc;
+	size_t length = 48000;
+	BMCDBlepOscillator_init(&osc, BMDPWO_SAW, 10, 2, length);
+	size_t numBleps = 2;
+	size_t filterOrder = 2;
+	size_t oversampleFactor = 2;
+	BMCDBlepOscillator_init(&osc, numBleps, filterOrder, oversampleFactor, length);
+
+	float *output = malloc(sizeof(float)*length);
+	float *frequencies = malloc(sizeof(float)*length);
+	
+	for(size_t i=0; i<length; i++)
+		frequencies[i] = 80.0f;
+	
+	BMCDBlepOscillator_process(&osc, frequencies, output, length);
+	
+	//Export wav file
+	BMExportWavFile exportWavFile;
+	BMExportWavFile_init(&exportWavFile,48000);
+	char* filePath = "./osc_test.wav";
+	system("pwd");
+	BMExportWavFile_exportAudioFloatToInt16(&exportWavFile,filePath, output, output, length);
+}
+
+
+
 int main(int argc, const char * argv[]) {
-    //testBMStaticDelay();
-    testDPWOscillator();
+	testCDBlepOscillator();
     return 0;
 
 }
