@@ -42,7 +42,6 @@
 		3A874E9522F157B800B97FC2 /* BMTanhLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A874E9422F157B800B97FC2 /* BMTanhLimiter.c */; };
 		3A8D662C25676B880022EACF /* BMSlidingWindowSum.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A8D662B25676B880022EACF /* BMSlidingWindowSum.c */; };
 		3A8D663425676BD10022EACF /* BMGaussianUpsampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A8D663225676BD10022EACF /* BMGaussianUpsampler.c */; };
-		3A8D66392570BC520022EACF /* BMCDBlepOscillator.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A8D66382570BC520022EACF /* BMCDBlepOscillator.c */; };
 		3A8D663E25834D1C0022EACF /* BMReleaseShaper.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A8D663D25834D1B0022EACF /* BMReleaseShaper.c */; };
 		3A95396422CB50CD0058A586 /* BMZavalishinLPFOrder1.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */; };
 		3A9E06C122E1651100ECB53B /* BMIIRDownsampler2x.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A9E06BF22E1651100ECB53B /* BMIIRDownsampler2x.c */; };
@@ -195,8 +194,6 @@
 		3A8D663025676BD10022EACF /* BMGaussianUpsampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMGaussianUpsampler.h; sourceTree = "<group>"; };
 		3A8D663125676BD10022EACF /* Decimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decimation.h; sourceTree = "<group>"; };
 		3A8D663225676BD10022EACF /* BMGaussianUpsampler.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMGaussianUpsampler.c; sourceTree = "<group>"; };
-		3A8D66372570BC520022EACF /* BMCDBlepOscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCDBlepOscillator.h; sourceTree = "<group>"; };
-		3A8D66382570BC520022EACF /* BMCDBlepOscillator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMCDBlepOscillator.c; sourceTree = "<group>"; };
 		3A8D663C25834D1B0022EACF /* BMReleaseShaper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMReleaseShaper.h; sourceTree = "<group>"; };
 		3A8D663D25834D1B0022EACF /* BMReleaseShaper.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMReleaseShaper.c; sourceTree = "<group>"; };
 		3A95396222CB50CD0058A586 /* BMZavalishinLPFOrder1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMZavalishinLPFOrder1.h; sourceTree = "<group>"; };
@@ -415,11 +412,19 @@
 			path = Measurement;
 			sourceTree = "<group>";
 		};
+		3A644A68258C9378002C6241 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		4C688A2B2244CF6700E3B1E6 = {
 			isa = PBXGroup;
 			children = (
 				4C688A362244CF6700E3B1E6 /* AudioFiltersXcodeProject */,
 				4C688A352244CF6700E3B1E6 /* Products */,
+				3A644A68258C9378002C6241 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -835,7 +840,6 @@
 				3A8320992360537200B5387B /* BMStereoMod2.c in Sources */,
 				4CC13A7A2244D80B003FA1B9 /* BMStaticDelay.c in Sources */,
 				4CC13A772244D80B003FA1B9 /* BMEarlyReflections.c in Sources */,
-				3A8D66392570BC520022EACF /* BMCDBlepOscillator.c in Sources */,
 				3AB41758229F843500AECC6E /* BMVariableFilter.c in Sources */,
 				3A03B2182418AA70004F2776 /* BMHarmonicityMeasure.c in Sources */,
 				4CC13A7D2244D80B003FA1B9 /* BMInterpolatedDelay.c in Sources */,

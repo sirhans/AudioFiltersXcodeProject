@@ -2979,7 +2979,8 @@ void testBMStaticDelay(){
 void testDPWOscillator(){
     BMDPWOscillator osc;
     size_t length = 48000;
-    BMDPWOscillator_init(&osc, BMDPWO_SAW, 10, 2, length);
+    size_t oversample = 1;
+    BMDPWOscillator_init(&osc, BMDPWO_SAW, 10, oversample, length);
 
     float *output = malloc(sizeof(float)*length);
     float *frequencies = malloc(sizeof(float)*length);
@@ -3002,10 +3003,9 @@ void testDPWOscillator(){
 void testCDBlepOscillator(){
 	BMCDBlepOscillator osc;
 	size_t length = 48000;
-	BMCDBlepOscillator_init(&osc, BMDPWO_SAW, 10, 2, length);
 	size_t numBleps = 2;
 	size_t filterOrder = 2;
-	size_t oversampleFactor = 2;
+	size_t oversampleFactor = 1;
 	BMCDBlepOscillator_init(&osc, numBleps, filterOrder, oversampleFactor, length);
 
 	float *output = malloc(sizeof(float)*length);
