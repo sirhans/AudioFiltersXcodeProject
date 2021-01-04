@@ -3003,18 +3003,22 @@ void testDPWOscillator(){
 void testCDBlepOscillator(){
 	BMCDBlepOscillator osc;
 	size_t length = 48000;
-	size_t numBleps = 2;
+	size_t numBleps = 20;
 	size_t filterOrder = 2;
-	size_t oversampleFactor = 1;
+	size_t oversampleFactor = 2;
 	BMCDBlepOscillator_init(&osc, numBleps, filterOrder, oversampleFactor, length);
 
 	float *output = malloc(sizeof(float)*length);
 	float *frequencies = malloc(sizeof(float)*length);
 	
 	for(size_t i=0; i<length; i++)
-		frequencies[i] = 80.0f;
+		frequencies[i] = 1040.324f;
 	
 	BMCDBlepOscillator_process(&osc, frequencies, output, length);
+	
+	// drop the volume to avoid clipping
+	float half = 0.5f;
+	vDSP_vsmul(output, 1, &half, output, 1, length);
 	
 	//Export wav file
 	BMExportWavFile exportWavFile;
