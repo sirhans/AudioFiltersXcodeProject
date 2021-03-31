@@ -54,6 +54,7 @@
 #include "BMStaticDelay.h"
 #include "BMDPWOscillator.h"
 #include "BMCDBlepOscillator.h"
+#include "BMBlipOscillator.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -3029,9 +3030,42 @@ void testCDBlepOscillator(){
 }
 
 
+void testBlipOscillator(){
+    BMBlipOscillator osc;
+    size_t length = 48000;
+    size_t numBleps = 20;
+    size_t filterOrder = 2;
+    size_t oversampleFactor = 1;
+    float sampleRate = 48000;
+    BMBlipOscillator_init(&osc, sampleRate, oversampleFactor, filterOrder, numBleps);
+    BMBlipOscilaltor_setLowpassFc(&osc, 1000.0f);
+
+    float *output = malloc(sizeof(float)*length);
+    float *frequencies = malloc(sizeof(float)*length);
+    
+    for(size_t i=0; i<length; i++)
+        frequencies[i] = 61.324f;
+    
+    int length_i = (int)length;
+    vvlog2f(frequencies, frequencies, &length_i);
+    
+    BMBlipOscillator_process(&osc, frequencies, output, length);
+    
+    // drop the volume to avoid clipping
+    float half = 0.5f;
+    vDSP_vsmul(output, 1, &half, output, 1, length);
+    
+    //Export wav file
+    BMExportWavFile exportWavFile;
+    BMExportWavFile_init(&exportWavFile,48000);
+    char* filePath = "./osc_test.wav";
+    system("pwd");
+    BMExportWavFile_exportAudioFloatToInt16(&exportWavFile,filePath, output, output, length);
+}
+
 
 int main(int argc, const char * argv[]) {
-	testCDBlepOscillator();
+	testBlipOscillator();
     return 0;
 
 }
