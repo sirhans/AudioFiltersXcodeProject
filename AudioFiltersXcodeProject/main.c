@@ -3033,18 +3033,18 @@ void testCDBlepOscillator(){
 void testBlipOscillator(){
     BMBlipOscillator osc;
     size_t length = 48000;
-    size_t numBleps = 20;
-    size_t filterOrder = 2;
+    size_t numBleps = 16;
+    size_t filterOrder = 8;
     size_t oversampleFactor = 1;
     float sampleRate = 48000;
     BMBlipOscillator_init(&osc, sampleRate, oversampleFactor, filterOrder, numBleps);
-    BMBlipOscilaltor_setLowpassFc(&osc, 1000.0f);
+    BMBlipOscilaltor_setLowpassFc(&osc, 2000.0f);
 
     float *output = malloc(sizeof(float)*length);
     float *frequencies = malloc(sizeof(float)*length);
     
     for(size_t i=0; i<length; i++)
-        frequencies[i] = 61.324f;
+        frequencies[i] = 101.324f;
     
     int length_i = (int)length;
     vvlog2f(frequencies, frequencies, &length_i);
@@ -3061,6 +3061,35 @@ void testBlipOscillator(){
     char* filePath = "./osc_test.wav";
     system("pwd");
     BMExportWavFile_exportAudioFloatToInt16(&exportWavFile,filePath, output, output, length);
+}
+
+
+
+
+void testBlip(){
+	BMBlip osc;
+	size_t length = 48000;
+	size_t numBleps = 20;
+	size_t filterOrder = 16;
+	size_t oversampleFactor = 1;
+	float sampleRate = 48000;
+	BMBlip_init(&osc, 2, 400.0f, sampleRate);
+	BMBlip_restart(&osc, 0.5f);
+
+	float *output = calloc(length, sizeof(float));
+	
+	BMBlip_process(&osc, output, length);
+	
+	// drop the volume to avoid clipping
+	float half = 0.5f;
+	vDSP_vsmul(output, 1, &half, output, 1, length);
+	
+	//Export wav file
+	BMExportWavFile exportWavFile;
+	BMExportWavFile_init(&exportWavFile,48000);
+	char* filePath = "./osc_test.wav";
+	system("pwd");
+	BMExportWavFile_exportAudioFloatToInt16(&exportWavFile,filePath, output, output, length);
 }
 
 
