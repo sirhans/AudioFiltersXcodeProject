@@ -3044,7 +3044,7 @@ void testBlipOscillator(){
     float *frequencies = malloc(sizeof(float)*length);
     
     for(size_t i=0; i<length; i++)
-        frequencies[i] = 2001.324f;
+        frequencies[i] = 2001.123f;
     
     int length_i = (int)length;
     vvlog2f(frequencies, frequencies, &length_i);
