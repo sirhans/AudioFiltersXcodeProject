@@ -3038,13 +3038,13 @@ void testBlipOscillator(){
     size_t oversampleFactor = 1;
     float sampleRate = 48000;
     BMBlipOscillator_init(&osc, sampleRate, oversampleFactor, filterOrder, numBleps);
-    BMBlipOscilaltor_setLowpassFc(&osc, 4000.0f);
+    BMBlipOscilaltor_setLowpassFc(&osc, 5000.0f);
 
     float *output = malloc(sizeof(float)*length);
     float *frequencies = malloc(sizeof(float)*length);
     
     for(size_t i=0; i<length; i++)
-        frequencies[i] = 2001.123f;
+        frequencies[i] = 1251.123f;
     
     int length_i = (int)length;
     vvlog2f(frequencies, frequencies, &length_i);
