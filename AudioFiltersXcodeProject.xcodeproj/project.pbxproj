@@ -32,6 +32,7 @@
 		3A70D1CA236815DC00F464E6 /* BMUpsampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A4F2244D80B003FA1B9 /* BMUpsampler.c */; };
 		3A70D1CB236815E000F464E6 /* BMPolyphaseIIR2Designer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AEEF23A22D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.c */; };
 		3A70D1D123681B3300F464E6 /* BMAsymptoticLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A70D1D023681B3300F464E6 /* BMAsymptoticLimiter.c */; };
+		3A769A22262FED0100030823 /* BMFirstOrderVariableFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A769A21262FED0100030823 /* BMFirstOrderVariableFilter.c */; };
 		3A784AF02373E8B30048920C /* BMSFM.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A784AEE2373E8B30048920C /* BMSFM.c */; };
 		3A784AF42373E8CD0048920C /* BMBetaPDF.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A784AF12373E8CD0048920C /* BMBetaPDF.c */; };
 		3A784AF52373E8CD0048920C /* BMFFT.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A784AF22373E8CD0048920C /* BMFFT.c */; };
@@ -175,6 +176,8 @@
 		3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMQuadraticThreshold.c; sourceTree = "<group>"; };
 		3A70D1CF23681B3300F464E6 /* BMAsymptoticLimiter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMAsymptoticLimiter.h; sourceTree = "<group>"; };
 		3A70D1D023681B3300F464E6 /* BMAsymptoticLimiter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMAsymptoticLimiter.c; sourceTree = "<group>"; };
+		3A769A20262FED0100030823 /* BMFirstOrderVariableFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMFirstOrderVariableFilter.h; sourceTree = "<group>"; };
+		3A769A21262FED0100030823 /* BMFirstOrderVariableFilter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMFirstOrderVariableFilter.c; sourceTree = "<group>"; };
 		3A784AEE2373E8B30048920C /* BMSFM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMSFM.c; sourceTree = "<group>"; };
 		3A784AEF2373E8B30048920C /* BMSFM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMSFM.h; sourceTree = "<group>"; };
 		3A784AF12373E8CD0048920C /* BMBetaPDF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMBetaPDF.c; sourceTree = "<group>"; };
@@ -522,6 +525,8 @@
 				4CC139F02244D80B003FA1B9 /* BMVelocityFilter.h */,
 				3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */,
 				3A95396222CB50CD0058A586 /* BMZavalishinLPFOrder1.h */,
+				3A769A20262FED0100030823 /* BMFirstOrderVariableFilter.h */,
+				3A769A21262FED0100030823 /* BMFirstOrderVariableFilter.c */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -861,6 +866,7 @@
 				4CC13A762244D80B003FA1B9 /* BMQuadratureOscillator.c in Sources */,
 				4CC13A682244D80B003FA1B9 /* BMDiffusion.c in Sources */,
 				3AAEA15422B3420B0066D852 /* BMHoldPeak.c in Sources */,
+				3A769A22262FED0100030823 /* BMFirstOrderVariableFilter.c in Sources */,
 				4C6FA2122410EAA1003043FE /* BMSmoothDelay.c in Sources */,
 				3A2595A1249385780098FBEE /* BMIntonationOptimiser.c in Sources */,
 				4C6FA2192410EAB2003043FE /* BMExportWavFile.c in Sources */,
