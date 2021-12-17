@@ -32,6 +32,7 @@
 		3A70D1CA236815DC00F464E6 /* BMUpsampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CC13A4F2244D80B003FA1B9 /* BMUpsampler.c */; };
 		3A70D1CB236815E000F464E6 /* BMPolyphaseIIR2Designer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AEEF23A22D8864D00A3C5B5 /* BMPolyphaseIIR2Designer.c */; };
 		3A70D1D123681B3300F464E6 /* BMAsymptoticLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A70D1D023681B3300F464E6 /* BMAsymptoticLimiter.c */; };
+		3A738DD926D8E4E00061CF32 /* BMSpectralGain.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A738DD826D8E4E00061CF32 /* BMSpectralGain.c */; };
 		3A769A22262FED0100030823 /* BMFirstOrderVariableFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A769A21262FED0100030823 /* BMFirstOrderVariableFilter.c */; };
 		3A784AF02373E8B30048920C /* BMSFM.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A784AEE2373E8B30048920C /* BMSFM.c */; };
 		3A784AF42373E8CD0048920C /* BMBetaPDF.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A784AF12373E8CD0048920C /* BMBetaPDF.c */; };
@@ -176,6 +177,8 @@
 		3A6A32A822CF357300DEEDFA /* BMQuadraticThreshold.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMQuadraticThreshold.c; sourceTree = "<group>"; };
 		3A70D1CF23681B3300F464E6 /* BMAsymptoticLimiter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMAsymptoticLimiter.h; sourceTree = "<group>"; };
 		3A70D1D023681B3300F464E6 /* BMAsymptoticLimiter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMAsymptoticLimiter.c; sourceTree = "<group>"; };
+		3A738DD726D8E4E00061CF32 /* BMSpectralGain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMSpectralGain.h; sourceTree = "<group>"; };
+		3A738DD826D8E4E00061CF32 /* BMSpectralGain.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMSpectralGain.c; sourceTree = "<group>"; };
 		3A769A20262FED0100030823 /* BMFirstOrderVariableFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMFirstOrderVariableFilter.h; sourceTree = "<group>"; };
 		3A769A21262FED0100030823 /* BMFirstOrderVariableFilter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMFirstOrderVariableFilter.c; sourceTree = "<group>"; };
 		3A784AEE2373E8B30048920C /* BMSFM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMSFM.c; sourceTree = "<group>"; };
@@ -428,6 +431,15 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		3A738DD626D8E4500061CF32 /* Spectral Processing */ = {
+			isa = PBXGroup;
+			children = (
+				3A738DD726D8E4E00061CF32 /* BMSpectralGain.h */,
+				3A738DD826D8E4E00061CF32 /* BMSpectralGain.c */,
+			);
+			path = "Spectral Processing";
+			sourceTree = "<group>";
+		};
 		4C688A2B2244CF6700E3B1E6 = {
 			isa = PBXGroup;
 			children = (
@@ -476,6 +488,7 @@
 				4CC13A3D2244D80B003FA1B9 /* OtherEffects */,
 				4CC13A492244D80B003FA1B9 /* Convolution */,
 				4CC13A4B2244D80B003FA1B9 /* SampleRate */,
+				3A738DD626D8E4500061CF32 /* Spectral Processing */,
 				4CC13A522244D80B003FA1B9 /* NonlinearGain */,
 				4CC13A612244D80B003FA1B9 /* TPCircularBuffer */,
 			);
@@ -930,6 +943,7 @@
 				3A70D1CA236815DC00F464E6 /* BMUpsampler.c in Sources */,
 				4CC13A812244D80B003FA1B9 /* BMGetOSVersion.c in Sources */,
 				3ADD67D3247013A900CEFBC7 /* BMAllpassNestedFilter.c in Sources */,
+				3A738DD926D8E4E00061CF32 /* BMSpectralGain.c in Sources */,
 				3AD24AF623A641DA003F8A0F /* BMMultiTapDelay.c in Sources */,
 				3ADD67CA246FD71F00CEFBC7 /* BMSincUpsampler.c in Sources */,
 				3A70D1D123681B3300F464E6 /* BMAsymptoticLimiter.c in Sources */,
