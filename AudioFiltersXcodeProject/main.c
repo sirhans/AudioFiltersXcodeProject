@@ -55,6 +55,7 @@
 #include "BMDPWOscillator.h"
 #include "BMCDBlepOscillator.h"
 #include "BMBlipOscillator.h"
+#include "BMFFT.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -3093,8 +3094,93 @@ void testBlip(){
 }
 
 
+void randomVector(float *v, size_t length){
+	// seed the random number generator
+	srand48(time(0));
+	
+	// fill the array with random numbers
+	for(size_t i=0; i<length; i++)
+		v[i] = drand48();
+	
+	// normalise the result
+	BMVectorNormalise(v, length);
+}
+
+
+void testIFFT(){
+	size_t length = 128;
+	BMFFT fft;
+	BMFFT_init(&fft, length);
+	
+	float *input = malloc(sizeof(float)*length);
+	float zero = 0.0f;
+	float one = 1.0f;
+	float unitaryMagnitude = 1.0f / sqrt(length);
+	float increment = 1.0f / (6.493687f * length);
+	//vDSP_vramp(&zero, &increment, input, 1, length);
+	//vDSP_vfill(&unitaryMagnitude, input, 1, length);
+	randomVector(input, length);
+	
+	// print the vector magnitude of the input
+	float norm = BMVectorNorm(input,length);
+	printf("input norm: %f\n", norm);
+	
+	// do the fft
+	DSPSplitComplex zDomain;
+	zDomain.imagp = calloc(length/2,sizeof(float));
+	zDomain.realp = calloc(length/2,sizeof(float));
+	BMFFT_FFTComplexOutput(&fft, input, &zDomain, length);
+	
+	// scale the zDomain data
+//	float fftScale = 1.0 / (2.0 * sqrt(length));
+//	vDSP_vsmul(zDomain.imagp, 1, &fftScale, zDomain.imagp, 1, length/2);
+//	vDSP_vsmul(zDomain.realp, 1, &fftScale, zDomain.realp, 1, length/2);
+	
+	// print the vector magnitude of the zDomain data
+	norm = BMVectorNormSplitComplex(zDomain,length/2);
+	printf("zDomain norm: %f\n", norm);
+	
+	// print the vector magnitude of the real and imaginary components
+	norm = BMVectorNorm(zDomain.realp,length/2);
+	printf("real norm: %f\n", norm);
+	norm = BMVectorNorm(zDomain.imagp,length/2);
+	printf("imag norm: %f\n", norm);
+	
+	// do the ifft
+	float *output = malloc(sizeof(float)*length);
+	BMFFT_IFFT(&fft, &zDomain, output, length/2);
+	
+	// scale the output data
+//	float ifftScale = 1.0 / sqrt(length);
+//	float combinedScale = 1.0 / (2 * length);
+//	vDSP_vsmul(output, 1, &combinedScale, output, 1, length);
+	
+	// print the vector magnitude of the output
+	norm = BMVectorNorm(output, length);
+	printf("output norm: %f\n", norm);
+	
+	// print the input and output
+	printf("********** INPUT ************\n{");
+	for(size_t i=0; i<length-1; i++) printf("%f, ", input[i]);
+	printf("%f}\n",input[length-1]);
+	printf("********** OUTPUT ************\n{");
+	for(size_t i=0; i<length-1; i++) printf("%f, ", output[i]);
+	printf("%f}\n",input[length-1]);
+	
+	// print the vector distance from input to output
+	float distanceSq;
+	vDSP_distancesq(input, 1, output, 1, &distanceSq, length);
+	printf("distance: %f\n", sqrtf(distanceSq));
+	
+	free(input);
+	free(output);
+	free(zDomain.imagp);
+	free(zDomain.realp);
+}
+
+
 int main(int argc, const char * argv[]) {
-	testBlipOscillator();
+	testIFFT();
     return 0;
 
 }
