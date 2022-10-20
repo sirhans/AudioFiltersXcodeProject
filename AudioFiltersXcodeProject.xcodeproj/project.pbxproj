@@ -526,6 +526,8 @@
 				3A1A0E9D23A610CE003DEE0E /* BMFirstOrderArray.h */,
 				3A1A0E9F23A610CE003DEE0E /* BMFirstOrderDirectForm.c */,
 				3A1A0EA023A610CE003DEE0E /* BMFirstOrderDirectForm.h */,
+				3A769A21262FED0100030823 /* BMFirstOrderVariableFilter.c */,
+				3A769A20262FED0100030823 /* BMFirstOrderVariableFilter.h */,
 				4CC13A082244D80B003FA1B9 /* BMMultiLevelBiquad.c */,
 				4CC139F92244D80B003FA1B9 /* BMMultiLevelBiquad.h */,
 				4CC139F62244D80B003FA1B9 /* BMMultiLevelSVF.c */,
@@ -544,10 +546,8 @@
 				4CC139F02244D80B003FA1B9 /* BMVelocityFilter.h */,
 				3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */,
 				3A95396222CB50CD0058A586 /* BMZavalishinLPFOrder1.h */,
-				3A769A20262FED0100030823 /* BMFirstOrderVariableFilter.h */,
-				3A769A21262FED0100030823 /* BMFirstOrderVariableFilter.c */,
-				3A79545828F8EE8B00B9AF61 /* BMVagusNerveTherapyFilter.h */,
 				3A79545928F8EE8B00B9AF61 /* BMVagusNerveTherapyFilter.c */,
+				3A79545828F8EE8B00B9AF61 /* BMVagusNerveTherapyFilter.h */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -692,8 +692,8 @@
 				4CC13A422244D80B003FA1B9 /* BMOffset.h */,
 				3AEB17BB228AAA54004C7E4E /* BMSmoothGain.c */,
 				3AEB17B8228AAA54004C7E4E /* BMSmoothGain.h */,
-				3A79545B28F8F37800B9AF61 /* BMSmoothValue.h */,
 				3A79545C28F8F37800B9AF61 /* BMSmoothValue.c */,
+				3A79545B28F8F37800B9AF61 /* BMSmoothValue.h */,
 				3A8320972360537200B5387B /* BMStereoMod2.c */,
 				3A8320982360537200B5387B /* BMStereoMod2.h */,
 				4CC13A412244D80B003FA1B9 /* BMStereoWidener.c */,
