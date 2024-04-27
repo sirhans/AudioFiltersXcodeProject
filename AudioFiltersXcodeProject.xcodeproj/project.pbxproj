@@ -39,7 +39,6 @@
 		3A784AF52373E8CD0048920C /* BMFFT.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A784AF22373E8CD0048920C /* BMFFT.c */; };
 		3A784AFB2373E9D80048920C /* BMHysteresisLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A784AF72373E9D70048920C /* BMHysteresisLimiter.c */; };
 		3A784AFC2373E9D80048920C /* BMQuadraticLimiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A784AF92373E9D80048920C /* BMQuadraticLimiter.c */; };
-		3A79545A28F8EE8B00B9AF61 /* BMVagusNerveTherapyFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A79545928F8EE8B00B9AF61 /* BMVagusNerveTherapyFilter.c */; };
 		3A79545D28F8F37800B9AF61 /* BMSmoothValue.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A79545C28F8F37800B9AF61 /* BMSmoothValue.c */; };
 		3A7FDAF7231684170090EC36 /* BMChamberlinSVF.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A7FDAF6231684170090EC36 /* BMChamberlinSVF.c */; };
 		3A8320992360537200B5387B /* BMStereoMod2.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A8320972360537200B5387B /* BMStereoMod2.c */; };
@@ -193,8 +192,6 @@
 		3A784AF82373E9D70048920C /* BMHysteresisLimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMHysteresisLimiter.h; sourceTree = "<group>"; };
 		3A784AF92373E9D80048920C /* BMQuadraticLimiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BMQuadraticLimiter.c; sourceTree = "<group>"; };
 		3A784AFA2373E9D80048920C /* BMQuadraticLimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMQuadraticLimiter.h; sourceTree = "<group>"; };
-		3A79545828F8EE8B00B9AF61 /* BMVagusNerveTherapyFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMVagusNerveTherapyFilter.h; sourceTree = "<group>"; };
-		3A79545928F8EE8B00B9AF61 /* BMVagusNerveTherapyFilter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMVagusNerveTherapyFilter.c; sourceTree = "<group>"; };
 		3A79545B28F8F37800B9AF61 /* BMSmoothValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMSmoothValue.h; sourceTree = "<group>"; };
 		3A79545C28F8F37800B9AF61 /* BMSmoothValue.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMSmoothValue.c; sourceTree = "<group>"; };
 		3A7FDAF5231684170090EC36 /* BMChamberlinSVF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMChamberlinSVF.h; sourceTree = "<group>"; };
@@ -504,8 +501,6 @@
 		4CC139EF2244D80B003FA1B9 /* Filters */ = {
 			isa = PBXGroup;
 			children = (
-				3A8D662B25676B880022EACF /* BMSlidingWindowSum.c */,
-				3A8D662A25676B880022EACF /* BMSlidingWindowSum.h */,
 				3ADD67D1247013A900CEFBC7 /* BMAllpassNestedFilter.c */,
 				3ADD67D2247013A900CEFBC7 /* BMAllpassNestedFilter.h */,
 				4CC13A022244D80B003FA1B9 /* BMBiquadArray.c */,
@@ -536,6 +531,8 @@
 				4CC139F82244D80B003FA1B9 /* BMRoundRobin.h */,
 				4CC13A042244D80B003FA1B9 /* BMRoundRobinFilter.c */,
 				4CC139F42244D80B003FA1B9 /* BMRoundRobinFilter.h */,
+				3A8D662B25676B880022EACF /* BMSlidingWindowSum.c */,
+				3A8D662A25676B880022EACF /* BMSlidingWindowSum.h */,
 				4CC13A002244D80B003FA1B9 /* BMTNFilter.c */,
 				4CC139F32244D80B003FA1B9 /* BMTNFilter.h */,
 				3AB41757229F843500AECC6E /* BMVariableFilter.c */,
@@ -546,8 +543,6 @@
 				4CC139F02244D80B003FA1B9 /* BMVelocityFilter.h */,
 				3A95396322CB50CD0058A586 /* BMZavalishinLPFOrder1.c */,
 				3A95396222CB50CD0058A586 /* BMZavalishinLPFOrder1.h */,
-				3A79545928F8EE8B00B9AF61 /* BMVagusNerveTherapyFilter.c */,
-				3A79545828F8EE8B00B9AF61 /* BMVagusNerveTherapyFilter.h */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -911,7 +906,6 @@
 				3AEB51402580CC8A0053D3E5 /* BMLFO.c in Sources */,
 				4CC13A8A2244D80B003FA1B9 /* BMEnvelopeFollower.c in Sources */,
 				3A83209C23629A9A00B5387B /* BMShortSimpleDelay.c in Sources */,
-				3A79545A28F8EE8B00B9AF61 /* BMVagusNerveTherapyFilter.c in Sources */,
 				3A79545D28F8F37800B9AF61 /* BMSmoothValue.c in Sources */,
 				3A9E06C722E1693D00ECB53B /* BMIIRUpsampler2x.c in Sources */,
 				3A1A0EA323A6112A003DEE0E /* BMMonoToStereo.c in Sources */,

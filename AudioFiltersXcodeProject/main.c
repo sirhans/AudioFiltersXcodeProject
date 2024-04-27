@@ -56,6 +56,7 @@
 #include "BMCDBlepOscillator.h"
 #include "BMBlipOscillator.h"
 #include "BMFFT.h"
+#include "BMVagusNerveTherapyFilter.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -3178,11 +3179,48 @@ void testIFFT(){
 	free(zDomain.realp);
 }
 
+//
+//void testTherapyFilter (void) {
+//	size_t length = 1024;
+//	
+//	BMVagusNerveTherapyFilter filter;
+//	float sampleRate = 48000;
+//	BMVagusNerveTherapyFilter_init(&filter, sampleRate);
+//
+//	size_t bufferSize = length;
+//	float *inputL, *inputR;
+//	float *outputL, *outputR;
+//	float *buffer = (float*)malloc(sizeof(float) * bufferSize * 4);
+//	memset(buffer, 0, sizeof(float) * bufferSize * 4);
+//	inputL  = buffer + (bufferSize * 0);
+//	inputR  = buffer + (bufferSize * 1);
+//	outputL = buffer + (bufferSize * 2);
+//	outputR = buffer + (bufferSize * 3);
+//
+//	// offset the impulse by 100 samples to prevent wierd things that happen
+//	// in the first few samples of processing dynamic filters. However,
+//	// if the length of the IR is short, start from 0 instead.
+//	size_t impulseIndex = length < 200 ? 0 : 100;
+//	inputL[impulseIndex] = 1.0f;
+//	inputR[impulseIndex] = 1.0f;
+//
+//	BMVagusNerveTherapyFilter_process(&filter, inputL, inputR, outputL, outputR, bufferSize);
+//
+//	// print Impulse Response to console
+//	printf("{");
+//	size_t i=0;
+//	for(; i<length-1; i++)
+//		printf("%f, ", outputL[i]);
+//	printf("%f}", outputL[i]);
+//
+//	free(buffer);
+//	buffer = NULL;
+//}
+
 
 int main(int argc, const char * argv[]) {
-	testIFFT();
+	//testTherapyFilter();
     return 0;
-
 }
 
 
