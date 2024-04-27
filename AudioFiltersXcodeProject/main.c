@@ -56,7 +56,6 @@
 #include "BMCDBlepOscillator.h"
 #include "BMBlipOscillator.h"
 #include "BMFFT.h"
-#include "BMVagusNerveTherapyFilter.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -1811,23 +1810,38 @@ void testDownsampler(){
 	size_t downsampleFactor = 8;
 	
 	BMDownsampler ds;
-	BMDownsampler_init(&ds, false, downsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
+	BMDownsampler_init(&ds, true, downsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
 	
 	float sampleRate = 48000.0f;
 	size_t testLength = sampleRate * 5 * downsampleFactor;
 	
-	float* sineSweep = malloc(sizeof(float)*testLength);
-	float* output = malloc(sizeof(float)*testLength/downsampleFactor);
+	float* sineSweepL = malloc(sizeof(float)*testLength);
+	float* outputL = malloc(sizeof(float)*testLength/downsampleFactor);
+	float* sineSweepR = malloc(sizeof(float)*testLength);
+	float* outputR = malloc(sizeof(float)*testLength/downsampleFactor);
 	
-	generateSineSweep(sineSweep, 20.0f, 24000.0f, 48000.0f, testLength);
+	generateSineSweep(sineSweepL, 20.0f, 24000.0f, 48000.0f, testLength);
+	generateSineSweep(sineSweepR, 20.0f, 24000.0f, 48000.0f, testLength);
 	
-	BMDownsampler_processBufferMono(&ds, sineSweep, output, testLength);
+	size_t ic = 0;
+	size_t sp = 0;
+	size_t oc = 0;
+	while(ic < testLength - 1){
+		size_t samplesProcessing = BM_MIN(sp,testLength - (ic+1));
+		size_t samplesOut;
+		BMDownsampler_processBufferStereoOddInputLength(&ds, sineSweepL + ic, sineSweepR + ic, outputL + oc, outputR + oc, samplesProcessing, &samplesOut);
+		ic += samplesProcessing;
+		oc += samplesOut;
+		sp++;
+	}
 	
-	arrayToFile(output,testLength/downsampleFactor);
+	arrayToFile(outputL,testLength/downsampleFactor);
 	
 	BMDownsampler_free(&ds);
-	free(sineSweep);
-	free(output);
+	free(sineSweepL);
+	free(outputL);
+	free(sineSweepR);
+	free(outputR);
 }
 
 
@@ -3219,7 +3233,7 @@ void testIFFT(){
 
 
 int main(int argc, const char * argv[]) {
-	//testTherapyFilter();
+	testDownsampler();
     return 0;
 }
 
