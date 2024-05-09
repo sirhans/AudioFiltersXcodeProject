@@ -15,6 +15,8 @@
 		3A03B2182418AA70004F2776 /* BMHarmonicityMeasure.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A03B2172418AA70004F2776 /* BMHarmonicityMeasure.c */; };
 		3A03B21B2418AD51004F2776 /* BMMeasurementBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A03B21A2418AD51004F2776 /* BMMeasurementBuffer.c */; };
 		3A0DB86D247FB352002FD6E7 /* BMSincDownsampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A0DB86C247FB352002FD6E7 /* BMSincDownsampler.c */; };
+		3A0EA5F92BEC670400DE0C1E /* BMLFOPan2.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A0EA5F82BEC670400DE0C1E /* BMLFOPan2.c */; };
+		3A0EA5FC2BED3A8900DE0C1E /* BM2x2MatrixMixer.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A0EA5FB2BED3A8900DE0C1E /* BM2x2MatrixMixer.c */; };
 		3A0F7A6025E77DC900C05BEF /* BMBlipOscillator.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A0F7A5F25E77DC900C05BEF /* BMBlipOscillator.c */; };
 		3A177DE8255E68BB00F45FF5 /* BMDPWOscillator.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A177DE7255E68BB00F45FF5 /* BMDPWOscillator.c */; };
 		3A1A0E9623A607F8003DEE0E /* BMAudioStreamConverter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A1A0E9423A607F8003DEE0E /* BMAudioStreamConverter.c */; };
@@ -147,6 +149,10 @@
 		3A03B21A2418AD51004F2776 /* BMMeasurementBuffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMMeasurementBuffer.c; sourceTree = "<group>"; };
 		3A0DB86B247FB352002FD6E7 /* BMSincDownsampler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMSincDownsampler.h; sourceTree = "<group>"; };
 		3A0DB86C247FB352002FD6E7 /* BMSincDownsampler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMSincDownsampler.c; sourceTree = "<group>"; };
+		3A0EA5F72BEC670400DE0C1E /* BMLFOPan2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMLFOPan2.h; sourceTree = "<group>"; };
+		3A0EA5F82BEC670400DE0C1E /* BMLFOPan2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMLFOPan2.c; sourceTree = "<group>"; };
+		3A0EA5FA2BED3A8900DE0C1E /* BM2x2MatrixMixer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BM2x2MatrixMixer.h; sourceTree = "<group>"; };
+		3A0EA5FB2BED3A8900DE0C1E /* BM2x2MatrixMixer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BM2x2MatrixMixer.c; sourceTree = "<group>"; };
 		3A0F7A5E25E77DC800C05BEF /* BMBlipOscillator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMBlipOscillator.h; sourceTree = "<group>"; };
 		3A0F7A5F25E77DC900C05BEF /* BMBlipOscillator.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMBlipOscillator.c; sourceTree = "<group>"; };
 		3A177DE6255E68BB00F45FF5 /* BMDPWOscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMDPWOscillator.h; sourceTree = "<group>"; };
@@ -566,6 +572,8 @@
 				4CC13A0B2244D80B003FA1B9 /* BMQuadratureOscillator.h */,
 				3AD2739D260DD1EA00527E7F /* BMBlip.h */,
 				3AD2739E260DD1EA00527E7F /* BMBlip.c */,
+				3A0EA5F72BEC670400DE0C1E /* BMLFOPan2.h */,
+				3A0EA5F82BEC670400DE0C1E /* BMLFOPan2.c */,
 			);
 			path = Oscillators;
 			sourceTree = "<group>";
@@ -701,6 +709,8 @@
 				3A3C85442344644400C1D697 /* BMVocalRemover.h */,
 				3AEB17B9228AAA54004C7E4E /* BMWetDryMixer.c */,
 				3AEB17BA228AAA54004C7E4E /* BMWetDryMixer.h */,
+				3A0EA5FA2BED3A8900DE0C1E /* BM2x2MatrixMixer.h */,
+				3A0EA5FB2BED3A8900DE0C1E /* BM2x2MatrixMixer.c */,
 			);
 			path = OtherEffects;
 			sourceTree = "<group>";
@@ -947,6 +957,7 @@
 				4CC13A912244D80B003FA1B9 /* TPCircularBuffer+AudioBufferList.c in Sources */,
 				4CC13A6F2244D80B003FA1B9 /* BMTNFilter.c in Sources */,
 				3A70D1CA236815DC00F464E6 /* BMUpsampler.c in Sources */,
+				3A0EA5F92BEC670400DE0C1E /* BMLFOPan2.c in Sources */,
 				4CC13A812244D80B003FA1B9 /* BMGetOSVersion.c in Sources */,
 				3ADD67D3247013A900CEFBC7 /* BMAllpassNestedFilter.c in Sources */,
 				3A738DD926D8E4E00061CF32 /* BMSpectralGain.c in Sources */,
@@ -955,6 +966,7 @@
 				3A70D1D123681B3300F464E6 /* BMAsymptoticLimiter.c in Sources */,
 				4C6FA2142410EAA1003043FE /* BMPitchShiftDelay.c in Sources */,
 				3A1A0EA123A610CE003DEE0E /* BMFirstOrderArray.c in Sources */,
+				3A0EA5FC2BED3A8900DE0C1E /* BM2x2MatrixMixer.c in Sources */,
 				4CC13A832244D80B003FA1B9 /* BMSpectrum.c in Sources */,
 				4CC13A802244D80B003FA1B9 /* BMLagrangeInterpolation.c in Sources */,
 				3A03B2102410CDBA004F2776 /* BMLowpassedLimiter.c in Sources */,

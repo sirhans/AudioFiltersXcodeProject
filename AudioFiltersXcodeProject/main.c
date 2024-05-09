@@ -1806,8 +1806,8 @@ void testUpsampler(){
 
 
 
-void testDownsampler(){
-	size_t downsampleFactor = 8;
+void testDownsampler(void){
+	size_t downsampleFactor = 2;
 	
 	BMDownsampler ds;
 	BMDownsampler_init(&ds, true, downsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
@@ -1843,6 +1843,58 @@ void testDownsampler(){
 	free(sineSweepR);
 	free(outputR);
 }
+
+
+void testStaticDelay(void){
+	// configure delay settings
+	float sampleRate = 48000.0f;
+	float delayTimeSeconds = 0.333f;
+	float decayTimeSeconds = 1.0f;
+	float wetGainDb = -6.0f;
+	float crossMixAmount = 0.3f;
+	float lowpassFc = 2000.0f;
+	float highpassFc = 300.0f;
+	
+	BMStaticDelay d;
+	BMStaticDelay_init(&d, delayTimeSeconds, decayTimeSeconds, wetGainDb, crossMixAmount, lowpassFc, highpassFc, sampleRate);
+	BMStaticDelay_setDryGain(&d, -100.0f);
+	
+	// allocate memory for 5 seconds sine sweep test
+	size_t testLength = sampleRate * 5;
+	float* sineSweepL = malloc(sizeof(float)*testLength);
+	float* outputL = malloc(sizeof(float)*testLength);
+	float* sineSweepR = malloc(sizeof(float)*testLength);
+	float* outputR = malloc(sizeof(float)*testLength);
+	
+	generateSineSweep(sineSweepL, 20.0f, 24000.0f, 48000.0f, testLength);
+	generateSineSweep(sineSweepR, 20.0f, 24000.0f, 48000.0f, testLength);
+	
+	// reduce the volume
+	float gain = BM_DB_TO_GAIN(-10.0f);
+	vDSP_vsmul(sineSweepL, 1, &gain, sineSweepL, 1, testLength);
+	vDSP_vsmul(sineSweepR, 1, &gain, sineSweepR, 1, testLength);
+	
+	size_t ic = 0;
+	size_t sp = 1000;
+	size_t oc = 0;
+	while(ic < testLength - 1){
+		size_t samplesProcessing = BM_MIN(sp,testLength - (ic+1));
+		BMStaticDelay_processBufferStereo(&d, sineSweepL + ic, sineSweepR + ic, outputL + oc, outputR + oc, (int)samplesProcessing);
+		ic += samplesProcessing;
+		oc += samplesProcessing;
+		sp++;
+	}
+	
+	arrayToFile(outputL,testLength);
+	
+	// free memory
+	BMStaticDelay_free(&d);
+	free(sineSweepL);
+	free(outputL);
+	free(sineSweepR);
+	free(outputR);
+}
+
 
 
 void testUpDownsampler(){
@@ -2970,26 +3022,6 @@ void testBMSpectrogram(){
 
 
 
-void testBMStaticDelay(){
-    BMStaticDelay d;
-    BMStaticDelay_init(&d, 2, 2, 0.001, 1.0, -6.0, 0.3, 1000.0, 30.0, 48000);
-    
-    size_t length = 10000;
-    float *input = calloc(length, sizeof(float));
-    float *outL = malloc(length * sizeof(float));
-    float *outR = malloc(length * sizeof(float));
-    
-    BMStaticDelay_processBufferStereo(&d, input, input, outL, outR, (int)length);
-//    BMStaticDelay_processBufferStereo(&d, input, input, outL, outR, 256);
-//    BMStaticDelay_processBufferStereo(&d, input, input, outL, outR, 256);
-//    BMStaticDelay_processBufferStereo(&d, input, input, outL, outR, 256);
-//    BMStaticDelay_processBufferStereo(&d, input, input, outL, outR, 256);
-//    BMStaticDelay_processBufferStereo(&d, input, input, outL, outR, 256);
-    
-    free(input);
-    free(outL);
-    free(outR);
-}
 
 
 
@@ -3233,7 +3265,7 @@ void testIFFT(){
 
 
 int main(int argc, const char * argv[]) {
-	testDownsampler();
+	testStaticDelay();
     return 0;
 }
 
