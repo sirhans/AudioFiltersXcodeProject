@@ -56,6 +56,7 @@
 #include "BMCDBlepOscillator.h"
 #include "BMBlipOscillator.h"
 #include "BMFFT.h"
+#include "BMStereoMod2.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -1845,6 +1846,45 @@ void testDownsampler(void){
 }
 
 
+void testUpsamplerOddInputLength(void){
+	size_t upsampleFactor = 2;
+	
+	BMUpsampler ds;
+	BMUpsampler_init(&ds, true, upsampleFactor, BMRESAMPLER_FULL_SPECTRUM);
+	
+	float sampleRate = 48000.0f;
+	size_t testLength = sampleRate * 5;
+	
+	float* sineSweepL = malloc(sizeof(float)*testLength);
+	float* outputL = malloc(sizeof(float)*testLength*upsampleFactor);
+	float* sineSweepR = malloc(sizeof(float)*testLength);
+	float* outputR = malloc(sizeof(float)*testLength*upsampleFactor);
+	
+	generateSineSweep(sineSweepL, 20.0f, 24000.0f, 48000.0f, testLength);
+	generateSineSweep(sineSweepR, 20.0f, 24000.0f, 48000.0f, testLength);
+	
+	size_t ic = 0;
+	size_t sp = 0;
+	size_t oc = 0;
+	while(ic < testLength - 1){
+		size_t samplesProcessing = BM_MIN(sp,testLength - (ic+1));
+		size_t samplesOut;
+		BMUpsampler_processBufferStereo(&ds, sineSweepL + ic, sineSweepR + ic, outputL + oc, outputR + oc, samplesProcessing);
+		ic += samplesProcessing;
+		oc += samplesProcessing * upsampleFactor;
+		sp++;
+	}
+	
+	arrayToFile(outputL,testLength*upsampleFactor);
+	
+	BMUpsampler_free(&ds);
+	free(sineSweepL);
+	free(outputL);
+	free(sineSweepR);
+	free(outputR);
+}
+
+
 void testStaticDelay(void){
 	// configure delay settings
 	float sampleRate = 48000.0f;
@@ -3264,8 +3304,51 @@ void testIFFT(){
 //}
 
 
+void testStereoMod2(void){
+	size_t upsampleFactor = 2;
+	float sampleRate = 48000.0f;
+	
+	BMStereoMod2 sm;
+	BMStereoMod2_init(&sm, sampleRate);
+	
+	size_t testLength = sampleRate * 5;
+	
+	float* sineSweepL = malloc(sizeof(float)*testLength);
+	float* outputL = malloc(sizeof(float)*testLength);
+	float* sineSweepR = malloc(sizeof(float)*testLength);
+	float* outputR = malloc(sizeof(float)*testLength);
+	
+	generateSineSweep(sineSweepL, 20.0f, 24000.0f, 48000.0f, testLength);
+	generateSineSweep(sineSweepR, 20.0f, 24000.0f, 48000.0f, testLength);
+	
+	// reduce the input gain
+	float gain = 0.5f;
+	vDSP_vsmul(sineSweepL, 1, &gain, sineSweepL, 1, testLength);
+	vDSP_vsmul(sineSweepR, 1, &gain, sineSweepR, 1, testLength);
+	
+	size_t c = 0;
+	size_t chunkSize = 0;
+	size_t samplesRemaining = testLength;
+	while(samplesRemaining > 0){
+		size_t samplesProcessing = BM_MIN(chunkSize,samplesRemaining);
+		BMStereoMod2_process(&sm, sineSweepL + c, sineSweepR + c, outputL + c, outputR + c, samplesProcessing);
+		c += samplesProcessing;
+		chunkSize++;
+		samplesRemaining -= samplesProcessing;
+	}
+	
+	arrayToFile(outputR,testLength);
+	
+	BMStereoMod2_free(&sm);
+	free(sineSweepL);
+	free(outputL);
+	free(sineSweepR);
+	free(outputR);
+}
+
+
 int main(int argc, const char * argv[]) {
-	testStaticDelay();
+	testStereoMod2();
     return 0;
 }
 
