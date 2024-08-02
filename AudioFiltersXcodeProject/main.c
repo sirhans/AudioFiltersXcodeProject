@@ -57,6 +57,7 @@
 #include "BMBlipOscillator.h"
 #include "BMFFT.h"
 #include "BMStereoMod2.h"
+#include "BMIntonationOptimiser.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -3347,8 +3348,24 @@ void testStereoMod2(void){
 }
 
 
+#define INTONATION_TEST_NUM_NOTES 4
+void testIntonationOptimiser(void){
+	size_t numNotes = INTONATION_TEST_NUM_NOTES;
+	int MIDINoteList [] = {60, 62, 64, 70}; // a chord
+	float pitchCorrectionList [INTONATION_TEST_NUM_NOTES];
+	
+	int root = BMIntonationOptimiser_processNoteList(MIDINoteList, pitchCorrectionList, numNotes);
+	
+	printf("Root: %i\n\n", root);
+	printf("1: %f\n", pitchCorrectionList[0]);
+	printf("2: %f\n", pitchCorrectionList[1]);
+	printf("3: %f\n", pitchCorrectionList[2]);
+	printf("4: %f\n", pitchCorrectionList[3]);
+}
+
+
 int main(int argc, const char * argv[]) {
-	testStereoMod2();
+	testIntonationOptimiser();
     return 0;
 }
 
