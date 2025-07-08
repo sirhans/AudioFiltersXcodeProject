@@ -131,6 +131,8 @@
 		3A6C97842CE7F95200B6ED57 /* BMAttackShaper.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A6C96902CE7F95100B6ED57 /* BMAttackShaper.c */; };
 		3A6C97852CE7F95200B6ED57 /* BMVelocityFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A6C96402CE7F95100B6ED57 /* BMVelocityFilter.c */; };
 		3A6C97862CE7F95200B6ED57 /* BMStaticDelay.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A6C960D2CE7F95100B6ED57 /* BMStaticDelay.c */; };
+		3AD147412DD2948D00DA83E2 /* BMImitationFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AD147402DD2948D00DA83E2 /* BMImitationFilter.c */; };
+		3AD1475E2DD3CCE000DA83E2 /* tinywav.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AD1475C2DD3CCE000DA83E2 /* tinywav.c */; };
 		4C688A382244CF6700E3B1E6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C688A372244CF6700E3B1E6 /* main.c */; };
 /* End PBXBuildFile section */
 
@@ -418,6 +420,12 @@
 		3A6C97062CE7F95100B6ED57 /* TPCircularBuffer+AudioBufferList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TPCircularBuffer+AudioBufferList.h"; sourceTree = "<group>"; };
 		3A6C97072CE7F95100B6ED57 /* TPCircularBuffer+AudioBufferList.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "TPCircularBuffer+AudioBufferList.c"; sourceTree = "<group>"; };
 		3A6C97092CE7F95100B6ED57 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		3AD1473F2DD2948D00DA83E2 /* BMImitationFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMImitationFilter.h; sourceTree = "<group>"; };
+		3AD147402DD2948D00DA83E2 /* BMImitationFilter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMImitationFilter.c; sourceTree = "<group>"; };
+		3AD147592DD3CCE000DA83E2 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		3AD1475A2DD3CCE000DA83E2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		3AD1475B2DD3CCE000DA83E2 /* tinywav.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tinywav.h; sourceTree = "<group>"; };
+		3AD1475C2DD3CCE000DA83E2 /* tinywav.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tinywav.c; sourceTree = "<group>"; };
 		4C688A342244CF6700E3B1E6 /* AudioFiltersXcodeProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AudioFiltersXcodeProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C688A372244CF6700E3B1E6 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -542,6 +550,8 @@
 				3A6C96402CE7F95100B6ED57 /* BMVelocityFilter.c */,
 				3A6C96412CE7F95100B6ED57 /* BMZavalishinLPFOrder1.h */,
 				3A6C96422CE7F95100B6ED57 /* BMZavalishinLPFOrder1.c */,
+				3AD1473F2DD2948D00DA83E2 /* BMImitationFilter.h */,
+				3AD147402DD2948D00DA83E2 /* BMImitationFilter.c */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -839,6 +849,17 @@
 			path = AudioFiltersSubmoduleV2/AudioFilters;
 			sourceTree = SOURCE_ROOT;
 		};
+		3AD1475D2DD3CCE000DA83E2 /* tinywav */ = {
+			isa = PBXGroup;
+			children = (
+				3AD147592DD3CCE000DA83E2 /* LICENSE */,
+				3AD1475A2DD3CCE000DA83E2 /* README.md */,
+				3AD1475B2DD3CCE000DA83E2 /* tinywav.h */,
+				3AD1475C2DD3CCE000DA83E2 /* tinywav.c */,
+			);
+			path = tinywav;
+			sourceTree = "<group>";
+		};
 		4C688A2B2244CF6700E3B1E6 = {
 			isa = PBXGroup;
 			children = (
@@ -861,6 +882,7 @@
 			children = (
 				3A6C970A2CE7F95100B6ED57 /* AudioFilters */,
 				4C688A372244CF6700E3B1E6 /* main.c */,
+				3AD1475D2DD3CCE000DA83E2 /* tinywav */,
 			);
 			path = AudioFiltersXcodeProject;
 			sourceTree = "<group>";
@@ -981,6 +1003,7 @@
 				3A6C97432CE7F95200B6ED57 /* BMCDBlepOscillator.c in Sources */,
 				3A6C97442CE7F95200B6ED57 /* BMOffset.c in Sources */,
 				3A6C97452CE7F95200B6ED57 /* BMFFT.c in Sources */,
+				3AD1475E2DD3CCE000DA83E2 /* tinywav.c in Sources */,
 				3A6C97462CE7F95200B6ED57 /* BMSmoothFade.c in Sources */,
 				3A6C97472CE7F95200B6ED57 /* BMBlip.c in Sources */,
 				3A6C97482CE7F95200B6ED57 /* BMCrossover.c in Sources */,
@@ -1033,6 +1056,7 @@
 				3A6C97772CE7F95200B6ED57 /* BMMultiTapDelay.c in Sources */,
 				3A6C97782CE7F95200B6ED57 /* BMCepstrum.c in Sources */,
 				3A6C97792CE7F95200B6ED57 /* BM2x2MatrixMixer.c in Sources */,
+				3AD147412DD2948D00DA83E2 /* BMImitationFilter.c in Sources */,
 				3A6C977A2CE7F95200B6ED57 /* BMSorting.c in Sources */,
 				3A6C977B2CE7F95200B6ED57 /* BMMonoToStereo.c in Sources */,
 				3A6C977C2CE7F95200B6ED57 /* BMOscillatorArray.c in Sources */,

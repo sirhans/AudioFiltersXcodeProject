@@ -58,6 +58,8 @@
 #include "BMFFT.h"
 #include "BMStereoMod2.h"
 #include "BMIntonationOptimiser.h"
+#include "BMImitationFilter.h"
+#include "tinywav.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -81,7 +83,7 @@ void arrayToFileWithName(float* array, char* name, size_t length){
 	fclose(audioFile);
 	
 	system("pwd");
-	printf(name);
+	printf("%s", name);
 	printf("\n");
 }
 
@@ -125,7 +127,7 @@ void imageToFileWithName(uint8_t *image, char *name, size_t width, size_t height
 	fclose(af);
 	
 	system("pwd");
-	printf(name);
+	printf("%s", name);
 	printf("\n");
 }
 
@@ -161,7 +163,7 @@ void generateSineSweep(float* output, double startFrequency, double endFrequency
 
 
 
-void testDelay(){
+void testDelay(void){
 	float sampleRate = 44100.;
 	size_t delayPerTap = 6;
 	size_t numTaps = 50;
@@ -204,7 +206,7 @@ void testDelay(){
 	
 }
 
-void testReverb(){
+void testReverb(void){
 	// open a file for writing
 	FILE* audioFile;
 	audioFile = fopen("./rvImpulse.csv", "w+");
@@ -254,7 +256,7 @@ void testReverb(){
 }
 
 
-void testFIRFilter(){
+void testFIRFilter(void){
 	float kernel [17] =  {0.0, -0.00130751,
 		0.00478209, -0.00725887, 0.0, 0.0255661, -0.0672996,
 		0.107966, 0.375, 0.107966, -0.0672996, 0.0255661,
@@ -273,7 +275,7 @@ void testFIRFilter(){
 	printf("%f}\n",IR[f.length-1]);
 }
 
-void testButterworthFilter(){
+void testButterworthFilter(void){
 	float IR [1000];
 	
 	memset(IR,0,sizeof(float)*1000);
@@ -299,7 +301,7 @@ void testButterworthFilter(){
 	printf("%f}\n",IR[999]);
 }
 
-void testVND(){
+void testVND(void){
 	BMVelvetNoiseDecorrelator vndFilter;
 	
 	float sampleRate = 48000.0f;
@@ -334,7 +336,7 @@ void testVND(){
 }
 
 
-void testMonoToStereo(){
+void testMonoToStereo(void){
 	float sampleRate = 48000.0f;
 	BMMonoToStereo m2s;
 	BMMonoToStereo_init(&m2s, sampleRate, true);
@@ -386,7 +388,7 @@ void testRRStartNote(BMRoundRobin rrb){
 	BMRoundRobin_testImpulseResponse(&rrb);
 }
 
-void testRoundRobin(){
+void testRoundRobin(void){
 	BMRoundRobin rrb;
 	float freq = 1200;
 	for(freq=300;freq<=1800;freq+=300){
@@ -398,7 +400,7 @@ void testRoundRobin(){
 
 
 
-void testBiquadArray(){
+void testBiquadArray(void){
 	BMBiquadArray bqa;
 	float delayTimes = .2;
 	float fc = 5000.0;
@@ -416,7 +418,7 @@ void testBiquadArray(){
 }
 
 
-void testTestReverb(){
+void testTestReverb(void){
 	TestReverb rv;
 	TestReverb_init(&rv, 16, 44100.);
 	
@@ -433,7 +435,7 @@ void biquadIR(vDSP_biquadm_Setup setup, float* input,float* output, int length){
 	printf("------------------\n");
 }
 
-void testBiquad(){
+void testBiquad(void){
 	vDSP_Length Channels = 1;
 	vDSP_Length Sections = 1;
 	double *F = malloc(5*Channels*Sections*sizeof *F);
@@ -498,7 +500,7 @@ void testBiquad(){
 #define LI_Stride_Step 0.1
 
 #define LI_outputLength (LI_inputLength - LI_order) * LI_order
-void testLagrangeInterpol(){
+void testLagrangeInterpol(void){
 	BMLagrangeInterpolation lagInter;
 	BMLagrangeInterpolation_init(&lagInter, LI_order);
 	
@@ -530,7 +532,7 @@ void testLagrangeInterpol(){
 	
 }
 
-void testMultiLevelSVF(){
+void testMultiLevelSVF(void){
 	BMMultiLevelSVF svf;
 	BMMultiLevelSVF_init(&svf, 1, 44100, true);
 	
@@ -549,7 +551,7 @@ void testMultiLevelSVF(){
 	printf("%f %f\n",a2[1].x,a2[1].y);
 }
 
-void testFastLog(){
+void testFastLog(void){
 	// set up input
 	float t [128];
 	for(size_t i=0; i<128; i++)
@@ -564,7 +566,7 @@ void testFastLog(){
 	printf("%f}\n",t[128-1]);
 }
 
-void testFasterLog(){
+void testFasterLog(void){
 	// set up input
 	float t [128];
 	for(size_t i=0; i<128; i++)
@@ -580,7 +582,7 @@ void testFasterLog(){
 }
 
 
-void testUserDefinedVectorTypes(){
+void testUserDefinedVectorTypes(void){
 	vUint32_8 xx;
 	vFloat32_8 yy;
 	uint32 xi [8] = {0,1,2,3,4,5,6,7};
@@ -719,7 +721,7 @@ void testUserDefinedVectorTypes(){
 }
 
 
-void testNEONConditionals(){
+void testNEONConditionals(void){
 	vFloat a = {0.0f,0.0f,0.0f,0.0f};
 	vFloat b = {-1.0f,0.0f,1.0f,0.0f};
 	vSInt32 c;
@@ -727,7 +729,7 @@ void testNEONConditionals(){
 	for(size_t i=0; i<4; i++) printf("%i,",c[i]);
 }
 
-void testInRangef(){
+void testInRangef(void){
 	float testInput [32];
 	float ll = 1;
 	float ul = 2;
@@ -910,7 +912,7 @@ void asymptoticLimitTest6(float limit,
 }
 
 
-void testAsymptoticLimit(){
+void testAsymptoticLimit(void){
 	float t [256];
 	float o [256];
 	for(size_t i = 0; i<256; i++) t[i] = (float)i/64.0;
@@ -1108,7 +1110,7 @@ static inline void softKnee4(const float* overshoot,
 }
 
 
-void testSoftKnee(){
+void testSoftKnee(void){
 	float t [256];
 	float o [256];
 	float temp1 [256];
@@ -1198,7 +1200,7 @@ void testSoftKnee(){
 }
 
 
-void testAsymptoticLimitOutputRange(){
+void testAsymptoticLimitOutputRange(void){
 	float t [256];
 	float o [256];
 	for(size_t i = 0; i<256; i++) t[i] = (float)i*64.0;
@@ -1249,7 +1251,7 @@ void arrayXYToFile(float* arrayX,float* arrayY, size_t length){
 #define BMCOMPRESSOR_TEST_SAMPLERATE 48000
 #define BMCOMPRESSOR_TEST_LENGTH BMCOMPRESSOR_TEST_SAMPLERATE
 
-void testCompressor(){
+void testCompressor(void){
 	BMCompressor c;
 	
 	BMCompressor_initWithSettings(&c, BMCOMPRESSOR_TEST_SAMPLERATE, -10.0f, 5.0f, 40.0f, .001f, 0.05f);
@@ -1279,7 +1281,7 @@ float asymThresholdTestFunction(float x, float threshold){
 	return x / (1.0f + (xIfNeg * invThreshold));
 }
 
-void testAsymptoticThreshold(){
+void testAsymptoticThreshold(void){
 	float t [256];
 	for(size_t i=0; i<256; i++) {
 		t[i] = asymThresholdTestFunction(1.0f - (float)i * 0.1f,-10.0);
@@ -1289,7 +1291,7 @@ void testAsymptoticThreshold(){
 }
 
 
-void testCriticallyDampedFilterStepResponse(){
+void testCriticallyDampedFilterStepResponse(void){
 	float sampleRate = 48000.0f;
 	
 	float attackTimeInSeconds = 0.05;
@@ -1338,7 +1340,7 @@ void testCriticallyDampedFilterStepResponse(){
 
 
 
-void testCriticallyDampedFilterFrequencyResponse(){
+void testCriticallyDampedFilterFrequencyResponse(void){
 	float sampleRate = 48000.0f;
 	
 	float attackTimeInSeconds = 0.05;
@@ -1372,7 +1374,7 @@ void testCriticallyDampedFilterFrequencyResponse(){
 }
 
 
-void testEnvelopeFollower(){
+void testEnvelopeFollower(void){
 	BMEnvelopeFollower env;
 	
 	BMEnvelopeFollower_init(&env, 48000.0f);
@@ -1397,7 +1399,7 @@ void testEnvelopeFollower(){
 	arrayToFile(o,BMCOMPRESSOR_TEST_LENGTH);
 }
 
-void testEnvAttackTime(){
+void testEnvAttackTime(void){
 	float attackTimeInSeconds = 0.100;
 	float sampleRate = 48000.0f;
 	
@@ -1430,7 +1432,7 @@ void testEnvAttackTime(){
 	arrayToFile(o,BMCOMPRESSOR_TEST_LENGTH);
 }
 
-void testEnvReleaseTime(){
+void testEnvReleaseTime(void){
 	float attackTimeInSeconds = 0.001;
 	float releaseTimeInSeconds = 0.050;
 	float sampleRate = 48000.0f;
@@ -1463,7 +1465,7 @@ void testEnvReleaseTime(){
 
 
 
-void logSpeedTest(){
+void logSpeedTest(void){
 	// fill an array with random numbers
 	float t [BMCOMPRESSOR_TEST_LENGTH];
 	float s [BMCOMPRESSOR_TEST_LENGTH];
@@ -1528,7 +1530,7 @@ void quadraticThresholdT(const float* input, float* output, float threshold, flo
 	vDSP_vmax(input,1,output,1,output,1,numFrames);
 }
 
-void quadraticThresholdTest(){
+void quadraticThresholdTest(void){
 	float t [2*BMCOMPRESSOR_TEST_LENGTH];
 	float o [2*BMCOMPRESSOR_TEST_LENGTH];
 	
@@ -1545,7 +1547,7 @@ void quadraticThresholdTest(){
 //#define LT_SampleRate 48000.
 //#define LT_Frequency 10.
 //#define LT_TestRange 50
-//void testBMLagTime(){
+//void testBMLagTime(void){
 //	BMStereoLagTime stereoLagTime;
 //	BMStereoLagTime_init(&stereoLagTime, 500, LT_SampleRate);
 //
@@ -1588,7 +1590,7 @@ void quadraticThresholdTest(){
 //#define BS_Freq_Range 1000.0f
 //#define BS_Freq_Start 1.0f
 //#define BS_Freq_End 20000.0f
-//void testBinauralSynthesis(){
+//void testBinauralSynthesis(void){
 //	float* input = malloc(sizeof(float) * BS_Range);
 //	float* output = malloc(sizeof(float) * BS_Range);
 //	float* frequency = malloc(sizeof(float)*BS_Freq_Range);
@@ -1624,7 +1626,7 @@ void quadraticThresholdTest(){
 
 
 
-void testWetDryMixer() {
+void testWetDryMixer(void){
 	size_t bufferSize = 600;
 	size_t testLength = bufferSize * round(48000.0 / bufferSize);
 	float* inputDryR = malloc(sizeof(float)*testLength);
@@ -1686,7 +1688,7 @@ void testWetDryMixer() {
 
 
 
-void testUpsampler2x(){
+void testUpsampler2x(void){
 	BMIIRUpsampler2x us;
 	size_t numCoefficients = BMIIRUpsampler2x_init(&us, 110.0, 0.025, false);
 	printf("\nnumber of allpass coefficients: %zu\n",numCoefficients);
@@ -1710,7 +1712,7 @@ void testUpsampler2x(){
 
 
 
-void testDownsampler2x(){
+void testDownsampler2x(void){
 	BMIIRDownsampler2x ds;
 	size_t numCoefficients = BMIIRDownsampler2x_init(&ds, 110.0, 0.025, false);
 	printf("\nnumber of allpass coefficients: %zu\n",numCoefficients);
@@ -1736,7 +1738,7 @@ void testDownsampler2x(){
 
 
 
-void testUpDownsampler2x(){
+void testUpDownsampler2x(void){
 	BMIIRUpsampler2x us;
 	BMIIRDownsampler2x ds;
 	BMIIRUpsampler2x_init(&us, 110.0, 0.025, false);
@@ -1782,7 +1784,7 @@ void testUpDownsampler2x(){
 
 
 
-void testUpsampler(){
+void testUpsampler(void){
 	size_t upsampleFactor = 8;
 	
 	BMUpsampler us;
@@ -1938,7 +1940,7 @@ void testStaticDelay(void){
 
 
 
-void testUpDownsampler(){
+void testUpDownsampler(void){
 	size_t upsampleFactor = 16;
 	
 	BMDownsampler ds;
@@ -1996,7 +1998,7 @@ void testUpDownsampler(){
 
 
 
-void testCrossover(){
+void testCrossover(void){
 	
 	BMCrossover4way cvr;
 	BMCrossover4way_init(&cvr,
@@ -2055,7 +2057,7 @@ void testCrossover(){
 
 
 
-void testVASVF(){
+void testVASVF(void){
 	float sampleRate = 48000;
 	float testLength = 5000;
 	
@@ -2108,7 +2110,7 @@ void fadeIn(const float* input, float* output, float fadeTimeSeconds, float samp
 
 
 
-void testNoiseGate() {
+void testNoiseGate(void){
 	float sampleRate = 48000;
 	size_t testLength = sampleRate * 5;
 	float decayTime = 1.0 / 10.0;
@@ -2139,7 +2141,7 @@ void testNoiseGate() {
 
 
 
-void testOversamplerTransientResponse(){
+void testOversamplerTransientResponse(void){
 	float sampleRate = 48000;
 	size_t testLength = sampleRate * 5;
 	float toneFrequency = 80.0;
@@ -2197,7 +2199,7 @@ void testOversamplerTransientResponse(){
 
 
 
-void testOversamplerImpulseResponse(){
+void testOversamplerImpulseResponse(void){
 	
 	float sampleRate = 48000;
 	size_t testLength = 512;
@@ -2767,7 +2769,7 @@ void testFDN(int repeat, bool write, int method){
 }
 
 
-void testClipperSpeed(){
+void testClipperSpeed(void){
     size_t testLength = 1024;
     float *testData = malloc(sizeof(float)*testLength);
     
@@ -2798,7 +2800,7 @@ void testClipperSpeed(){
 }
 
 
-void testFormatConverter(){
+void testFormatConverter(void){
     BMAudioStreamConverter converter;
     AudioStreamBasicDescription input, output;
     input.mSampleRate = 16000.0f;
@@ -2855,7 +2857,7 @@ void testFormatConverter(){
 }
 
 
-void testGroupDelay(){
+void testGroupDelay(void){
 	BMMultiLevelBiquad bqf;
 	BMMultiLevelBiquad_init(&bqf, 1, 48000.0f, false, true, false);
 	BMMultiLevelBiquad_setHighPass6db(&bqf, 3000.0f, 0);
@@ -2869,11 +2871,11 @@ void testGroupDelay(){
 }
 
 
-void testExtremeCompressor(){
+void testExtremeCompressor(void){
     
 }
 
-void testExport(){
+void testExport(void){
     uint32_t sr = 48000;
     uint32_t length = sr * 10;
     
@@ -2888,7 +2890,7 @@ void testExport(){
     BMExportWavFile_exportAudioFloatToInt16(&exportWavFile,filePath, dataL, dataL, length);
 }
 
-void testRandomsInRange(){
+void testRandomsInRange(void){
     size_t randoms [20];
     BMReverbRandomsInRange(0, 100, randoms, 20);
     
@@ -2899,7 +2901,7 @@ void testRandomsInRange(){
 }
 
 
-void testCloudReverb(){
+void testCloudReverb(void){
     uint32_t sr = 48000;
     uint32_t length = sr * 10;
     
@@ -2918,7 +2920,7 @@ void testCloudReverb(){
 }
 
 
-void testLongLoopFDN(){
+void testLongLoopFDN(void){
 	uint32_t sr = 48000;
     uint32_t length = sr * 10;
     
@@ -2986,7 +2988,7 @@ void resampleToTarget(size_t sampleWidth, size_t targetSampleWidth, size_t *upsa
 }
 
 
-void testBMSincUpsampler(){
+void testBMSincUpsampler(void){
 	size_t length = 100;
 	float *sineSweep = calloc(length,sizeof(float));
 	generateSineSweep(sineSweep, 3000, 3000, 48000, length);
@@ -3021,7 +3023,7 @@ void testBMSincUpsampler(){
 
 
 
-void testBMSpectrogram(){
+void testBMSpectrogram(void){
 	BMSpectrogram sg;
 	
 	size_t maxFFTSize = 4096;
@@ -3066,7 +3068,7 @@ void testBMSpectrogram(){
 
 
 
-void testDPWOscillator(){
+void testDPWOscillator(void){
     BMDPWOscillator osc;
     size_t length = 48000;
     size_t oversample = 1;
@@ -3090,7 +3092,7 @@ void testDPWOscillator(){
 
 
 
-void testCDBlepOscillator(){
+void testCDBlepOscillator(void){
 	BMCDBlepOscillator osc;
 	size_t length = 48000;
 	size_t numBleps = 20;
@@ -3119,7 +3121,7 @@ void testCDBlepOscillator(){
 }
 
 
-void testBlipOscillator(){
+void testBlipOscillator(void){
     BMBlipOscillator osc;
     size_t length = 48000;
     size_t numBleps = 32;
@@ -3155,7 +3157,7 @@ void testBlipOscillator(){
 
 
 
-void testBlip(){
+void testBlip(void){
 	BMBlip osc;
 	size_t length = 48000;
 	size_t numBleps = 20;
@@ -3195,7 +3197,7 @@ void randomVector(float *v, size_t length){
 }
 
 
-void testIFFT(){
+void testIFFT(void){
 	size_t length = 128;
 	BMFFT fft;
 	BMFFT_init(&fft, length);
@@ -3364,8 +3366,157 @@ void testIntonationOptimiser(void){
 }
 
 
+
+
+void testImitationFilter(void){
+	// print the current working directry
+	printf("Present working directory: ");
+	system("pwd");
+	
+	// initialize the filter
+	BMImitationFilter filterL, filterR;
+	size_t filterOrder = 300;
+	float convergenceRate = 1.0 / 4.0;
+	bool swapLR = true;
+	BMImitationFilter_init(&filterL, filterOrder, convergenceRate);
+	BMImitationFilter_init(&filterR, filterOrder, convergenceRate);
+	
+	// open a wav file for writing
+	TinyWav unfilteredReference, filteredReference, inputFile, outputFile, errorFile;
+	char unfilteredReferenceFilename [256];
+	char filteredReferenceFilename [256];
+	char inputFilename[256];
+	char outputFilename [256];
+	char errorFilename [256];
+	snprintf(unfilteredReferenceFilename, sizeof(unfilteredReferenceFilename), "1016.wav");
+	snprintf(filteredReferenceFilename, sizeof(filteredReferenceFilename), "1016Gate.wav");
+	snprintf(inputFilename, sizeof(outputFilename), "1016.wav");
+	snprintf(outputFilename, sizeof(outputFilename), "output.wav");
+	snprintf(errorFilename, sizeof(outputFilename), "error.wav");
+	
+	// open file pointers for input files
+	tinywav_open_read(&unfilteredReference, unfilteredReferenceFilename, TW_SPLIT);
+	tinywav_open_read(&filteredReference, filteredReferenceFilename, TW_SPLIT);
+	tinywav_open_read(&inputFile, inputFilename, TW_SPLIT);
+	
+	// open file pointers for output files
+	int16_t numChannels = 2;
+	int32_t sampleRate = 44100;
+	tinywav_open_write(&outputFile,
+					   numChannels,
+					   sampleRate,
+					   TW_FLOAT32, // the output samples will be 32-bit floats. TW_INT16 is also supported
+					   TW_SPLIT,  // the samples to be written will be split: [[LLLL],[RRRR]]
+					   outputFilename // the output path
+					   );
+	tinywav_open_write(&errorFile,
+					   numChannels,
+					   sampleRate,
+					   TW_FLOAT32, // the output samples will be 32-bit floats. TW_INT16 is also supported
+					   TW_SPLIT,  // the samples to be written will be split: [[LLLL],[RRRR]]
+					   errorFilename // the output path
+					   );
+	
+	// set up input / output buffers
+	// NOTE: samples are in float32 format even if output is 16 bit
+	float *unfilteredRefBuffer[2];
+	float unfilteredRefLBuffer[BM_BUFFER_CHUNK_SIZE];
+	float unfilteredRefRBuffer[BM_BUFFER_CHUNK_SIZE];
+	unfilteredRefBuffer[0] = unfilteredRefLBuffer;
+	unfilteredRefBuffer[1] = unfilteredRefRBuffer;
+	
+	float *filteredRefBuffer[2];
+	float filteredRefLBuffer[BM_BUFFER_CHUNK_SIZE];
+	float filteredRefRBuffer[BM_BUFFER_CHUNK_SIZE];
+	filteredRefBuffer[0] = filteredRefLBuffer;
+	filteredRefBuffer[1] = filteredRefRBuffer;
+
+	float *inputBuffer[2];
+	float inputLBuffer[BM_BUFFER_CHUNK_SIZE];
+	float inputRBuffer[BM_BUFFER_CHUNK_SIZE];
+	inputBuffer[0] = inputLBuffer;
+	inputBuffer[1] = inputRBuffer;
+	
+	float *outputBuffer[2];
+	float outputLBuffer[BM_BUFFER_CHUNK_SIZE];
+	float outputRBuffer[BM_BUFFER_CHUNK_SIZE];
+	outputBuffer[0] = outputLBuffer;
+	outputBuffer[1] = outputRBuffer;
+	
+	float *errorBuffer[2];
+	float errorLBuffer[BM_BUFFER_CHUNK_SIZE];
+	float errorRBuffer[BM_BUFFER_CHUNK_SIZE];
+	errorBuffer[0] = errorLBuffer;
+	errorBuffer[1] = errorRBuffer;
+	
+	// the input is an impulse for checking filter frequency response
+//	float input[BM_BUFFER_CHUNK_SIZE];
+//	memset(input, 0, BM_BUFFER_CHUNK_SIZE * sizeof(float));
+//	input[0] = 1.0;
+
+	
+	// process
+	bool done = FALSE;
+	size_t i=0;
+	while(!done) {
+		int samplesRead1, samplesRead2, samplesRead3;
+		samplesRead1 = tinywav_read_f(&unfilteredReference, unfilteredRefBuffer, BM_BUFFER_CHUNK_SIZE);
+		samplesRead2 = tinywav_read_f(&filteredReference, filteredRefBuffer, BM_BUFFER_CHUNK_SIZE);
+		samplesRead3 = tinywav_read_f(&inputFile, inputBuffer, BM_BUFFER_CHUNK_SIZE);
+		
+		// we will only process as many samples as we read from ALL files
+		size_t samplesProcessing = BM_MIN(BM_MIN(samplesRead1,samplesRead2),samplesRead3);
+		
+		// if we read less than the requested number of samples then we are at
+		// the end of the file
+		if (samplesProcessing < BM_BUFFER_CHUNK_SIZE)
+			done = TRUE;
+
+		// optionally swap the left and right channels of the filtered reference
+		float *LRef = filteredRefLBuffer;
+		float *RRef = filteredRefRBuffer;
+		if (swapLR) {
+			LRef = filteredRefRBuffer;
+			RRef = filteredRefLBuffer;
+		}
+		
+		BMImitationFilter_process(&filterL, unfilteredRefLBuffer, LRef, inputLBuffer, outputLBuffer, errorLBuffer, samplesProcessing);
+		BMImitationFilter_process(&filterR, unfilteredRefRBuffer, RRef, inputRBuffer, outputRBuffer, errorRBuffer, samplesProcessing);
+		
+		tinywav_write_f(&outputFile, outputBuffer, (int)samplesProcessing);
+		tinywav_write_f(&errorFile, errorBuffer, (int)samplesProcessing);
+		
+		// progress indicator
+		if (i++ % 1000 == 0) {
+			printf(".");
+			fflush(stdout);
+		}
+		
+		// quit early to save time
+		if (i > 10000) done = TRUE;
+	}
+	printf("\n");
+	tinywav_close_read(&unfilteredReference);
+	tinywav_close_read(&filteredReference);
+	tinywav_close_read(&inputFile);
+	tinywav_close_write(&outputFile);
+	tinywav_close_write(&errorFile);
+	printf("Files saved.\n\n");
+	
+	// print the current working directry
+	printf("Present working directory: ");
+	system("pwd");
+	
+	BMImitationFilter_free(&filterL);
+	BMImitationFilter_free(&filterR);
+}
+
+
+
+
+
 int main(int argc, const char * argv[]) {
-	testIntonationOptimiser();
+	testImitationFilter();
     return 0;
 }
 
