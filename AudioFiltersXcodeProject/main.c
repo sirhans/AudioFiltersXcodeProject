@@ -3634,13 +3634,15 @@ void testLevelerWithSine(void){
 	int16_t numChannels = 2;
 	
 	// initialize the leveler
-	BMLeveler leveler;
+	BMLeveler levelerL, levelerR;
 	float targetOutputDb = 0.0;
-	float ratio = 1000.0;
-	float maxGainDb = 100.0;
-	float speedSeconds = 0.05;
-	float thresholdDb = -70.0;
-	BMLeveler_init(&leveler, targetOutputDb, ratio, maxGainDb, speedSeconds, thresholdDb, (float)sampleRate);
+	float ratio = 5.0;
+	float maxGainDb = 16.0;
+	float speedSeconds = 1.0;
+	float thresholdDb = -30.0;
+	BMLeveler_init(&levelerL, targetOutputDb, ratio, maxGainDb, speedSeconds, thresholdDb, (float)sampleRate);
+	BMLeveler_init(&levelerR, targetOutputDb, ratio, maxGainDb, speedSeconds, thresholdDb, (float)sampleRate);
+
 	
 	// init the test signal generator
 	BMBroadSpectrumTestSignal bsTest;
@@ -3692,9 +3694,9 @@ void testLevelerWithSine(void){
 		// fill the input buffers with test signal and process audio
 		BMBroadSpectrumTestSignal_processStereo(&bsTest, inputLBuffer, inputRBuffer, samplesProcessing);
 		BMLongFade_processStereo(&fade, inputLBuffer, inputRBuffer, inputLBuffer, inputRBuffer, samplesProcessing);
-		memcpy(outputLBuffer, inputLBuffer, sizeof(float)*samplesProcessing);
-		memcpy(outputRBuffer, inputRBuffer, sizeof(float)*samplesProcessing);
-		BMLeveler_processStereo(&leveler, inputLBuffer, inputRBuffer, outputLBuffer, outputRBuffer, samplesProcessing);
+//		memcpy(outputLBuffer, inputLBuffer, sizeof(float)*samplesProcessing);
+//		memcpy(outputRBuffer, inputRBuffer, sizeof(float)*samplesProcessing);
+		BMLeveler_processStereo(&levelerL, inputLBuffer, inputRBuffer, outputLBuffer, outputRBuffer, samplesProcessing);
 		
 		tinywav_write_f(&outputFile, outputBuffer, (int)samplesProcessing);
 		
@@ -3714,7 +3716,8 @@ void testLevelerWithSine(void){
 	printf("Present working directory: ");
 	system("pwd");
 	
-	BMLeveler_free(&leveler);
+	BMLeveler_free(&levelerL);
+	BMLeveler_free(&levelerR);
 	BMBroadSpectrumTestSignal_free(&bsTest);
 	BMLongFade_free(&fade);
 }
