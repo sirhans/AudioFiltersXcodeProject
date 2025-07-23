@@ -3694,7 +3694,7 @@ void testLevelerWithSine(void){
 		BMLongFade_processStereo(&fade, inputLBuffer, inputRBuffer, inputLBuffer, inputRBuffer, samplesProcessing);
 		memcpy(outputLBuffer, inputLBuffer, sizeof(float)*samplesProcessing);
 		memcpy(outputRBuffer, inputRBuffer, sizeof(float)*samplesProcessing);
-		// BMLeveler_processStereo(&leveler, inputLBuffer, inputRBuffer, outputLBuffer, outputRBuffer, samplesProcessing);
+		BMLeveler_processStereo(&leveler, inputLBuffer, inputRBuffer, outputLBuffer, outputRBuffer, samplesProcessing);
 		
 		tinywav_write_f(&outputFile, outputBuffer, (int)samplesProcessing);
 		
