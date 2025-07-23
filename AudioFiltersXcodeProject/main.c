@@ -59,7 +59,11 @@
 #include "BMStereoMod2.h"
 #include "BMIntonationOptimiser.h"
 #include "BMImitationFilter.h"
+#include "BMLeveler.h"
 #include "tinywav.h"
+#include "BMOscillatorArray.h"
+#include "BMBroadSpectrumTestSignal.h"
+#include "BMLongFade.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -1254,7 +1258,7 @@ void arrayXYToFile(float* arrayX,float* arrayY, size_t length){
 void testCompressor(void){
 	BMCompressor c;
 	
-	BMCompressor_initWithSettings(&c, BMCOMPRESSOR_TEST_SAMPLERATE, -10.0f, 5.0f, 40.0f, .001f, 0.05f);
+	// BMCompressor_initWithSettings(&c, BMCOMPRESSOR_TEST_SAMPLERATE, -10.0f, 5.0f, 40.0f, .001f, 0.05f);
 	
 	// create sine wave for input test
 	float frequency = 300.0f;
@@ -1268,7 +1272,7 @@ void testCompressor(void){
 	}
 	
 	float minGain;
-	BMCompressor_ProcessBufferMono(&c, t, o, &minGain, BMCOMPRESSOR_TEST_LENGTH);
+	BMCompressor_processBufferMono(&c, t, o, &minGain, BMCOMPRESSOR_TEST_LENGTH);
 	
 	// print the output
 	arrayToFile(o,BMCOMPRESSOR_TEST_LENGTH);
@@ -3514,9 +3518,213 @@ void testImitationFilter(void){
 
 
 
+void testLeveler(void){
+	// print the current working directry
+	printf("Present working directory: ");
+	system("pwd");
+	
+	// open a wav files for reading and writing
+	char inputFilename[256];
+	char outputFilename [256];
+	snprintf(inputFilename, sizeof(outputFilename), "compressorLimiterTest3.wav");
+	snprintf(outputFilename, sizeof(outputFilename), "output.wav");
+	
+	// open file pointers for input files
+	TinyWav inputFile, outputFile;
+	tinywav_open_read(&inputFile, inputFilename, TW_SPLIT);
+	
+	// get the input sample rate
+	int32_t sampleRate = inputFile.h.SampleRate;
+	int16_t numChannels = inputFile.numChannels;
+	assert(numChannels > 0);
+	assert(numChannels <= 2);
+	
+	// initialize the leveler
+	BMLeveler leveler;
+	float targetOutputDb = 0.0;
+	float ratio = 1000.0;
+	float maxGainDb = 100.0;
+	float speedSeconds = 0.05;
+	float thresholdDb = -70.0;
+	BMLeveler_init(&leveler, targetOutputDb, ratio, maxGainDb, speedSeconds, thresholdDb, (float)sampleRate);
+	
+	// open file pointers for output files
+	tinywav_open_write(&outputFile,
+					   numChannels,
+					   sampleRate,
+					   TW_FLOAT32, // the output samples will be 32-bit floats. TW_INT16 is also supported
+					   TW_SPLIT,  // the samples to be written will be split: [[LLLL],[RRRR]]
+					   outputFilename // the output path
+					   );
+	
+	// set up input / output buffers
+	// NOTE: samples are in float32 format even if output is 16 bit
+	float *inputBuffer[2];
+	float inputLBuffer[BM_BUFFER_CHUNK_SIZE];
+	float inputRBuffer[BM_BUFFER_CHUNK_SIZE];
+	inputBuffer[0] = inputLBuffer;
+	inputBuffer[1] = inputRBuffer;
+	
+	float *outputBuffer[2];
+	float outputLBuffer[BM_BUFFER_CHUNK_SIZE];
+	float outputRBuffer[BM_BUFFER_CHUNK_SIZE];
+	outputBuffer[0] = outputLBuffer;
+	outputBuffer[1] = outputRBuffer;
+	
+	// process
+	bool done = FALSE;
+	size_t i=0;
+	while(!done) {
+		int samplesRead;
+		samplesRead = tinywav_read_f(&inputFile, inputBuffer, BM_BUFFER_CHUNK_SIZE);
+		
+		// we will only process as many samples as we read
+		size_t samplesProcessing = samplesRead;
+		
+		// if we read less than the requested number of samples then we are at
+		// the end of the file
+		if (samplesProcessing < BM_BUFFER_CHUNK_SIZE)
+			done = TRUE;
+		
+		if (numChannels == 1)
+			BMLeveler_processMono(&leveler, inputLBuffer, outputLBuffer, samplesProcessing);
+		else if (numChannels == 2)
+			BMLeveler_processStereo(&leveler, inputLBuffer, inputRBuffer, outputLBuffer, outputRBuffer, samplesProcessing);
+		
+		tinywav_write_f(&outputFile, outputBuffer, (int)samplesProcessing);
+		
+		// progress indicator
+		if (i++ % 1000 == 0) {
+			printf(".");
+			fflush(stdout);
+		}
+	}
+	printf("\n");
+	tinywav_close_read(&inputFile);
+	tinywav_close_write(&outputFile);
+	printf("Files saved.\n\n");
+	
+	// print the current working directry
+	printf("Present working directory: ");
+	system("pwd");
+	
+	BMLeveler_free(&leveler);
+}
+
+
+
+
+void testLevelerWithSine(void){
+	// print the current working directry
+	printf("Present working directory: ");
+	system("pwd");
+	
+	// open a wav files for reading and writing
+	char inputFilename[256];
+	char outputFilename [256];
+	snprintf(inputFilename, sizeof(outputFilename), "compressorLimiterTest3.wav");
+	snprintf(outputFilename, sizeof(outputFilename), "output.wav");
+	
+	// open file pointers for input files
+	TinyWav inputFile, outputFile;
+	// tinywav_open_read(&inputFile, inputFilename, TW_SPLIT);
+	
+	// get the input sample rate
+	int32_t sampleRate = 44100;
+	int16_t numChannels = 2;
+	
+	// initialize the leveler
+	BMLeveler leveler;
+	float targetOutputDb = 0.0;
+	float ratio = 1000.0;
+	float maxGainDb = 100.0;
+	float speedSeconds = 0.05;
+	float thresholdDb = -70.0;
+	BMLeveler_init(&leveler, targetOutputDb, ratio, maxGainDb, speedSeconds, thresholdDb, (float)sampleRate);
+	
+	// init the test signal generator
+	BMBroadSpectrumTestSignal bsTest;
+	size_t numOscillators = 9;
+	float minFreqPow = 6.0;
+	float minFrequency = powf(2.0, minFreqPow);
+	float maxFrequency = powf(2.0, minFreqPow + numOscillators - 1);
+	BMBroadSpectrumTestSignal_init(&bsTest, minFrequency, maxFrequency, numOscillators, (float)sampleRate);
+	
+	// init the long fade
+	BMLongFade fade;
+	float startGainDB = -50.0;
+	float endGainDB = 15.0;
+	size_t lengthInSeconds = 120;
+	BMLongFade_init(&fade, startGainDB, endGainDB, (float)lengthInSeconds, sampleRate);
+	
+	// open file pointers for output files
+	tinywav_open_write(&outputFile,
+					   numChannels,
+					   sampleRate,
+					   TW_FLOAT32, // the output samples will be 32-bit floats. TW_INT16 is also supported
+					   TW_SPLIT,  // the samples to be written will be split: [[LLLL],[RRRR]]
+					   outputFilename // the output path
+					   );
+	
+	// set up input / output buffers
+	// NOTE: samples are in float32 format even if output is 16 bit
+	float *inputBuffer[2];
+	float inputLBuffer[BM_BUFFER_CHUNK_SIZE];
+	float inputRBuffer[BM_BUFFER_CHUNK_SIZE];
+	inputBuffer[0] = inputLBuffer;
+	inputBuffer[1] = inputRBuffer;
+	
+	float *outputBuffer[2];
+	float outputLBuffer[BM_BUFFER_CHUNK_SIZE];
+	float outputRBuffer[BM_BUFFER_CHUNK_SIZE];
+	outputBuffer[0] = outputLBuffer;
+	outputBuffer[1] = outputRBuffer;
+	
+	// process
+	size_t samplesProcessed = 0;
+	size_t lengthInSamples = sampleRate * lengthInSeconds;
+	size_t i=0;
+	while(samplesProcessed < lengthInSamples) {
+
+		// we will only process one buffer chunk size
+		size_t samplesProcessing = BM_BUFFER_CHUNK_SIZE;
+		
+		// fill the input buffers with test signal and process audio
+		BMBroadSpectrumTestSignal_processStereo(&bsTest, inputLBuffer, inputRBuffer, samplesProcessing);
+		BMLongFade_processStereo(&fade, inputLBuffer, inputRBuffer, inputLBuffer, inputRBuffer, samplesProcessing);
+		memcpy(outputLBuffer, inputLBuffer, sizeof(float)*samplesProcessing);
+		memcpy(outputRBuffer, inputRBuffer, sizeof(float)*samplesProcessing);
+		// BMLeveler_processStereo(&leveler, inputLBuffer, inputRBuffer, outputLBuffer, outputRBuffer, samplesProcessing);
+		
+		tinywav_write_f(&outputFile, outputBuffer, (int)samplesProcessing);
+		
+		// progress indicator
+		if (i++ % 1000 == 0) {
+			printf(".");
+			fflush(stdout);
+		}
+		
+		samplesProcessed += samplesProcessing;
+	}
+	printf("\n");
+	tinywav_close_write(&outputFile);
+	printf("Files saved.\n\n");
+	
+	// print the current working directry
+	printf("Present working directory: ");
+	system("pwd");
+	
+	BMLeveler_free(&leveler);
+	BMBroadSpectrumTestSignal_free(&bsTest);
+	BMLongFade_free(&fade);
+}
+
+
+
+
 
 int main(int argc, const char * argv[]) {
-	testImitationFilter();
+	testLevelerWithSine();
     return 0;
 }
 
