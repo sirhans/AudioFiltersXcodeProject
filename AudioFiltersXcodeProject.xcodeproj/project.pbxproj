@@ -134,6 +134,8 @@
 		3A9F3EFD2E1EE0D700D73D9B /* BMTriangleLFO.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A9F3EFC2E1EE0D700D73D9B /* BMTriangleLFO.c */; };
 		3A9F3F8C2E31413000D73D9B /* BMBroadSpectrumTestSignal.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A9F3F8B2E31413000D73D9B /* BMBroadSpectrumTestSignal.c */; };
 		3A9F3F8F2E31548100D73D9B /* BMLongFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A9F3F8E2E31548100D73D9B /* BMLongFade.c */; };
+		3AA4EC512E86845600D9556C /* BMLoopFinder.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4EC502E86845600D9556C /* BMLoopFinder.c */; };
+		3AA4EC532E86AE1D00D9556C /* BMIntegerMath.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4EC522E86AE1D00D9556C /* BMIntegerMath.c */; };
 		3AD147412DD2948D00DA83E2 /* BMImitationFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AD147402DD2948D00DA83E2 /* BMImitationFilter.c */; };
 		3AD1475E2DD3CCE000DA83E2 /* tinywav.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AD1475C2DD3CCE000DA83E2 /* tinywav.c */; };
 		4C688A382244CF6700E3B1E6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C688A372244CF6700E3B1E6 /* main.c */; };
@@ -429,6 +431,9 @@
 		3A9F3F8B2E31413000D73D9B /* BMBroadSpectrumTestSignal.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMBroadSpectrumTestSignal.c; sourceTree = "<group>"; };
 		3A9F3F8D2E31548100D73D9B /* BMLongFade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMLongFade.h; sourceTree = "<group>"; };
 		3A9F3F8E2E31548100D73D9B /* BMLongFade.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMLongFade.c; sourceTree = "<group>"; };
+		3AA4EC4F2E86845600D9556C /* BMLoopFinder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMLoopFinder.h; sourceTree = "<group>"; };
+		3AA4EC502E86845600D9556C /* BMLoopFinder.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMLoopFinder.c; sourceTree = "<group>"; };
+		3AA4EC522E86AE1D00D9556C /* BMIntegerMath.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMIntegerMath.c; sourceTree = "<group>"; };
 		3AD1473F2DD2948D00DA83E2 /* BMImitationFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMImitationFilter.h; sourceTree = "<group>"; };
 		3AD147402DD2948D00DA83E2 /* BMImitationFilter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMImitationFilter.c; sourceTree = "<group>"; };
 		3AD147592DD3CCE000DA83E2 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -605,6 +610,7 @@
 				3A6C96592CE7F95100B6ED57 /* BMFFT.h */,
 				3A6C965A2CE7F95100B6ED57 /* BMFFT.c */,
 				3A6C965B2CE7F95100B6ED57 /* BMIntegerMath.h */,
+				3AA4EC522E86AE1D00D9556C /* BMIntegerMath.c */,
 				3A6C965C2CE7F95100B6ED57 /* BMLagrangeInterpolation.h */,
 				3A6C965D2CE7F95100B6ED57 /* BMLagrangeInterpolation.c */,
 				3A6C965E2CE7F95100B6ED57 /* BMLagrangeInterpolationTable.h */,
@@ -786,6 +792,8 @@
 				3A6C96E62CE7F95100B6ED57 /* BMWetDryMixer.c */,
 				3A9F3F8D2E31548100D73D9B /* BMLongFade.h */,
 				3A9F3F8E2E31548100D73D9B /* BMLongFade.c */,
+				3AA4EC4F2E86845600D9556C /* BMLoopFinder.h */,
+				3AA4EC502E86845600D9556C /* BMLoopFinder.c */,
 			);
 			path = OtherEffects;
 			sourceTree = "<group>";
@@ -1037,6 +1045,7 @@
 				3A6C97532CE7F95200B6ED57 /* BMVocalRemover.c in Sources */,
 				3A6C97542CE7F95200B6ED57 /* BMPitchShiftDelay.c in Sources */,
 				3A6C97552CE7F95200B6ED57 /* BMSpectrogram.c in Sources */,
+				3AA4EC512E86845600D9556C /* BMLoopFinder.c in Sources */,
 				3A6C97562CE7F95200B6ED57 /* BMSpectrumManager.c in Sources */,
 				3A6C97572CE7F95200B6ED57 /* BMLagrangeInterpolationTable.c in Sources */,
 				3A6C97582CE7F95200B6ED57 /* BMWaveshaping.c in Sources */,
@@ -1081,6 +1090,7 @@
 				3A6C977E2CE7F95200B6ED57 /* BMRMSPower.c in Sources */,
 				3A6C977F2CE7F95200B6ED57 /* BMExportWavFile.c in Sources */,
 				3A6C97802CE7F95200B6ED57 /* Decimation.c in Sources */,
+				3AA4EC532E86AE1D00D9556C /* BMIntegerMath.c in Sources */,
 				3A6C97812CE7F95200B6ED57 /* BMDynamicSmoothingFilter.c in Sources */,
 				3A6C97822CE7F95200B6ED57 /* TestReverb.c in Sources */,
 				3A9F3EE32E1DC63F00D73D9B /* BMLeveler.c in Sources */,

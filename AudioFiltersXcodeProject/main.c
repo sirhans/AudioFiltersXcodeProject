@@ -64,6 +64,7 @@
 #include "BMOscillatorArray.h"
 #include "BMBroadSpectrumTestSignal.h"
 #include "BMLongFade.h"
+#include "BMIntegerMath.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -3650,7 +3651,7 @@ void testLevelerWithSine(void){
 	float minFreqPow = 6.0;
 	float minFrequency = powf(2.0, minFreqPow);
 	float maxFrequency = powf(2.0, minFreqPow + numOscillators - 1);
-	BMBroadSpectrumTestSignal_init(&bsTest, minFrequency, maxFrequency, numOscillators, (float)sampleRate);
+	BMBroadSpectrumTestSignal_init(&bsTest, minFrequency, maxFrequency, numOscillators, false, (float)sampleRate);
 	
 	// init the long fade
 	BMLongFade fade;
@@ -3723,11 +3724,8 @@ void testLevelerWithSine(void){
 }
 
 
-
-
-
 int main(int argc, const char * argv[]) {
-	testLevelerWithSine();
+
     return 0;
 }
 
