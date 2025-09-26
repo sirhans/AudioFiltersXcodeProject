@@ -65,6 +65,7 @@
 #include "BMBroadSpectrumTestSignal.h"
 #include "BMLongFade.h"
 #include "BMIntegerMath.h"
+#include "BMLoopFinder.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -3724,9 +3725,26 @@ void testLevelerWithSine(void){
 }
 
 
-int main(int argc, const char * argv[]) {
+void testBMLoopFinder(void){
+	float sampleRate = 44100;
+	float frequency = 100;
+	size_t length = 3 * sampleRate;
+	float *b = malloc(sizeof(float) * length);
+	
+	for(size_t i=0; i<length; i++) {
+		b[i] = (float)sin(frequency * M_PI * (double)i / (double)sampleRate);
+	}
+	
+	bmLoopPoints lp = BMLoopFinder(b, sampleRate, frequency, length, 5 * sampleRate / frequency, 80 * sampleRate / frequency, -30.0);
+	
+	printf("done");
+}
 
-    return 0;
+
+
+int main(int argc, const char * argv[]) {
+	testBMLoopFinder();
+	return 0;
 }
 
 
