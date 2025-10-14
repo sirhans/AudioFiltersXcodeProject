@@ -66,6 +66,7 @@
 #include "BMLongFade.h"
 #include "BMIntegerMath.h"
 #include "BMLoopFinder.h"
+#include "BMDither.h"
 
 #define TESTBUFFERLENGTH 128
 #define FFTSIZE 4096
@@ -3728,22 +3729,193 @@ void testLevelerWithSine(void){
 void testBMLoopFinder(void){
 	float sampleRate = 44100;
 	float frequency = 100;
-	size_t length = 3 * sampleRate;
+	size_t length = sampleRate / 10;
 	float *b = malloc(sizeof(float) * length);
 	
 	for(size_t i=0; i<length; i++) {
 		b[i] = (float)sin(frequency * M_PI * (double)i / (double)sampleRate);
 	}
 	
-	bmLoopPoints lp = BMLoopFinder(b, sampleRate, frequency, length, 5 * sampleRate / frequency, 80 * sampleRate / frequency, -30.0);
+	size_t minLoopLength = 5 * sampleRate / frequency;
+	size_t maxLoopLength = minLoopLength * 2;
+	float noiseTargetDb = -30.0;
+	bmLoopPoints lp = BMLoopFinder(b,
+								   sampleRate,
+								   frequency,
+								   length,
+								   minLoopLength,
+								   maxLoopLength,
+								   noiseTargetDb);
 	
 	printf("done");
 }
 
 
+void testDither(void){
+	
+	// open a wav file for writing
+	char outputFilename [256];
+	snprintf(outputFilename, sizeof(outputFilename), "output.wav");
+	
+	// open file pointer for output file
+	TinyWav outputFile;
+	
+	// define sample rate and channel format
+	int32_t sampleRate = 44100;
+	int16_t numChannels = 2;
+	
+	// initialize the dither module
+	BMDither dither;
+	BMDither_init(&dither, BMDITHER_16, sampleRate);
+	
+	// init the test signal generator
+//	BMBroadSpectrumTestSignal bsTest;
+//	size_t numOscillators = 9;
+//	float minFreqPow = 6.0;
+//	float minFrequency = powf(2.0, minFreqPow);
+//	float maxFrequency = powf(2.0, minFreqPow + numOscillators - 1);
+//	BMBroadSpectrumTestSignal_init(&bsTest, minFrequency, maxFrequency, numOscillators, false, (float)sampleRate);
+	
+	// init the long fade
+//	BMLongFade fade;
+//	float startGainDB = -50.0;
+//	float endGainDB = 15.0;
+//	size_t lengthInSeconds = 120;
+//	BMLongFade_init(&fade, startGainDB, endGainDB, (float)lengthInSeconds, sampleRate);
+	
+	// open file pointer for output file
+	tinywav_open_write(&outputFile,
+					   numChannels,
+					   sampleRate,
+					   TW_FLOAT32, // the output samples will be 32-bit floats. TW_INT16 is also supported
+					   TW_SPLIT,  // the samples to be written will be split: [[LLLL],[RRRR]]
+					   outputFilename // the output path
+					   );
+	
+	// set up output buffers
+	// NOTE: samples are in float32 format even if output is 16 bit
+	float *outputBuffer[2];
+	float outputLBuffer[BM_BUFFER_CHUNK_SIZE];
+	float outputRBuffer[BM_BUFFER_CHUNK_SIZE];
+	outputBuffer[0] = outputLBuffer;
+	outputBuffer[1] = outputRBuffer;
+	
+	// set up input buffers
+	float inputLBuffer[BM_BUFFER_CHUNK_SIZE];
+	float inputRBuffer[BM_BUFFER_CHUNK_SIZE];
+	// fill them with zeros
+	memset(inputLBuffer, 0, sizeof(float) * BM_BUFFER_CHUNK_SIZE);
+	memset(inputRBuffer, 0, sizeof(float) * BM_BUFFER_CHUNK_SIZE);
+	
+	// process
+	size_t lengthInSeconds = 16;
+	size_t samplesProcessed = 0;
+	size_t lengthInSamples = sampleRate * lengthInSeconds;
+	size_t i=0;
+	while(samplesProcessed < lengthInSamples) {
+
+		// we will only process one buffer chunk size
+		size_t samplesProcessing = BM_BUFFER_CHUNK_SIZE;
+		
+		// fill the input buffers with test signal and process audio
+		BMDither_processStereo(&dither, inputLBuffer, inputRBuffer, outputLBuffer, outputRBuffer, samplesProcessing);
+		
+		tinywav_write_f(&outputFile, outputBuffer, (int)samplesProcessing);
+		
+		// progress indicator
+		if (i++ % 1000 == 0) {
+			printf(".");
+			fflush(stdout);
+		}
+		
+		samplesProcessed += samplesProcessing;
+	}
+	
+	printf("\n");
+	tinywav_close_write(&outputFile);
+	printf("Files saved.\n\n");
+	
+	// print the current working directry
+	printf("Present working directory: ");
+	system("pwd");
+	
+	BMDither_free(&dither);
+}
+
+
+
+void testWhiteNoise(void){
+	
+	// open a wav file for writing
+	char outputFilename [256];
+	snprintf(outputFilename, sizeof(outputFilename), "output.wav");
+	
+	// open file pointer for output file
+	TinyWav outputFile;
+	
+	// define sample rate and channel format
+	int32_t sampleRate = 44100;
+	int16_t numChannels = 2;
+	
+	// initialize the white noise generator
+	BMWhiteNoiseOscillator whiteNoise;
+	BMWhiteNoiseOscillator_init(&whiteNoise);
+	
+	// open file pointer for output file
+	tinywav_open_write(&outputFile,
+					   numChannels,
+					   sampleRate,
+					   TW_FLOAT32, // the output samples will be 32-bit floats. TW_INT16 is also supported
+					   TW_SPLIT,  // the samples to be written will be split: [[LLLL],[RRRR]]
+					   outputFilename // the output path
+					   );
+	
+	// set up output buffers
+	// NOTE: samples are in float32 format even if output is 16 bit
+	float *outputBuffer[2];
+	float outputLBuffer[BM_BUFFER_CHUNK_SIZE];
+	float outputRBuffer[BM_BUFFER_CHUNK_SIZE];
+	outputBuffer[0] = outputLBuffer;
+	outputBuffer[1] = outputRBuffer;
+	
+	// process
+	size_t lengthInSeconds = 4;
+	size_t samplesProcessed = 0;
+	size_t lengthInSamples = sampleRate * lengthInSeconds;
+	size_t i=0;
+	while(samplesProcessed < lengthInSamples) {
+
+		// we will only process one buffer chunk size
+		size_t samplesProcessing = BM_BUFFER_CHUNK_SIZE;
+		
+		// fill the input buffers with test signal and process audio
+		BMWhiteNoiseOscillator_process(&whiteNoise, outputLBuffer, samplesProcessing);
+		BMWhiteNoiseOscillator_process(&whiteNoise, outputRBuffer, samplesProcessing);
+		
+		tinywav_write_f(&outputFile, outputBuffer, (int)samplesProcessing);
+		
+		// progress indicator
+		if (i++ % 1000 == 0) {
+			printf(".");
+			fflush(stdout);
+		}
+		
+		samplesProcessed += samplesProcessing;
+	}
+	
+	printf("\n");
+	tinywav_close_write(&outputFile);
+	printf("Files saved.\n\n");
+	
+	// print the current working directry
+	printf("Present working directory: ");
+	system("pwd");
+	
+}
 
 int main(int argc, const char * argv[]) {
-	testBMLoopFinder();
+	testDither();
+	
 	return 0;
 }
 

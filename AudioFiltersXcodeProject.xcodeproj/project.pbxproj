@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -136,6 +136,8 @@
 		3A9F3F8F2E31548100D73D9B /* BMLongFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A9F3F8E2E31548100D73D9B /* BMLongFade.c */; };
 		3AA4EC512E86845600D9556C /* BMLoopFinder.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4EC502E86845600D9556C /* BMLoopFinder.c */; };
 		3AA4EC532E86AE1D00D9556C /* BMIntegerMath.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AA4EC522E86AE1D00D9556C /* BMIntegerMath.c */; };
+		3AAC59452E9D01F2009AA404 /* BMDither.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AAC59442E9D01F2009AA404 /* BMDither.c */; };
+		3AAC59482E9D0EC7009AA404 /* BMWhiteNoiseOscillator.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AAC59472E9D0EC7009AA404 /* BMWhiteNoiseOscillator.c */; };
 		3AD147412DD2948D00DA83E2 /* BMImitationFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AD147402DD2948D00DA83E2 /* BMImitationFilter.c */; };
 		3AD1475E2DD3CCE000DA83E2 /* tinywav.c in Sources */ = {isa = PBXBuildFile; fileRef = 3AD1475C2DD3CCE000DA83E2 /* tinywav.c */; };
 		4C688A382244CF6700E3B1E6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4C688A372244CF6700E3B1E6 /* main.c */; };
@@ -434,6 +436,10 @@
 		3AA4EC4F2E86845600D9556C /* BMLoopFinder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMLoopFinder.h; sourceTree = "<group>"; };
 		3AA4EC502E86845600D9556C /* BMLoopFinder.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMLoopFinder.c; sourceTree = "<group>"; };
 		3AA4EC522E86AE1D00D9556C /* BMIntegerMath.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMIntegerMath.c; sourceTree = "<group>"; };
+		3AAC59432E9D01F2009AA404 /* BMDither.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMDither.h; sourceTree = "<group>"; };
+		3AAC59442E9D01F2009AA404 /* BMDither.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMDither.c; sourceTree = "<group>"; };
+		3AAC59462E9D0EC7009AA404 /* BMWhiteNoiseOscillator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMWhiteNoiseOscillator.h; sourceTree = "<group>"; };
+		3AAC59472E9D0EC7009AA404 /* BMWhiteNoiseOscillator.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMWhiteNoiseOscillator.c; sourceTree = "<group>"; };
 		3AD1473F2DD2948D00DA83E2 /* BMImitationFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMImitationFilter.h; sourceTree = "<group>"; };
 		3AD147402DD2948D00DA83E2 /* BMImitationFilter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BMImitationFilter.c; sourceTree = "<group>"; };
 		3AD147592DD3CCE000DA83E2 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -443,6 +449,10 @@
 		4C688A342244CF6700E3B1E6 /* AudioFiltersXcodeProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AudioFiltersXcodeProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C688A372244CF6700E3B1E6 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		3AAC594C2E9E026A009AA404 /* TinyMT */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TinyMT; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		4C688A312244CF6700E3B1E6 /* Frameworks */ = {
@@ -625,6 +635,7 @@
 				3A6C96672CE7F95100B6ED57 /* incbeta.h */,
 				3A6C96682CE7F95100B6ED57 /* incbeta.c */,
 				3A6C96692CE7F95100B6ED57 /* LinearSmoothedValue.h */,
+				3AAC594C2E9E026A009AA404 /* TinyMT */,
 			);
 			path = MathUtilities;
 			sourceTree = "<group>";
@@ -747,6 +758,8 @@
 				3A6C96C72CE7F95100B6ED57 /* BMQuadratureOscillator.c */,
 				3A9F3F8A2E31413000D73D9B /* BMBroadSpectrumTestSignal.h */,
 				3A9F3F8B2E31413000D73D9B /* BMBroadSpectrumTestSignal.c */,
+				3AAC59462E9D0EC7009AA404 /* BMWhiteNoiseOscillator.h */,
+				3AAC59472E9D0EC7009AA404 /* BMWhiteNoiseOscillator.c */,
 			);
 			path = Oscillators;
 			sourceTree = "<group>";
@@ -794,6 +807,8 @@
 				3A9F3F8E2E31548100D73D9B /* BMLongFade.c */,
 				3AA4EC4F2E86845600D9556C /* BMLoopFinder.h */,
 				3AA4EC502E86845600D9556C /* BMLoopFinder.c */,
+				3AAC59432E9D01F2009AA404 /* BMDither.h */,
+				3AAC59442E9D01F2009AA404 /* BMDither.c */,
 			);
 			path = OtherEffects;
 			sourceTree = "<group>";
@@ -925,6 +940,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				3AAC594C2E9E026A009AA404 /* TinyMT */,
+			);
 			name = AudioFiltersXcodeProject;
 			productName = AudioFiltersXcodeProject;
 			productReference = 4C688A342244CF6700E3B1E6 /* AudioFiltersXcodeProject */;
@@ -982,6 +1000,7 @@
 				3A6C97162CE7F95200B6ED57 /* BMTremolo.c in Sources */,
 				3A6C97172CE7F95200B6ED57 /* BMFirstOrderVariableFilter.c in Sources */,
 				3A6C97182CE7F95200B6ED57 /* BMTNFilter.c in Sources */,
+				3AAC59482E9D0EC7009AA404 /* BMWhiteNoiseOscillator.c in Sources */,
 				3A6C97192CE7F95200B6ED57 /* BMMultiLevelBiquad.c in Sources */,
 				3A6C971A2CE7F95200B6ED57 /* BMZavalishinLPFOrder1.c in Sources */,
 				3A6C971B2CE7F95200B6ED57 /* BMSpectralGain.c in Sources */,
@@ -1091,6 +1110,7 @@
 				3A6C977F2CE7F95200B6ED57 /* BMExportWavFile.c in Sources */,
 				3A6C97802CE7F95200B6ED57 /* Decimation.c in Sources */,
 				3AA4EC532E86AE1D00D9556C /* BMIntegerMath.c in Sources */,
+				3AAC59452E9D01F2009AA404 /* BMDither.c in Sources */,
 				3A6C97812CE7F95200B6ED57 /* BMDynamicSmoothingFilter.c in Sources */,
 				3A6C97822CE7F95200B6ED57 /* TestReverb.c in Sources */,
 				3A9F3EE32E1DC63F00D73D9B /* BMLeveler.c in Sources */,
